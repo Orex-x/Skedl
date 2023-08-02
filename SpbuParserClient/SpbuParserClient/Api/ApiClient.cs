@@ -1,9 +1,9 @@
 ﻿using SpbuParserClient.Models;
-using System;
+
 
 namespace SpbuParserClient.Api
 {
-    public abstract class ApiClient
+    public abstract class ApiClient : IApiClient
     {
         private HttpClient _httpClient;
 
