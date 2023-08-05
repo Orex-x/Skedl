@@ -5,9 +5,12 @@ from spbu_parser import Parser
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from pydantic import BaseModel
 from fastapi_jwt_auth import AuthJWT
+from config_manager import ConfigManager
 
 
 parser = Parser("https://timetable.spbu.ru")
+config_manager = ConfigManager()
+config_data = config_manager.read_config()
 
 app = FastAPI()
 
@@ -16,7 +19,7 @@ class User(BaseModel):
     password: str
 
 class Settings(BaseModel):
-    authjwt_secret_key: str = "8r6B2wemSsD4dsEB7vkc0F8veLhSBdofewNhEQjSotQnFyl89uWsiXTzbfaFqSgy"
+    authjwt_secret_key: str = config_data["Jwt"]["Key"]
     authjwt_decode_algorithms: set = {"HS512"}
 
 @AuthJWT.load_config
