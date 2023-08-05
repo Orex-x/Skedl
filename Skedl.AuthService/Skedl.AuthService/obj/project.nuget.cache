@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0iolUVYlpLczVSMIp9F29Zv0bMuCfYR1KxIJLnfqjK/2gbaVljT5jg/uQBwrhVu7veG1a12N4DPgl5Q+SEh9wA==",
+  "dgSpecHash": "ILcjnP0eNb6UtjTVgncxYHZzpsL0wzCw2gd1B0/KegyB6ZsCw/ZwUxISn9JowhANcP/sFo+btUAFDGHewmX12g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\orex\\RiderProjects\\Skedl.AuthService\\Skedl.AuthService\\Skedl.AuthService.csproj",
+  "projectFilePath": "C:\\Users\\orex\\source\\repos\\Skedl\\Skedl.AuthService\\Skedl.AuthService\\Skedl.AuthService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\orex\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.20\\microsoft.aspnetcore.authentication.jwtbearer.6.0.20.nupkg.sha512",
     "C:\\Users\\orex\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

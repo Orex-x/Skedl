@@ -1511,11 +1511,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\orex\\RiderProjects\\Skedl.AuthService\\Skedl.AuthService\\Skedl.AuthService.csproj",
+      "projectUniqueName": "C:\\Users\\orex\\source\\repos\\Skedl\\Skedl.AuthService\\Skedl.AuthService\\Skedl.AuthService.csproj",
       "projectName": "Skedl.AuthService",
-      "projectPath": "C:\\Users\\orex\\RiderProjects\\Skedl.AuthService\\Skedl.AuthService\\Skedl.AuthService.csproj",
+      "projectPath": "C:\\Users\\orex\\source\\repos\\Skedl\\Skedl.AuthService\\Skedl.AuthService\\Skedl.AuthService.csproj",
       "packagesPath": "C:\\Users\\orex\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\orex\\RiderProjects\\Skedl.AuthService\\Skedl.AuthService\\obj\\",
+      "outputPath": "C:\\Users\\orex\\source\\repos\\Skedl\\Skedl.AuthService\\Skedl.AuthService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

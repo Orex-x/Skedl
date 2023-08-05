@@ -105,17 +105,18 @@ public class AuthController : Controller
     {
         List<Claim> claims = new List<Claim>
         {
-            new(ClaimTypes.Name, user.Name),
-            new(ClaimTypes.Role, "User")
+            new("name", user.Name),
+            new("role", "User"),
+            new("type", "access"),
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
 
-        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
 
         var token = new JwtSecurityToken(
             claims: claims,
-            expires: DateTime.Now.AddMinutes(1),
+            expires: DateTime.Now.AddMinutes(3),
             signingCredentials: credentials);
 
         var jwt = new JwtSecurityTokenHandler().WriteToken(token);
@@ -143,7 +144,7 @@ public class AuthController : Controller
         var refreshToken = new RefreshToken
         {
             Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
-            Expires = DateTime.Now.AddMinutes(5),
+            Expires = DateTime.Now.AddDays(10),
             Created = DateTime.Now
         };
 
