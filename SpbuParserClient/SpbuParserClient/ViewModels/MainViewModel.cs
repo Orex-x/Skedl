@@ -10,30 +10,37 @@ namespace SpbuParserClient.ViewModels
         [ObservableProperty]
         ObservableCollection<string> items;
 
-        private readonly IApiClientFactory _apiClientFactory;
+        private ApiClientFactory _factory;
 
-        public MainViewModel(IApiClientFactory apiClientFactory)
+        public MainViewModel(ApiClientFactory factory)
         {
-            _apiClientFactory = apiClientFactory;
+
+            _factory = factory;
+
             Items = new ObservableCollection<string>()
             {
-                "СПБГУ"
+                "СПБГУ",
+                "МПТ",
             };
         }
-
-
 
         [RelayCommand]
         async void Tap(string item)
         {
+            switch (item)
+            {
+                case "СПБГУ": {
+                        _factory.BuildSpbuClient();
+                        break;
+                    }
+                case "МПТ":
+                    {
+                        _factory.BuildMptClient();
+                        break;
+                    }
+            }
 
-            ApiClient client = _apiClientFactory.CreateSpbuApiClient();
-
-            await Shell.Current.GoToAsync(nameof(FieldsOfStudyPage), 
-                new Dictionary<string, object>()
-                {
-                    { "ApiClient" , client }
-                });
+            await Shell.Current.GoToAsync(nameof(FieldsOfStudyPage));
         }
     }
 }

@@ -8,28 +8,27 @@ namespace SpbuParserClient.ViewModels
 {
 
  
-    public partial class FieldsOfStudyViewModel : ObservableObject, IQueryAttributable
+    public partial class FieldsOfStudyViewModel : ObservableObject
     {
-        private ApiClient _apiClient;
+
+        private ApiClient _client;
 
         [ObservableProperty]
         ObservableCollection<BaseLink> items;
 
-        public FieldsOfStudyViewModel() 
+        public FieldsOfStudyViewModel(ApiClientFactory factory) 
         {
-            Items = new ObservableCollection<BaseLink>() { 
-                new BaseLink()
-                {
-                    Link = "asd",
-                    Name = "asd"
-                }
-            };
+            _client = factory.GetApiClient();
+            Items = new ObservableCollection<BaseLink>();
+            Init();
         }
 
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
+
+        public async void Init()
         {
-            _apiClient = query["ApiClient"] as ApiClient;
+            Items = new(await _client.GetFieldsOfStudy());
         }
+       
 
         [RelayCommand]
         async void Tap(BaseLink item)

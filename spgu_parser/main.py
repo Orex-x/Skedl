@@ -1,9 +1,11 @@
+
 from fastapi import FastAPI, Body, status, Request, Depends, HTTPException
 from fastapi.responses import JSONResponse, FileResponse
 from spbu_parser import Parser
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from pydantic import BaseModel
 from fastapi_jwt_auth import AuthJWT
+
 
 parser = Parser("https://timetable.spbu.ru")
 
@@ -50,7 +52,7 @@ def get_field_of_study(link):
 def get_groups(link, code):
     return parser.get_groups(link, code)
 
- 
+
 @app.put("/api/getScheduleWeek")
 async def getScheduleWeek(request: Request):
     data = await request.json()
