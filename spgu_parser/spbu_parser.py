@@ -60,7 +60,7 @@ class Parser:
                             link += hidden_input.get("name") + "=" + hidden_input.get("value") + "&"
                         name = submit_input.get("value")    
 
-                        base_link.name = year
+                        base_link.name = name
                         base_link.link = link
                     
                     edu_programme.years.append(base_link)
@@ -76,21 +76,24 @@ class Parser:
         soup = BeautifulSoup(r.content, 'html.parser')
 
         ul_panel = soup.find(attrs={"class" : "panel-collapse nopadding nomargin"})
-        link_panels = ul_panel.find_all('li')
 
-        base_links = [] 
+        if ul_panel:
 
-        for link_panel in link_panels:
-            onclick_value = link_panel.div.get('onclick')
-            pattern = r"\'(.*?)\'"
-            match = re.search(pattern, onclick_value)
+            link_panels = ul_panel.find_all('li')
 
-            link = match.group(1)
-            name = link_panel.find(attrs={"class" : "col-sm-4"}).text
-            base_link = BaseLink(name.strip(), link.strip())
-            base_links.append(base_link)
-        
-        return base_links
+            base_links = [] 
+
+            for link_panel in link_panels:
+                onclick_value = link_panel.div.get('onclick')
+                pattern = r"\'(.*?)\'"
+                match = re.search(pattern, onclick_value)
+
+                link = match.group(1)
+                name = link_panel.find(attrs={"class" : "col-sm-4"}).text
+                base_link = BaseLink(name.strip(), link.strip())
+                base_links.append(base_link)
+            
+            return base_links
     
     def getScheduleWeek(self, link):
         r = requests.get(self.url + link)
