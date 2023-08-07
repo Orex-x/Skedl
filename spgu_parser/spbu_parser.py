@@ -71,8 +71,8 @@ class Parser:
 
         return fields_of_study
 
-    def get_groups(self, link, code):
-        r = requests.get(self.url + "/" + link + "/StudyProgram/" + code)
+    def get_groups(self, link):
+        r = requests.get(self.url + link)
         soup = BeautifulSoup(r.content, 'html.parser')
 
         ul_panel = soup.find(attrs={"class" : "panel-collapse nopadding nomargin"})
@@ -130,6 +130,34 @@ class Parser:
             schedule_week.days.append(schedule_day)
         
         return schedule_week
+
+
+    def get_all_groups(self):
+        fields_of_study = self.get_fields_of_study()
+
+        all_groups = []
+
+        for item_filed_of_study in fields_of_study:
+
+            filed = self.get_field_of_study(item_filed_of_study.link)
+            for item_filed in filed:
+
+                edu_programmes = item_filed.edu_programmes
+                for edu_programme_item in edu_programmes:
+
+                    years = edu_programme_item.years
+                    for year_item in years:
+
+                        groups = self.get_groups(year_item.link)
+                        all_groups.append(groups)
+        
+        return all_groups
+
+
+
+
+
+
 
     def get_content(self):
         return requests.get(self.url)

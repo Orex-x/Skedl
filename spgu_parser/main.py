@@ -43,6 +43,11 @@ def expiredTime(Authorize: AuthJWT = Depends()):
 async def main():
     return FileResponse("public/index.html")
 
+
+@app.get("/api/get_all_groups")
+def get_all_groups():
+    return parser.get_all_groups()
+
 @app.get("/api/getFieldsOfStudy")
 def get_fields_of_study():
     return parser.get_fields_of_study()
@@ -51,16 +56,19 @@ def get_fields_of_study():
 def get_field_of_study(link):
     return parser.get_field_of_study(link)
 
-@app.get("/api/getGroups/{link}/{code}")
-def get_groups(link, code):
-    return parser.get_groups(link, code)
-
+@app.get("/api/getGroups")
+async def get_groups(request: Request):
+    data = await request.json()
+    link = data.get("link")
+    return parser.get_groups(link)
 
 @app.put("/api/getScheduleWeek")
 async def getScheduleWeek(request: Request):
     data = await request.json()
     link = data.get("link")
     return parser.getScheduleWeek(link)
+
+
 
 if __name__ == "__main__":
     import uvicorn
