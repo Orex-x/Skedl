@@ -7,6 +7,8 @@ from models.schedule_week import *
 from models.schedule_day import *
 from models.schedule_lecture import *
 import re
+import time
+import json
 
 
 class Parser:
@@ -135,11 +137,8 @@ class Parser:
         return schedule_week
 
 
-    def get_all_groups(self):
+    async def get_all_groups(self):
         fields_of_study = self.get_fields_of_study()
-
-        all_groups = []
-
         for item_filed_of_study in fields_of_study:
 
             filed = self.get_field_of_study(item_filed_of_study.link)
@@ -152,11 +151,14 @@ class Parser:
                     for year_item in years:
 
                         groups = self.get_groups(year_item.link)
-                        all_groups.append(groups)
-        
-        return all_groups
-
-
+                        print('get groups')
+                        if(groups):
+                            link_dicts = [link.to_dict() for link in groups]
+                            json_string = json.dumps(link_dicts, indent=4)
+                            print(json_string)
+                            yield json_string
+                        time.sleep(1)
+    
 
 
 

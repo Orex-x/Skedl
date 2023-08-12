@@ -1,75 +1,32 @@
-
-from fastapi import FastAPI, Body, status, Request, Depends, HTTPException
-from fastapi.responses import JSONResponse, FileResponse
 from spbu_parser import Parser
-from fastapi_jwt_auth.exceptions import AuthJWTException
-from pydantic import BaseModel
-from fastapi_jwt_auth import AuthJWT
-from config_manager import ConfigManager
-
+import pika
+import asyncio
 
 parser = Parser("https://timetable.spbu.ru")
-config_manager = ConfigManager()
-config_data = config_manager.read_config()
 
-app = FastAPI()
+#methods
+async def publish_groups(ch, prop):
+    async for result in parser.get_all_groups():
+        print(result)
+        ch.basic_publish('', routing_key=prop.reply_to, body=result)
 
-class User(BaseModel):
-    username: str
-    password: str
+def on_request_get_all_groups(ch, method, prop, body):
+    asyncio.run(publish_groups(ch, prop))
 
-class Settings(BaseModel):
-    authjwt_secret_key: str = config_data["Jwt"]["Key"]
-    authjwt_decode_algorithms: set = {"HS512"}
+connection_parameters = pika.ConnectionParameters('localhost')
 
-@AuthJWT.load_config
-def get_config():
-    return Settings()
+connection = pika.BlockingConnection(connection_parameters)
 
-@app.exception_handler(AuthJWTException)
-def authjwt_exception_handler(request: Request, exc: AuthJWTException):
-    return JSONResponse(
-        status_code=exc.status_code,
-        content={"detail": exc.message}
-    )
+channel = connection.channel()
 
-@app.get('/expired_time')
-def expiredTime(Authorize: AuthJWT = Depends()):
-    Authorize.jwt_required()
-    return {"hello": "world"}
+channel.queue_declare(queue='request_get_all_groups')
 
+channel.basic_consume(queue='request_get_all_groups', auto_ack=True,
+    on_message_callback=on_request_get_all_groups)
 
-@app.get("/")
-async def main():
-    return FileResponse("public/index.html")
+print("Starting Server")
 
-
-@app.get("/api/get_all_groups")
-def get_all_groups():
-    return parser.get_all_groups()
-
-@app.get("/api/getFieldsOfStudy")
-def get_fields_of_study():
-    return parser.get_fields_of_study()
-
-@app.get("/api/getFieldOfStudy/{link}")
-def get_field_of_study(link):
-    return parser.get_field_of_study(link)
-
-@app.get("/api/getGroups")
-async def get_groups(request: Request):
-    data = await request.json()
-    link = data.get("link")
-    return parser.get_groups(link)
-
-@app.put("/api/getScheduleWeek")
-async def getScheduleWeek(request: Request):
-    data = await request.json()
-    link = data.get("link")
-    return parser.getScheduleWeek(link)
+channel.start_consuming()
 
 
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
