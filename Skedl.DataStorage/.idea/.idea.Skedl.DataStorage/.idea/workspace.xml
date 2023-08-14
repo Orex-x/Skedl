@@ -9,34 +9,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7c136fde-7672-44eb-99da-d5d2586e3c67" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Controllers/DataController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Models/ApiModels/BaseLink.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Models/ApiModels/EduProgramme.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Models/ApiModels/FieldOfStudy.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Models/Group.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Services/ApiClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Services/Data/DataCatcher.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Services/DatabaseContext.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Services/UserService/IUserService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Services/UserService/UserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/Controllers/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/Controllers/AuthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/Models/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/bin/Debug/net6.0/Skedl.AuthService.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/bin/Debug/net6.0/Skedl.AuthService.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/bin/Debug/net6.0/Skedl.AuthService.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/bin/Debug/net6.0/Skedl.AuthService.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/bin/Debug/net6.0/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/bin/Debug/net6.0/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/obj/Debug/net6.0/Skedl.AuthService.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/obj/Debug/net6.0/Skedl.AuthService.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/obj/Debug/net6.0/Skedl.AuthService.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/obj/Debug/net6.0/Skedl.AuthService.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/obj/staticwebassets.pack.sentinel" beforeDir="false" afterPath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/obj/staticwebassets.pack.sentinel" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Skedl.DataStorage/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Skedl.DataStorage.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.DataStorage.sln" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Controllers/ApiController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Services/BackTask.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Services/Data/DataGroup/GroupService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Services/Data/DataGroup/IGroupService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Services/Data/IDataCatcher.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Services/RabbitMq/IRabbitMqService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Services/RabbitMq/RabbitMqConsumer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Services/RabbitMq/RabbitMqProducer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Services/huiznaet/HelloJob.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Skedl.DataStorage/Services/huiznaet/Huiznaetkaktebyanazvazz.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Skedl.DataStorage/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Skedl.DataStorage/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Skedl.DataStorage/Controllers/DataController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.DataStorage/Controllers/DataController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Skedl.DataStorage/Models/Group.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.DataStorage/Models/Group.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Skedl.DataStorage/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.DataStorage/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Skedl.DataStorage/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.DataStorage/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Skedl.DataStorage/Services/ApiClient.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Skedl.DataStorage/Services/Data/DataCatcher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.DataStorage/Services/Data/DataCatcher.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Skedl.DataStorage/Services/Data/HelloJob.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Skedl.DataStorage/Skedl.DataStorage.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.DataStorage/Skedl.DataStorage.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Skedl.DataStorage/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.DataStorage/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Skedl.DataStorage/obj/Debug/net6.0/Skedl.DataStorage.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.DataStorage/obj/Debug/net6.0/Skedl.DataStorage.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Skedl.DataStorage/obj/Debug/net6.0/Skedl.DataStorage.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.DataStorage/obj/Debug/net6.0/Skedl.DataStorage.assets.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Skedl.DataStorage/obj/Debug/net6.0/Skedl.DataStorage.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.DataStorage/obj/Debug/net6.0/Skedl.DataStorage.csproj.AssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Skedl.DataStorage/obj/Skedl.DataStorage.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.DataStorage/obj/Skedl.DataStorage.csproj.nuget.dgspec.json" afterDir="false" />
@@ -46,10 +37,6 @@
       <change beforePath="$PROJECT_DIR$/Skedl.DataStorage/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.DataStorage/obj/project.nuget.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Skedl.DataStorage/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.DataStorage/obj/project.packagespec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Skedl.DataStorage/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.DataStorage/obj/rider.project.restore.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spgu_parser/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../spgu_parser/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spgu_parser/models/base_link.py" beforeDir="false" afterPath="$PROJECT_DIR$/../spgu_parser/models/base_link.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spgu_parser/spbu_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/../spgu_parser/spbu_parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spgu_parser/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/../spgu_parser/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,25 +53,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\orex\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\orex\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\orex\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\vipbo\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache",
+      "C:\\Users\\vipbo\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache",
+      "C:\\Users\\vipbo\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Skedl.DataStorage">
     <configuration name="Skedl.DataStorage" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Skedl.DataStorage/Skedl.DataStorage.csproj" />
@@ -128,6 +116,7 @@
       <workItem from="1691407568218" duration="2303000" />
       <workItem from="1691447669000" duration="8147000" />
       <workItem from="1691861790759" duration="6915000" />
+      <workItem from="1691929777023" duration="11351000" />
     </task>
     <servers />
   </component>
@@ -136,5 +125,24 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Skedl.DataStorage/Services/Data/DataCatcher.cs</url>
+          <line>37</line>
+          <properties documentPath="C:\Users\vipbo\source\repos\Skedl\Skedl.DataStorage\Skedl.DataStorage\Services\Data\DataCatcher.cs" initialLine="37" containingFunctionPresentation="Lambda expression inside Method 'UpdateGroups'">
+            <startOffsets>
+              <option value="1093" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1122" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

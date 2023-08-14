@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Skedl.DataStorage.Models;
 using Skedl.DataStorage.Services;
+using Skedl.DataStorage.Services.Data;
 using Skedl.DataStorage.Services.UserService;
 
 namespace Skedl.DataStorage.Controllers;

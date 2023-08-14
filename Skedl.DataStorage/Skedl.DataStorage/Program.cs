@@ -1,7 +1,12 @@
 using System.Text;
+using MassTransit;
+using MassTransit.MultiBus;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Skedl.DataStorage.Services;
+using Skedl.DataStorage.Services.Data;
+using Skedl.DataStorage.Services.Data.DataGroup;
+using Skedl.DataStorage.Services.RabbitMq;
 using Skedl.DataStorage.Services.UserService;
 
 IConfiguration configuration = new ConfigurationBuilder()
@@ -14,15 +19,25 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddMassTransit(mt => mt.AddMassTransit(x =>
+{
+  x.UsingRabbitMq((ctx, cfg) =>
+  {
+      cfg.Host("192.168.0.103");
+  });
+}));
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IGroupService, GroupService>();
+builder.Services.AddScoped<IDataCatcher, DataCatcher>();
 builder.Services.AddDbContext<DatabaseContext>();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 
-new DataCatcher().Start();
+new Huiznaetkaktebyanazvazz().Start();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

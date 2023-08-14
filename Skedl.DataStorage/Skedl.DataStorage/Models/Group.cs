@@ -1,4 +1,6 @@
-﻿namespace Skedl.DataStorage.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace Skedl.DataStorage.Models;
 
 public class Group
 {

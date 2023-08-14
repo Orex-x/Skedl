@@ -1,29 +1,61 @@
-﻿using Newtonsoft.Json;
-using Quartz;
-using Quartz.Impl;
+﻿using System.Text;
+using System.Text.Json;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using Skedl.DataStorage.Models.ApiModels;
+using Skedl.DataStorage.Services.Data.DataGroup;
 
-namespace Skedl.DataStorage.Services;
+namespace Skedl.DataStorage.Services.Data;
 
-public class DataCatcher
+public class DataCatcher : IDataCatcher
 {
-    public async void Start()
+
+    private readonly IGroupService _groupService;
+    public DataCatcher(IGroupService groupService)
     {
-        StdSchedulerFactory factory = new StdSchedulerFactory();
-        IScheduler scheduler = await factory.GetScheduler();
-        
-        IJobDetail job = JobBuilder.Create<HelloJob>()
-            .Build();
+        _groupService = groupService;
+    }
     
-        // Trigger the job to run now, and then repeat every 10 seconds
-        ITrigger trigger = TriggerBuilder.Create()
-            .StartNow()
-            .WithSimpleSchedule(x => x
-                .WithIntervalInMinutes(40)
-                .RepeatForever())
-            .Build();
+    public void UpdateGroups()
+    {
+        var backTask = new BackTask();
         
-        await scheduler.ScheduleJob(job, trigger);
+        backTask.Start(() =>
+        {
+            var factory = new ConnectionFactory() { HostName = "192.168.0.103" };
         
-        await scheduler.Start(); // Начать планировщик
+            using var connection = factory.CreateConnection();
+
+            using var channel = connection.CreateModel();
+        
+            var replyQueue = channel.QueueDeclare("", exclusive: true);
+            channel.QueueDeclare("request_get_all_groups", exclusive: false, autoDelete: false);
+        
+            var consumer = new EventingBasicConsumer(channel);
+
+            consumer.Received += (model, ea) =>
+            {
+                var body = ea.Body.ToArray();
+                var message = Encoding.UTF8.GetString(body);
+                Console.WriteLine($"Reply Recieved: {message}");
+                
+                if(message.ToLower() == "stop") backTask.Stop();
+
+                var baseLinks = JsonSerializer.Deserialize<List<BaseLink>>(message);
+                _groupService.UpdateOrCreateGroups(baseLinks);
+            };
+        
+            channel.BasicConsume(queue: replyQueue.QueueName, autoAck: true, consumer: consumer);
+
+            var properties = channel.CreateBasicProperties();
+            properties.ReplyTo = replyQueue.QueueName;
+            properties.CorrelationId = Guid.NewGuid().ToString();
+
+            var body = Encoding.UTF8.GetBytes("");
+
+            Console.WriteLine($"Sending Request: {properties.CorrelationId}");
+
+            channel.BasicPublish("", "request_get_all_groups", properties, body);
+        });
     }
 }
