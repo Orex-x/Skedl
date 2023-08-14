@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "dgSpecHash": "dqonwnvvsrJLbBEXlxz2uYFimuVv9YVeSwn1hjK15sadzVXSgqBIzUY9CTjJGl1fmevxHNs2hkhz6SmATqL3XQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\orex\\source\\repos\\Skedl\\Skedl.Api\\Skedl.Api\\Skedl.Api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.10\\microsoft.aspnetcore.authentication.jwtbearer.7.0.10.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.0-preview.4.23259.3\\microsoft.entityframeworkcore.8.0.0-preview.4.23259.3.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.0-preview.4.23259.3\\microsoft.entityframeworkcore.abstractions.8.0.0-preview.4.23259.3.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.0-preview.4.23259.3\\microsoft.entityframeworkcore.analyzers.8.0.0-preview.4.23259.3.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\8.0.0-preview.4.23259.3\\microsoft.entityframeworkcore.relational.8.0.0-preview.4.23259.3.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\8.0.0-preview.4.23259.5\\microsoft.extensions.caching.abstractions.8.0.0-preview.4.23259.5.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.extensions.caching.memory\\8.0.0-preview.4.23259.5\\microsoft.extensions.caching.memory.8.0.0-preview.4.23259.5.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0-preview.4.23259.5\\microsoft.extensions.configuration.abstractions.8.0.0-preview.4.23259.5.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0-preview.4.23259.5\\microsoft.extensions.dependencyinjection.8.0.0-preview.4.23259.5.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0-preview.4.23259.5\\microsoft.extensions.dependencyinjection.abstractions.8.0.0-preview.4.23259.5.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.extensions.logging\\8.0.0-preview.4.23259.5\\microsoft.extensions.logging.8.0.0-preview.4.23259.5.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0-preview.4.23259.5\\microsoft.extensions.logging.abstractions.8.0.0-preview.4.23259.5.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.extensions.options\\8.0.0-preview.4.23259.5\\microsoft.extensions.options.8.0.0-preview.4.23259.5.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0-preview.4.23259.5\\microsoft.extensions.primitives.8.0.0-preview.4.23259.5.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.identitymodel.abstractions\\7.0.0-preview2\\microsoft.identitymodel.abstractions.7.0.0-preview2.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\7.0.0-preview2\\microsoft.identitymodel.jsonwebtokens.7.0.0-preview2.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.identitymodel.logging\\7.0.0-preview2\\microsoft.identitymodel.logging.7.0.0-preview2.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.identitymodel.protocols\\6.15.1\\microsoft.identitymodel.protocols.6.15.1.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\6.15.1\\microsoft.identitymodel.protocols.openidconnect.6.15.1.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\microsoft.identitymodel.tokens\\7.0.0-preview2\\microsoft.identitymodel.tokens.7.0.0-preview2.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\npgsql\\8.0.0-preview.4\\npgsql.8.0.0-preview.4.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\8.0.0-preview.4\\npgsql.entityframeworkcore.postgresql.8.0.0-preview.4.nupkg.sha512",
+    "C:\\Users\\orex\\.nuget\\packages\\system.identitymodel.tokens.jwt\\6.15.1\\system.identitymodel.tokens.jwt.6.15.1.nupkg.sha512"
+  ],
+  "logs": []
+}
