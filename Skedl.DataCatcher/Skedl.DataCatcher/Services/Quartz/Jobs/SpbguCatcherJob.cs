@@ -1,8 +1,9 @@
-﻿using System.Diagnostics;
-using System.Text;
+﻿using System.Text;
+using System.Text.Json;
 using Quartz;
-using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Skedl.DataCatcher.Models.DB;
+using Skedl.DataCatcher.Models.DTO;
 using Skedl.DataCatcher.Services.DatabaseContexts;
 using Skedl.DataCatcher.Services.RabbitMqServices;
 
@@ -73,13 +74,45 @@ public class SpbguCatcherJob : IJob
 
     private async Task AsyncEventHandler(object sender, BasicDeliverEventArgs ea)
     {
-        CheckStop(ea);
+        try
+        {
+            CheckStop(ea);
         
-        var body = ea.Body.ToArray();
-        var message = Encoding.UTF8.GetString(body);
+            var body = ea.Body.ToArray();
+            var message = Encoding.UTF8.GetString(body);
+
+            var list = JsonSerializer.Deserialize<List<GroupDto>>(message);
+
+            foreach (var groupDto in list)
+            {
+            
+                var a = _db.Groups.FirstOrDefault(x => x.Name == groupDto.Name);
+                if (a == null)
+                {
+                    var group = new Group
+                    {
+                        Name = groupDto.Name,
+                        Link = groupDto.Link
+                    };
+
+                    await _db.Groups.AddAsync(group);
+                }
+                else
+                {
+                    a.Link = groupDto.Link;
+                    _db.Groups.Update(a);
+                }
+
+                await _db.SaveChangesAsync();
+            }
         
-        Console.WriteLine(message);
-        
+            Console.WriteLine(message);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+     
         await Task.CompletedTask;
     }
 }

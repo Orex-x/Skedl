@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 using Quartz.Spi;
@@ -47,9 +48,22 @@ public class DiJobFactory : IJobFactory
     {
         if (Scopes.TryRemove(job, out var scope))
         {
-            // The Dispose() method ends the scope lifetime.
-            // Once Dispose is called, any scoped services that have been resolved from ServiceProvider will be disposed.
-            scope.Dispose();
+            // Manually dispose of scoped services except for DbContext
+            foreach (var service in scope.ServiceProvider.GetServices<object>())
+            {
+                if (service is DbContext)
+                {
+                    // Skip disposing of DbContext instances
+                    continue;
+                }
+
+                if (service is IDisposable disposableService)
+                {
+                    disposableService.Dispose();
+                }
+            }
+
+           // scope.Dispose(); // Dispose of the scope itself
         }
     }
 }

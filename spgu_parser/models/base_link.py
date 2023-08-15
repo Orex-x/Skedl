@@ -5,6 +5,6 @@ class BaseLink():
 
     def to_dict(self):
         return {
-            "name": self.name,
-            "link": self.link
+            "Name": self.name,
+            "Link": self.link
         }

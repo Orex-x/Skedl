@@ -9,6 +9,7 @@ from models.schedule_lecture import *
 import re
 import time
 import json
+import random
 
 
 class Parser:
@@ -157,7 +158,7 @@ class Parser:
                             json_string = json.dumps(link_dicts, indent=4)
                             print(json_string)
                             yield json_string
-                        time.sleep(1)
+                        time.sleep(random.uniform(1, 5))
     
 
 

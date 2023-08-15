@@ -5,19 +5,14 @@ import asyncio
 parser = Parser("https://timetable.spbu.ru")
 
 
-
-
 #methods
 async def publish_groups(ch, prop):
-    i = 0
     async for result in parser.get_all_groups():
         print(result)
         ch.basic_publish('', routing_key=prop.reply_to, body=result)
-        i+=1
-        if(i == 3):
-            properties = pika.BasicProperties(headers={'type': 'last', "queueName" : prop.reply_to})
-            ch.basic_publish('', routing_key=prop.reply_to, body=result, properties=properties)
-            break
+    
+    properties = pika.BasicProperties(headers={'type': 'last', "queueName" : prop.reply_to})
+    ch.basic_publish('', routing_key=prop.reply_to, body=result, properties=properties)
 
 def on_request_get_all_groups(ch, method, prop, body):
     asyncio.run(publish_groups(ch, prop))
