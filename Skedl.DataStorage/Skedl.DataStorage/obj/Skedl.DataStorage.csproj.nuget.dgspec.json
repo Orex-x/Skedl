@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vipbo\\source\\repos\\Skedl\\Skedl.DataStorage\\Skedl.DataStorage\\Skedl.DataStorage.csproj": {}
+    "C:\\Users\\orex\\source\\repos\\Skedl\\Skedl.DataStorage\\Skedl.DataStorage\\Skedl.DataStorage.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vipbo\\source\\repos\\Skedl\\Skedl.DataStorage\\Skedl.DataStorage\\Skedl.DataStorage.csproj": {
+    "C:\\Users\\orex\\source\\repos\\Skedl\\Skedl.DataStorage\\Skedl.DataStorage\\Skedl.DataStorage.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vipbo\\source\\repos\\Skedl\\Skedl.DataStorage\\Skedl.DataStorage\\Skedl.DataStorage.csproj",
+        "projectUniqueName": "C:\\Users\\orex\\source\\repos\\Skedl\\Skedl.DataStorage\\Skedl.DataStorage\\Skedl.DataStorage.csproj",
         "projectName": "Skedl.DataStorage",
-        "projectPath": "C:\\Users\\vipbo\\source\\repos\\Skedl\\Skedl.DataStorage\\Skedl.DataStorage\\Skedl.DataStorage.csproj",
-        "packagesPath": "C:\\Users\\vipbo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vipbo\\source\\repos\\Skedl\\Skedl.DataStorage\\Skedl.DataStorage\\obj\\",
+        "projectPath": "C:\\Users\\orex\\source\\repos\\Skedl\\Skedl.DataStorage\\Skedl.DataStorage\\Skedl.DataStorage.csproj",
+        "packagesPath": "C:\\Users\\orex\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\orex\\source\\repos\\Skedl\\Skedl.DataStorage\\Skedl.DataStorage\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\vipbo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\orex\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -69,7 +70,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.408\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.411\\RuntimeIdentifierGraph.json"
         }
       }
     }

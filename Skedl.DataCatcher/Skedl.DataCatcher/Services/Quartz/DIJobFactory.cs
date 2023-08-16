@@ -62,8 +62,6 @@ public class DiJobFactory : IJobFactory
                     disposableService.Dispose();
                 }
             }
-
-           // scope.Dispose(); // Dispose of the scope itself
         }
     }
 }

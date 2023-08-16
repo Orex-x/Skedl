@@ -32,7 +32,7 @@ public class QuartzService
         ITrigger trigger = TriggerBuilder.Create()
             .StartNow()
             .WithSimpleSchedule(x => x
-                .WithIntervalInHours(5)
+                .WithIntervalInHours(24)
                 .RepeatForever())
             .Build();
         
