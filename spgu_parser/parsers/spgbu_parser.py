@@ -12,7 +12,7 @@ import json
 import random
 
 
-class Parser:
+class SpbguParser:
 
     def __init__(self, url):
         self.url = url

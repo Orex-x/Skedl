@@ -5,6 +5,7 @@ using RabbitMQ.Client.Events;
 using Skedl.DataCatcher.Models.DB;
 using Skedl.DataCatcher.Models.DTO;
 using Skedl.DataCatcher.Services.DatabaseContexts;
+using Skedl.DataCatcher.Services.HttpServices;
 using Skedl.DataCatcher.Services.RabbitMqServices;
 
 namespace Skedl.DataCatcher.Services.Quartz;
@@ -12,15 +13,17 @@ namespace Skedl.DataCatcher.Services.Quartz;
 public class SpbguCatcherJob : IJob
 {
     private readonly IRabbitMqService _rabbitMqService;
+    private readonly IHttpService _httpService;
 
     private Dictionary<string, AsyncEventingBasicConsumer> _replyQueues;
 
     private DatabaseSpbgu? _db;
     
-    public SpbguCatcherJob(IRabbitMqService rabbitMqService, DatabaseSpbgu db)
+    public SpbguCatcherJob(IRabbitMqService rabbitMqService, DatabaseSpbgu db, IHttpService httpService)
     {
         _replyQueues = new Dictionary<string, AsyncEventingBasicConsumer>();
         _rabbitMqService = rabbitMqService;
+        _httpService = httpService;
         _db = db;
     }
     
@@ -37,13 +40,13 @@ public class SpbguCatcherJob : IJob
 
         var consumer =_rabbitMqService.StartConsuming(replyQueue.QueueName, asyncEventHandler);
 
-        var guid = Guid.NewGuid().ToString();
-        
-        var prop = _rabbitMqService.CreateBasicProperties();
-        prop.ReplyTo = replyQueue.QueueName;
-        prop.CorrelationId = guid;
-        
-        _rabbitMqService.Publish(routingKey, basicProperties: prop);
+        var headers = new Dictionary<string, string>
+        {
+            { "Reply-To", replyQueue.QueueName },
+            { "User-Agent", "Skedl-DataCatcher" }
+        };
+
+        _httpService.Get("/spbgu/getGroups", headers);
         
         _replyQueues.Add(replyQueue.QueueName, consumer);
         

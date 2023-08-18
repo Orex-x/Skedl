@@ -1,6 +1,6 @@
 import json
 
-class ConfigManager:
+class ConfigService:
     def __init__(self, file_path='appsettings.json'):
         self.file_path = file_path
 

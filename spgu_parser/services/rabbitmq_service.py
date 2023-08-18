@@ -1,3 +1,5 @@
+import pika
+
 def singleton(cls):
     instances = {}
     def get_instance(*args, **kwargs):
@@ -7,16 +9,17 @@ def singleton(cls):
     return get_instance
 
 @singleton
-class SingletonClass:
+class RabbitMqService:
+
     def __init__(self, host):
         self.host = host
-        print(f"Singleton instance created. {host}")
+        connection_parameters = pika.ConnectionParameters('localhost')
+        connection = pika.BlockingConnection(connection_parameters)
+        self.channel = connection.channel()
+    
+    def get_channel(self):
+        return self.channel
 
-    def get(self):
-        return self.host
 
-instance1 = SingletonClass("1")
-instance2 = SingletonClass("2")
 
-print(instance1 is instance2)  # Выведет: True
-print(instance1.get())
+
