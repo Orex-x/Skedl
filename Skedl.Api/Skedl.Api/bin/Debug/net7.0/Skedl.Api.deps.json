@@ -10,7 +10,8 @@
         "dependencies": {
           "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.10",
           "Microsoft.IdentityModel.JsonWebTokens": "7.0.0-preview2",
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.0-preview.4"
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.0-preview.4",
+          "System.IdentityModel.Tokens.Jwt": "7.0.0-preview2"
         },
         "runtime": {
           "Skedl.Api.dll": {}
@@ -211,7 +212,7 @@
       "Microsoft.IdentityModel.Protocols.OpenIdConnect/6.15.1": {
         "dependencies": {
           "Microsoft.IdentityModel.Protocols": "6.15.1",
-          "System.IdentityModel.Tokens.Jwt": "6.15.1"
+          "System.IdentityModel.Tokens.Jwt": "7.0.0-preview2"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll": {
@@ -265,15 +266,16 @@
           }
         }
       },
-      "System.IdentityModel.Tokens.Jwt/6.15.1": {
+      "System.IdentityModel.Tokens.Jwt/7.0.0-preview2": {
         "dependencies": {
           "Microsoft.IdentityModel.JsonWebTokens": "7.0.0-preview2",
-          "Microsoft.IdentityModel.Tokens": "7.0.0-preview2"
+          "Microsoft.IdentityModel.Tokens": "7.0.0-preview2",
+          "Newtonsoft.Json": "13.0.3"
         },
         "runtime": {
-          "lib/netstandard2.0/System.IdentityModel.Tokens.Jwt.dll": {
-            "assemblyVersion": "6.15.1.0",
-            "fileVersion": "6.15.1.30119"
+          "lib/net6.0/System.IdentityModel.Tokens.Jwt.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.0.40813"
           }
         }
       }
@@ -446,12 +448,12 @@
       "path": "npgsql.entityframeworkcore.postgresql/8.0.0-preview.4",
       "hashPath": "npgsql.entityframeworkcore.postgresql.8.0.0-preview.4.nupkg.sha512"
     },
-    "System.IdentityModel.Tokens.Jwt/6.15.1": {
+    "System.IdentityModel.Tokens.Jwt/7.0.0-preview2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-q3ZLyWmpX4+jW4XITf7Axd+9sC6w2NrQaKcQQT9A8waoknHgaNwSeookpUmPMQDqS0afT9Lh0JYub196vzuzbA==",
-      "path": "system.identitymodel.tokens.jwt/6.15.1",
-      "hashPath": "system.identitymodel.tokens.jwt.6.15.1.nupkg.sha512"
+      "sha512": "sha512-eBWS3IRIGOmRwS0DW74X4+QPy97yTxqPIqjsHOrDpO+nnRgbjBME7dURgHQBn4S0MM6AF+kwTPaFvKyzlnPa4w==",
+      "path": "system.identitymodel.tokens.jwt/7.0.0-preview2",
+      "hashPath": "system.identitymodel.tokens.jwt.7.0.0-preview2.nupkg.sha512"
     }
   }
 }

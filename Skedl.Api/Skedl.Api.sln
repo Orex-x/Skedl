@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skedl.Api", "Skedl.Api\Skedl.Api.csproj", "{58662298-10C2-476A-92C5-934F40454833}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skedl.Api", "Skedl.Api\Skedl.Api.csproj", "{2A4E443A-E170-4F34-A974-561296880A41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +8,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{58662298-10C2-476A-92C5-934F40454833}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58662298-10C2-476A-92C5-934F40454833}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58662298-10C2-476A-92C5-934F40454833}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58662298-10C2-476A-92C5-934F40454833}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A4E443A-E170-4F34-A974-561296880A41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A4E443A-E170-4F34-A974-561296880A41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A4E443A-E170-4F34-A974-561296880A41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A4E443A-E170-4F34-A974-561296880A41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

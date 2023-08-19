@@ -1,23 +1,33 @@
-
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Skedl.Api.Services;
+using Skedl.Api.Services.Databases;
 using Skedl.Api.Services.UserService;
 
 IConfiguration configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
     .Build();
-
-
+    
+    
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddDbContext<DatabaseContext>();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+builder.Services.AddDbContext<DatabaseSpbgu>();
+
+builder.Services.AddMvc(setupAction=> {
+        setupAction.EnableEndpointRouting = false;
+    }).AddJsonOptions(jsonOptions =>
+    {
+        jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null;
+    })
+    .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -35,9 +45,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
         };
     });
-
+    
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -50,6 +59,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseCors("NgOrigins");
 app.UseRouting();
 
 app.UseAuthentication();    // аутентификация

@@ -10,6 +10,7 @@
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
       <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="7.0.0-preview2" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0-preview.4" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.0-preview2" />
     </ItemGroup>
 
 </Project>
