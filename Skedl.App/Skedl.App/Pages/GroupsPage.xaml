@@ -7,24 +7,48 @@
              x:DataType="viewmodel:GroupsViewModel"
              Title="GroupsPage">
 
-    <CollectionView ItemsSource="{Binding Items}"
-                        SelectionMode="None">
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="{x:Type model:Group}">
-                <Grid>
-                    <Frame>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer 
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapCommand}"
+        <Label 
+            FontSize="24"
+            Text="Выберете вашу группу" 
+            VerticalOptions="Start" 
+            Margin="0,10,0,0" 
+            HorizontalOptions="Center"/>
+
+        <Editor 
+            Margin="20,5,20,5"
+            Placeholder="Поиск"
+            Text="{Binding SearchQuery, Mode=TwoWay}"
+            Grid.Row="1"/>
+
+        <CollectionView 
+            Grid.Row="3"
+            Margin="20"
+            ItemsSource="{Binding Items}"
+            SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type model:Group}">
+                    <Grid Margin="0,10,0,0">
+                        <Frame>
+
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:GroupsViewModel}}, Path=TapCommand}"
                                     CommandParameter="{Binding .}"/>
-                        </Frame.GestureRecognizers>
+                            </Frame.GestureRecognizers>
 
-                        <Label Text="{Binding Name}"/>
-                    </Frame>
-                </Grid>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+                            <Label Text="{Binding Name}"/>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
+    </Grid>
 </ContentPage>

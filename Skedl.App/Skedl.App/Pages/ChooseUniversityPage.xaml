@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Skedl.App.Pages.ChooseUniversityPage"
+             xmlns:viewmodel="clr-namespace:Skedl.App.ViewModels"
+             xmlns:model="clr-namespace:Skedl.App.Models.ChooseUniversityViewModel"
+             x:DataType="viewmodel:ChooseUniversityViewModel"
+             Title="ChooseUniversityPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <Label 
+            FontSize="24"
+            Text="Выберете ваш университет" 
+            VerticalOptions="Start" 
+            Margin="0,10,0,0" 
+            HorizontalOptions="Center"/>
+
+        <Editor 
+            Margin="20,5,20,5"
+            Placeholder="Поиск"
+            Grid.Row="1"/>
+
+        <CollectionView
+            Grid.Row="2"
+            ItemsSource="{Binding Items}"
+            SelectionMode="None">
+            
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type model:ListItem}">
+                    <Grid Margin="20,20,20,0">
+                        <Frame>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ChooseUniversityViewModel}}, Path=TapCommand}"
+                                    CommandParameter="{Binding .}"/>
+                            </Frame.GestureRecognizers>
+
+                            <Label Text="{Binding Name}"/>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

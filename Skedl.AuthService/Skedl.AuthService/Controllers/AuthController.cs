@@ -2,12 +2,13 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Skedl.AuthService.Models;
 using Skedl.AuthService.Services;
-using Skedl.AuthService.Services.UserService;
+using Skedl.AuthService.Services.CodeGeneration;
+using Skedl.AuthService.Services.MailService;
 
 namespace Skedl.AuthService.Controllers;
 
@@ -15,39 +16,72 @@ public class AuthController : Controller
 {
     private readonly DatabaseContext _context;
     private readonly IConfiguration _configuration;
-    private readonly IUserService _userService;
+    private readonly IMailService _mailService;
+    private readonly ICodeGenerator _codeGenerator;
 
-    
-    public AuthController(DatabaseContext context, IConfiguration configuration, IUserService userService)
+    public AuthController(DatabaseContext context, IConfiguration configuration, IMailService mailService, ICodeGenerator codeGenerator)
     {
         _context = context;
         _configuration = configuration;
-        _userService = userService;
+        _mailService = mailService;
+        _codeGenerator = codeGenerator;
     }
-    
-    public IActionResult Authorization() => View();
-    
-    
-    [HttpGet, Authorize]
-    public ActionResult<string> GetMe()
+
+
+    [HttpGet]
+    public async Task<ActionResult<string>> SendCode(string to)
     {
-        var userName = _userService.GetMyName();
-        return Ok(userName);
+        var userCodes = _context.UserCodes.Where(x => x.Email == to);
+        _context.UserCodes.RemoveRange(userCodes);
+        await _context.SaveChangesAsync();
+        
+        var code = _codeGenerator.Generation(5);
+
+        await _mailService.SendMessage(to, "Подтверждения пароля", $"Ваш код подтверждения {code}");
+
+        await _context.UserCodes.AddAsync(new UserCode()
+        {
+            Code = code,
+            Email = to
+        });
+
+        await _context.SaveChangesAsync();
+        
+        return Ok("Code sent successfully");
     }
-    
+
+    [HttpGet]
+    public async Task<ActionResult> VerifyCode(string to, string code)
+    {
+
+        var userCode = await _context.UserCodes.FirstOrDefaultAsync(x => x.Email == to);
+        
+        if (userCode == null)
+        {
+            return BadRequest("Invalid user");
+        }
+
+        if (userCode.Code == code)
+        {
+            _context.UserCodes.Remove(userCode);
+            await _context.SaveChangesAsync();
+            
+            return Ok("Code verified successfully");
+        }
+        
+        return BadRequest("Invalid code");
+    }
+
     [HttpPost]
-    public async Task<ActionResult<User>> Register([FromBody] UserRegister request)
+    public async Task<ActionResult> Register([FromBody] UserRegister model)
     {
         var user = new User
         {
-            Email = request.Email,
-            Name = request.Name,
-            Surname = request.Surname,
-            LastName = request.LastName,
-            Password = request.Password,
+            Email = model.Email,
+            Name = model.Name,
+            Password = model.Password,
         };
         
-
         string token = CreateToken(user);
         var refreshToken = GenerateRefreshToken();
         SetRefreshToken(refreshToken, user);
@@ -57,13 +91,13 @@ public class AuthController : Controller
     
         return Ok(new Dictionary<string, string>()
         {
-            {"token", token},
-            {"refreshToken", refreshToken.Token},
+            {"Token", token},
+            {"RefreshToken", refreshToken.Token},
         });
     }
    
     [HttpPost]
-    public async Task<ActionResult<string>> Login([FromBody] UserDto request)
+    public async Task<ActionResult> Login([FromBody] UserDto request)
     {
         var user = Authenticate(request);
 
@@ -79,8 +113,8 @@ public class AuthController : Controller
     
         return Ok(new Dictionary<string, string>()
         {
-            {"token", token},
-            {"refreshToken", refreshToken.Token},
+            {"Token", token},
+            {"RefreshToken", refreshToken.Token},
         });
     }
     

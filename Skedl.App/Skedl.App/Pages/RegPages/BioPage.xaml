@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Skedl.App.Pages.RegPages.BioPage"
+             xmlns:viewmodel="clr-namespace:Skedl.App.ViewModels.RegViewModels"
+             x:DataType="viewmodel:BioViewModel"
+             Title="BioPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+
+        <Label 
+            FontSize="24"
+            Text="Информация о вас" 
+            VerticalOptions="Start" 
+            Margin="0,10,0,0" 
+            HorizontalOptions="Center"/>
+
+        <Entry
+            Grid.Row="2"
+            Text="{Binding Name}"
+            Margin="20,0,20,0"
+            Keyboard="Numeric"
+            Placeholder="Имя"/>
+
+        <Entry
+            Grid.Row="4"
+            Margin="20,0,20,0"
+            Text="{Binding Login}"
+            Keyboard="Numeric"
+            Placeholder="Логин"/>
+
+        <Entry
+            Grid.Row="6"
+            Margin="20,0,20,0"
+            Keyboard="Numeric"
+            IsPassword="True"
+            Text="{Binding Password}"
+            Placeholder="Пароль"/>
+
+        <Entry
+            Grid.Row="8"
+            Margin="20,0,20,0"
+            Keyboard="Numeric"
+            Text="{Binding RPassword}"
+            IsPassword="True"
+            Placeholder="Повторите пароль"/>
+
+
+        <Label 
+            Grid.Row="11"
+            FontSize="14"
+            Text="{Binding ErrorMessage}" 
+            TextColor="Red"
+            VerticalOptions="End" 
+            Margin="0,10,0,0" 
+            HorizontalOptions="Center"/>
+
+        <Button 
+            Margin="20,0,20,20"
+            Text="Далее"
+            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BioViewModel}}, Path=NextCommand}"
+            Grid.Row="60"/>
+    </Grid>
+</ContentPage>

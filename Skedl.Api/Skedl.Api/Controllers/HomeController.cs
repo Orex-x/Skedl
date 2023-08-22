@@ -6,7 +6,6 @@ namespace Skedl.Api.Controllers;
 
 public class HomeController : Controller
 {
-   
     private readonly IUserService _userService;
     
     public HomeController(IUserService userService)
@@ -15,9 +14,16 @@ public class HomeController : Controller
     }
     
     [HttpGet, Authorize]
+    
     public ActionResult<string> GetMe()
     {
         var userName = _userService.GetMyName();
         return Ok(userName);
+    }
+    
+    [HttpGet]
+    public IActionResult Hello()
+    {
+        return Ok("Hello");
     }
 }

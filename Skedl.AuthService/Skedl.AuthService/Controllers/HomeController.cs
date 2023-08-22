@@ -13,6 +13,8 @@ public class HomeController : Controller
         _context = context;
     }
     
-    [Authorize]
-    public IActionResult Index() => View();
+    public IActionResult Hello()
+    {
+        return Ok("Hello");
+    }
 }

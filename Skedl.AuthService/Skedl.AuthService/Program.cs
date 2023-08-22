@@ -2,6 +2,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Skedl.AuthService.Services;
+using Skedl.AuthService.Services.CodeGeneration;
+using Skedl.AuthService.Services.MailService;
 using Skedl.AuthService.Services.UserService;
 
 IConfiguration configuration = new ConfigurationBuilder()
@@ -17,9 +19,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddDbContext<DatabaseContext>();
 builder.Services.AddSingleton(configuration);
+builder.Services.AddScoped<ICodeGenerator, CodeGenerator>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IMailService, GmailService>();
+builder.Services.AddDbContext<DatabaseContext>();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 
@@ -39,11 +43,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddCors(options => options.AddPolicy(name: "NgOrigins",
-    policy =>
-    {
-        policy.WithOrigins("http://localhost:8000").AllowAnyMethod().AllowAnyHeader();
-    }));
 
 
 var app = builder.Build();
@@ -67,6 +66,6 @@ app.UseAuthorization();     // авторизация
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "Auth/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
