@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Skedl.App.Models;
 using Skedl.App.Models.Api;
 using Skedl.App.Models.Reg;
 using System.Net.Http.Headers;
@@ -10,14 +11,19 @@ namespace Skedl.App.Services.ApiClient
     {
         private HttpClient _httpClient;
         private string _universityUrl;
-        private string _token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoi0JTQsNC90Y8iLCJyb2xlIjoiVXNlciIsInR5cGUiOiJhY2Nlc3MiLCJleHAiOjE2OTI2ODYzNDJ9.mPsNEA_Gl90JhdOoi0cwMjRYH7JGp_PQqM8eSzZOdAmI6vHcaJFJeqC96OxRQdFcG5uA5wwDOw0EHKV5BwbcqQ";
 
         public ApiClient(string baseUrl)
         {
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(baseUrl);
+        }
+
+        public async Task SetBearerToken()
+        {
+            var token = await SecureStorage.Default.GetAsync("access_token");
+
             _httpClient.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer", _token);
+                new AuthenticationHeaderValue("Bearer", token);
         }
 
         public void SetUniversityUrl(string url)
@@ -91,9 +97,18 @@ namespace Skedl.App.Services.ApiClient
         public async Task<bool> Registration(RegModel model)
         {
             var contentJson = JsonConvert.SerializeObject(model);
-            var content = new StringContent(contentJson, Encoding.UTF8, "application/json");
+            var body = new StringContent(contentJson, Encoding.UTF8, "application/json");
+            var response = await Post("Auth", "Register", body, false);
 
-            var response = await Post("Auth", "Register", content, false);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var tokensModel = JsonConvert.DeserializeObject<TokensModel>(content);
+
+                await SecureStorage.Default.SetAsync("access_token", tokensModel.Token);
+                await SecureStorage.Default.SetAsync("refresh_token", tokensModel.RefreshToken);
+            }
+            
             return response.IsSuccessStatusCode;
         }
     }

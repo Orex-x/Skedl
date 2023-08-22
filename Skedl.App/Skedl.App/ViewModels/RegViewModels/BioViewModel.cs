@@ -66,6 +66,13 @@ namespace Skedl.App.ViewModels.RegViewModels
             Model.Login = Login;
             Model.Name = Name;
             Model.Password = Password;
+
+            var resultOk = await _apiClient.Registration(Model);
+
+            if(resultOk)
+            {
+                await Shell.Current.GoToAsync(nameof(MainPage));
+            }
         }
     }
 }

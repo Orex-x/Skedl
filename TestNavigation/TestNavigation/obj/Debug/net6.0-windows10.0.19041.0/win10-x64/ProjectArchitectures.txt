@@ -1,0 +1,1 @@
+C:\Users\orex\source\repos\Skedl\TestNavigation\TestNavigation\TestNavigation.csproj;x64

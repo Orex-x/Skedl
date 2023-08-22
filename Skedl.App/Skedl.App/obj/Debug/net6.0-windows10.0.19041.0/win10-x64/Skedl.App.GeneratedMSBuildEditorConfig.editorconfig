@@ -64,6 +64,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = Skedl.App.Pages.RegPages.M
 build_metadata.AdditionalFiles.TargetPath = Pages\RegPages\MailPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Pages\RegPages\MailPage.xaml
 
+[C:/Users/orex/source/repos/Skedl/Skedl.App/Skedl.App/Pages/TestPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Skedl.App.Pages.TestPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\TestPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\TestPage.xaml
+
 [C:/Users/orex/source/repos/Skedl/Skedl.App/Skedl.App/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Skedl.App.Resources.Styles.Colors.xaml

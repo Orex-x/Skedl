@@ -30,13 +30,13 @@
     <AppXManifest Include="C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\bin\Debug\net6.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2023-08-21T19:20:21.544</Modified>
+      <Modified>2023-08-22T08:54:20.120</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\bin\Debug\net6.0-windows10.0.19041.0\win10-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2023-08-21T19:19:34.658</Modified>
+      <Modified>2023-08-22T08:54:19.754</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\bin\Debug\net6.0-windows10.0.19041.0\win10-x64\Skedl.App.runtimeconfig.json">
       <PackagePath>Skedl.App.runtimeconfig.json</PackagePath>
@@ -44,15 +44,15 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\bin\Debug\net6.0-windows10.0.19041.0\win10-x64\Skedl.App.dll">
       <PackagePath>Skedl.App.dll</PackagePath>
-      <Modified>2023-08-21T19:20:20.396</Modified>
+      <Modified>2023-08-22T08:54:18.343</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>Skedl.App.exe</PackagePath>
-      <Modified>2023-08-21T19:20:20.406</Modified>
+      <Modified>2023-08-22T08:54:18.364</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\bin\Debug\net6.0-windows10.0.19041.0\win10-x64\Skedl.App.deps.json">
       <PackagePath>Skedl.App.deps.json</PackagePath>
-      <Modified>2023-08-21T12:04:07.181</Modified>
+      <Modified>2023-08-22T08:54:19.552</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\orex\.nuget\packages\microsoft.netcore.app.runtime.win-x64\6.0.18\runtimes\win-x64\lib\net6.0\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
