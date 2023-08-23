@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Skedl.App.Models.Api;
 using Skedl.App.Services.ApiClient;
+using Skedl.App.Services.DataService;
 using System.Collections.ObjectModel;
 
 
@@ -31,18 +32,18 @@ namespace Skedl.App.ViewModels
         }
 
 
-        private readonly IApiClient _apiClient;
+        private readonly IDataService _dataService;
 
-        public GroupsViewModel(IApiClient apiClient)
+        public GroupsViewModel(IDataService dataService)
         {
-            _apiClient = apiClient;
+            _dataService = dataService;
             Init();
         }
 
         
         public async void Init()
         {
-            var list = await _apiClient.GetGroups();
+            var list = await _dataService.GetGroups();
             _groups = list;
             Items = new(list);
         }

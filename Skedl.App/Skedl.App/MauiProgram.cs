@@ -1,6 +1,8 @@
 ﻿using Skedl.App.Pages;
 using Skedl.App.Pages.RegPages;
 using Skedl.App.Services.ApiClient;
+using Skedl.App.Services.AuthService;
+using Skedl.App.Services.DataService;
 using Skedl.App.ViewModels;
 using Skedl.App.ViewModels.RegViewModels;
 
@@ -20,6 +22,9 @@ public static class MauiProgram
 			});
 
         builder.Services.AddSingleton<IApiClient>(new ApiClient("http://192.168.0.117:8081"));
+
+        builder.Services.AddSingleton<IAuthService, AuthService>();
+        builder.Services.AddSingleton<IDataService, DataService>();
 
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<MainViewModel>();

@@ -24633,24 +24633,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\orex\\.nuget\\packages\\": {},
+    "C:\\Users\\vipbo\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\orex\\source\\repos\\Skedl\\TestNavigation\\TestNavigation\\TestNavigation.csproj",
+      "projectUniqueName": "C:\\Users\\vipbo\\source\\repos\\Skedl\\TestNavigation\\TestNavigation\\TestNavigation.csproj",
       "projectName": "TestNavigation",
-      "projectPath": "C:\\Users\\orex\\source\\repos\\Skedl\\TestNavigation\\TestNavigation\\TestNavigation.csproj",
-      "packagesPath": "C:\\Users\\orex\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\orex\\source\\repos\\Skedl\\TestNavigation\\TestNavigation\\obj\\",
+      "projectPath": "C:\\Users\\vipbo\\source\\repos\\Skedl\\TestNavigation\\TestNavigation\\TestNavigation.csproj",
+      "packagesPath": "C:\\Users\\vipbo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\vipbo\\source\\repos\\Skedl\\TestNavigation\\TestNavigation\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\orex\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\vipbo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -24738,15 +24738,15 @@
           },
           {
             "name": "Microsoft.AspNetCore.App.Runtime.linux-arm",
-            "version": "[6.0.18, 6.0.18]"
+            "version": "[6.0.16, 6.0.16]"
           },
           {
             "name": "Microsoft.AspNetCore.App.Runtime.linux-arm64",
-            "version": "[6.0.18, 6.0.18]"
+            "version": "[6.0.16, 6.0.16]"
           },
           {
             "name": "Microsoft.AspNetCore.App.Runtime.linux-x64",
-            "version": "[6.0.18, 6.0.18]"
+            "version": "[6.0.16, 6.0.16]"
           },
           {
             "name": "Microsoft.Maui.Controls.Ref.android",
@@ -24790,7 +24790,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
       },
       "net6.0-ios16.1": {
         "targetAlias": "net6.0-ios",
@@ -24825,11 +24825,11 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.iOS.Ref",
-            "version": "[16.4.60, 16.4.60]"
+            "version": "[16.4.47, 16.4.47]"
           },
           {
             "name": "Microsoft.iOS.Runtime.iossimulator-x64",
-            "version": "[16.4.60, 16.4.60]"
+            "version": "[16.4.47, 16.4.47]"
           },
           {
             "name": "Microsoft.Maui.Controls.Ref.ios",
@@ -24873,7 +24873,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
       },
       "net6.0-maccatalyst16.1": {
         "targetAlias": "net6.0-maccatalyst",
@@ -24909,11 +24909,11 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.MacCatalyst.Ref",
-            "version": "[16.4.60, 16.4.60]"
+            "version": "[16.4.47, 16.4.47]"
           },
           {
             "name": "Microsoft.MacCatalyst.Runtime.maccatalyst-x64",
-            "version": "[16.4.60, 16.4.60]"
+            "version": "[16.4.47, 16.4.47]"
           },
           {
             "name": "Microsoft.Maui.Controls.Ref.maccatalyst",
@@ -24957,7 +24957,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
       },
       "net6.0-windows10.0.19041": {
         "targetAlias": "net6.0-windows10.0.19041.0",
@@ -24987,7 +24987,7 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-            "version": "[6.0.18, 6.0.18]"
+            "version": "[6.0.16, 6.0.16]"
           },
           {
             "name": "Microsoft.Maui.Controls.Ref.win",
@@ -25015,7 +25015,7 @@
           },
           {
             "name": "Microsoft.NETCore.App.Runtime.win-x64",
-            "version": "[6.0.18, 6.0.18]"
+            "version": "[6.0.16, 6.0.16]"
           },
           {
             "name": "Microsoft.Windows.SDK.NET.Ref",
@@ -25023,7 +25023,7 @@
           },
           {
             "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
-            "version": "[6.0.18, 6.0.18]"
+            "version": "[6.0.16, 6.0.16]"
           }
         ],
         "frameworkReferences": {
@@ -25043,7 +25043,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
       }
     },
     "runtimes": {

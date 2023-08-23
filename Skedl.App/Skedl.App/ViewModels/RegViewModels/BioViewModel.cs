@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Skedl.App.Models.Reg;
 using Skedl.App.Services.ApiClient;
+using Skedl.App.Services.AuthService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,11 +31,11 @@ namespace Skedl.App.ViewModels.RegViewModels
         [ObservableProperty]
         private string errorMessage;
 
-        private readonly IApiClient _apiClient;
+        private readonly IAuthService _authService;
 
-        public BioViewModel(IApiClient apiClient)
+        public BioViewModel(IAuthService authService)
         {
-            _apiClient = apiClient;
+            _authService = authService;
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -67,7 +68,7 @@ namespace Skedl.App.ViewModels.RegViewModels
             Model.Name = Name;
             Model.Password = Password;
 
-            var resultOk = await _apiClient.Registration(Model);
+            var resultOk = await _authService.Registration(Model);
 
             if(resultOk)
             {

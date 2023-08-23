@@ -1,9 +1,4 @@
-﻿using Newtonsoft.Json;
-using Skedl.App.Models;
-using Skedl.App.Models.Api;
-using Skedl.App.Models.Reg;
-using System.Net.Http.Headers;
-using System.Text;
+﻿using System.Net.Http.Headers;
 
 namespace Skedl.App.Services.ApiClient
 {
@@ -29,23 +24,6 @@ namespace Skedl.App.Services.ApiClient
         public void SetUniversityUrl(string url)
         {
             _universityUrl = url;
-        }
-
-        public async Task<ICollection<Group>> GetGroups()
-        {
-            try
-            {
-                var response = await Get("Api", "GetGroups");
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<ICollection<Group>>(result);
-                } 
-            }
-            catch (Exception ex){}
-            
-            return new List<Group>();
         }
 
         public async Task<HttpResponseMessage> Get(string server, string endpoint, bool withUniversity = true)
@@ -78,38 +56,6 @@ namespace Skedl.App.Services.ApiClient
             }
 
             return await _httpClient.PostAsync(uri, content);
-        }
-
-
-
-        public async Task<bool> SendCode(string email)
-        {
-            var response = await Get("Auth", $"Auth/SendCode?to={email}", false);
-            return response.IsSuccessStatusCode;
-        }
-
-        public async Task<bool> VerifyCode(string email, string code)
-        {
-            var response = await Get("Auth", $"Auth/VerifyCode?to={email}&code={code}", false);
-            return response.IsSuccessStatusCode;
-        }
-
-        public async Task<bool> Registration(RegModel model)
-        {
-            var contentJson = JsonConvert.SerializeObject(model);
-            var body = new StringContent(contentJson, Encoding.UTF8, "application/json");
-            var response = await Post("Auth", "Register", body, false);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                var tokensModel = JsonConvert.DeserializeObject<TokensModel>(content);
-
-                await SecureStorage.Default.SetAsync("access_token", tokensModel.Token);
-                await SecureStorage.Default.SetAsync("refresh_token", tokensModel.RefreshToken);
-            }
-            
-            return response.IsSuccessStatusCode;
         }
     }
 }

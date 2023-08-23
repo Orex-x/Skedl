@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Skedl.App.Models.Reg;
 using Skedl.App.Pages.RegPages;
 using Skedl.App.Services.ApiClient;
+using Skedl.App.Services.AuthService;
 
 namespace Skedl.App.ViewModels.RegViewModels
 {
@@ -18,12 +19,13 @@ namespace Skedl.App.ViewModels.RegViewModels
         [ObservableProperty]
         private string errorMessage;
 
-        private readonly IApiClient _apiClient;
+        private readonly IAuthService _authService;
 
-        public MailConfirmViewModel(IApiClient apiClient)
+        public MailConfirmViewModel(IAuthService authService)
         {
-            _apiClient = apiClient;
+            _authService = authService;
         }
+
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             Model = query["model"] as RegModel;
@@ -32,7 +34,7 @@ namespace Skedl.App.ViewModels.RegViewModels
         [RelayCommand]
         async Task Next()
         {
-            var resultOk = await _apiClient.VerifyCode(Model.Email, Code);
+            var resultOk = await _authService.VerifyCode(Model.Email, Code);
 
             if(resultOk)
             {

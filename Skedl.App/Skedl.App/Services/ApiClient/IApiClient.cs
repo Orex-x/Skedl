@@ -7,14 +7,10 @@ namespace Skedl.App.Services.ApiClient
 {
     public interface IApiClient
     {
-        Task<ICollection<Group>> GetGroups();
-
         void SetUniversityUrl(string url);
 
-        Task<bool> SendCode(string email);
+        Task<HttpResponseMessage> Post(string server, string endpoint, HttpContent content, bool withUniversity = true);
 
-        Task<bool> VerifyCode(string email, string code);
-
-        Task<bool> Registration(RegModel model);
+        Task<HttpResponseMessage> Get(string server, string endpoint, bool withUniversity = true);
     }
 }

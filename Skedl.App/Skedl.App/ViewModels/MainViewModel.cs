@@ -13,7 +13,5 @@ namespace Skedl.App.ViewModels
         {
 
         }
-
-        
     }
 }

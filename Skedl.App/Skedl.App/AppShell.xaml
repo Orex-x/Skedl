@@ -8,8 +8,7 @@
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:Pages.RegPages.BioPage}"
-        Route="Pages.RegPages.BioPage" />
-
-  
+        Shell.NavBarIsVisible="False"
+        ContentTemplate="{DataTemplate local:Pages.LoadPage}"
+        Route="Pages.LoadPage" />
 </Shell>
