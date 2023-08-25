@@ -15,6 +15,5 @@ public partial class AppShellAuth : Shell
         Routing.RegisterRoute(nameof(AuthPage), typeof(AuthPage));
         Routing.RegisterRoute(nameof(ChooseUniversityPage), typeof(ChooseUniversityPage));
         Routing.RegisterRoute(nameof(GroupsPage), typeof(GroupsPage));
-        Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
     }
 }

@@ -1,15 +1,20 @@
-﻿using Skedl.App.Models.Reg;
+﻿using Skedl.App.Models.Api;
+using Skedl.App.Models.Reg;
 
 namespace Skedl.App.Services.AuthService
 {
     public interface IAuthService
     {
-        Task Authorization(string emailOrLogin, string password);
+        Task<User> SignInAsync(string emailOrLogin, string password);
 
-        Task<bool> SendCode(string email);
+        Task<User> RegistrationAsync(RegModel model);
 
-        Task<bool> VerifyCode(string email, string code);
+        Task<HttpResponseMessage> SendCodeAsync(string email);
 
-        Task<bool> Registration(RegModel model);
+        Task<bool> VerifyCodeAsync(string email, string code);
+
+        Task<User> IsAuthorizedAsync();
+
+        Task<string> RefreshTokenAsync(string token);
     }
 }

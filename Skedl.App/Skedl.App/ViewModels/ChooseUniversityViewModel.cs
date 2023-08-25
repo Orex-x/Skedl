@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Skedl.App.Models.ChooseUniversityViewModel;
 using Skedl.App.Pages;
 using Skedl.App.Services.ApiClient;
+using Skedl.App.Services.UserService;
 using System.Collections.ObjectModel;
 
 namespace Skedl.App.ViewModels
@@ -13,22 +14,25 @@ namespace Skedl.App.ViewModels
         ObservableCollection<ListItem> items;
 
         private readonly IApiClient _apiClient;
+        private readonly IUserService _userService;
 
-        public ChooseUniversityViewModel(IApiClient apiClient)
+        public ChooseUniversityViewModel(IApiClient apiClient, IUserService userService)
         {
             _apiClient = apiClient;
+            _userService = userService;
 
             Items = new ObservableCollection<ListItem>()
             {
-                new ListItem{ Name = "СПБГУ", Ling = "Spbgu" },
-                new ListItem{ Name = "МПТ", Ling = "Mpu" },
+                new ListItem{ Name = "СПБГУ", Link = "Spbgu" },
+                new ListItem{ Name = "МПТ", Link = "Mpu" },
             };
         }
 
         [RelayCommand]
         async Task Tap(ListItem item)
         {
-            _apiClient.SetUniversityUrl(item.Ling);
+            _userService.SetUniversity(item.Link);
+            await _userService.UpdateUserAsync();
             await Shell.Current.GoToAsync(nameof(GroupsPage));
         }
     }

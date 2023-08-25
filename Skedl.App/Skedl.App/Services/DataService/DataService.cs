@@ -13,11 +13,11 @@ namespace Skedl.App.Services.DataService
             _client = client;
         }
 
-        public async Task<ICollection<Group>> GetGroups()
+        public async Task<ICollection<Group>> GetGroupsAsync()
         {
             try
             {
-                var response = await _client.Get("Api", "GetGroups");
+                var response = await _client.GetAsync("Api", "GetGroups");
 
                 if (response.IsSuccessStatusCode)
                 {

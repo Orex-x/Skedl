@@ -3,6 +3,6 @@ namespace Skedl.App.Services.DataService
 {
     public interface IDataService
     {
-        Task<ICollection<Group>> GetGroups();
+        Task<ICollection<Group>> GetGroupsAsync();
     }
 }

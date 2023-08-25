@@ -8,8 +8,8 @@
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:Pages.RegPages.BioPage}"
-        Route="Pages.RegPages.BioPage" />
+        ContentTemplate="{DataTemplate local:Pages.AuthPage}"
+        Route="Pages.AuthPage" />
 
   
 </Shell>

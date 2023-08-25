@@ -13,10 +13,8 @@ namespace Skedl.App.Services.ApiClient
             _httpClient.BaseAddress = new Uri(baseUrl);
         }
 
-        public async Task SetBearerToken()
+        public void SetBearerToken(string token)
         {
-            var token = await SecureStorage.Default.GetAsync("access_token");
-
             _httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", token);
         }
@@ -26,7 +24,7 @@ namespace Skedl.App.Services.ApiClient
             _universityUrl = url;
         }
 
-        public async Task<HttpResponseMessage> Get(string server, string endpoint, bool withUniversity = true)
+        public async Task<HttpResponseMessage> GetAsync(string server, string endpoint, bool withUniversity = true)
         {
             var uri = string.Empty;
             
@@ -42,7 +40,7 @@ namespace Skedl.App.Services.ApiClient
             return await _httpClient.GetAsync(uri);
         }
 
-        public async Task<HttpResponseMessage> Post(string server, string endpoint, HttpContent content, bool withUniversity = true)
+        public async Task<HttpResponseMessage> PostAsync(string server, string endpoint, HttpContent content, bool withUniversity = true)
         {
             var uri = string.Empty;
 

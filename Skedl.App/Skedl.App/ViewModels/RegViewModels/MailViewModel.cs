@@ -12,6 +12,9 @@ namespace Skedl.App.ViewModels.RegViewModels
         [ObservableProperty]
         private string userEmail;
 
+        [ObservableProperty]
+        private string errorMessage;
+
         private readonly IAuthService _authService;
 
         public MailViewModel(IAuthService authService)
@@ -23,9 +26,9 @@ namespace Skedl.App.ViewModels.RegViewModels
         [RelayCommand]
         async Task Next()
         {
-            var resultOk = await _authService.SendCode(UserEmail);
+            var result = await _authService.SendCodeAsync(UserEmail);
 
-            if (resultOk)
+            if (result.IsSuccessStatusCode)
             {
                 var model = new RegModel
                 {
@@ -36,6 +39,10 @@ namespace Skedl.App.ViewModels.RegViewModels
                 {
                     { "model", model }
                 });
+            }
+            else
+            {
+                ErrorMessage = await result.Content.ReadAsStringAsync();
             }
         }
     }

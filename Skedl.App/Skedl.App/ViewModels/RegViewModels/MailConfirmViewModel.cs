@@ -34,7 +34,7 @@ namespace Skedl.App.ViewModels.RegViewModels
         [RelayCommand]
         async Task Next()
         {
-            var resultOk = await _authService.VerifyCode(Model.Email, Code);
+            var resultOk = await _authService.VerifyCodeAsync(Model.Email, Code);
 
             if(resultOk)
             {

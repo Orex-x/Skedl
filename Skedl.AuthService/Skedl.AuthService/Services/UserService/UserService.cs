@@ -20,4 +20,14 @@ public class UserService : IUserService
         }
         return result;
     }
+    
+    public string GetMyEmail()
+    {
+        var result = string.Empty;
+        if (_httpContextAccessor.HttpContext != null)
+        {
+            result = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email);
+        }
+        return result;
+    }
 }

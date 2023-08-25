@@ -35,6 +35,11 @@ public class AuthController : Controller
         _context.UserCodes.RemoveRange(userCodes);
         await _context.SaveChangesAsync();
         
+        var currentUser = _context.Users.FirstOrDefault(x => x.Email == to);
+        
+        if(currentUser != null)
+            return BadRequest("Почта занята");
+        
         var code = _codeGenerator.Generation(5);
 
         await _mailService.SendMessage(to, "Подтверждения пароля", $"Ваш код подтверждения {code}");
@@ -73,13 +78,20 @@ public class AuthController : Controller
     }
 
     [HttpPost]
-    public async Task<ActionResult> Register([FromBody] UserRegister model)
+    public async Task<ActionResult> Register([FromBody] RegisterModel model)
     {
+        var currentUser = _context.Users.FirstOrDefault(x => x.Email == model.Email);
+        
+        if(currentUser != null)
+            return BadRequest("the login is already in use");
+        
+        
         var user = new User
         {
             Email = model.Email,
             Name = model.Name,
             Password = model.Password,
+            Login = model.Login
         };
         
         string token = CreateToken(user);
@@ -89,10 +101,10 @@ public class AuthController : Controller
         await _context.Users.AddAsync(user);
         await _context.SaveChangesAsync();
     
-        return Ok(new Dictionary<string, string>()
+        return Ok(new Dictionary<string, object>()
         {
-            {"Token", token},
-            {"RefreshToken", refreshToken.Token},
+            {"user", user},
+            {"token", token}
         });
     }
    
@@ -111,14 +123,21 @@ public class AuthController : Controller
         _context.Users.Update(user);
         await _context.SaveChangesAsync();
     
-        return Ok(new Dictionary<string, string>()
+        return Ok(new Dictionary<string, object>()
         {
-            {"Token", token},
-            {"RefreshToken", refreshToken.Token},
+            {"user", user},
+            {"token", token}
         });
     }
-    
-    
+
+    [HttpPost]
+    public async Task<ActionResult> UpdateUser([FromBody] User user)
+    {
+        _context.Users.Update(user);
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
+
     [HttpPost]
     public async Task<ActionResult<string>> RefreshToken([FromBody] RefreshTokenModel refreshToken)
     {
@@ -139,6 +158,7 @@ public class AuthController : Controller
     {
         List<Claim> claims = new List<Claim>
         {
+            new("email", user.Email),
             new("name", user.Name),
             new("role", "User"),
             new("type", "access"),
@@ -189,8 +209,8 @@ public class AuthController : Controller
     {
         var currentUser =
             _context.Users.FirstOrDefault(
-                x => x.Email == userDto.Email 
-                && x.Password == userDto.Password);
+                x => (x.Email == userDto.Email || x.Login == userDto.Email) 
+                     && x.Password == userDto.Password);
 
         return currentUser!;
     }

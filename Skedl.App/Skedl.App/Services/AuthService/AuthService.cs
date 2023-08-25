@@ -1,12 +1,8 @@
 ﻿using Newtonsoft.Json;
-using Skedl.App.Models;
+using Skedl.App.Models.Api;
 using Skedl.App.Models.Reg;
 using Skedl.App.Services.ApiClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Skedl.App.Services.AuthService
 {
@@ -18,39 +14,87 @@ namespace Skedl.App.Services.AuthService
             _client = client;
         }
 
-        public Task Authorization(string emailOrLogin, string password)
+        public async Task<User> SignInAsync(string emailOrLogin, string password)
         {
-            throw new NotImplementedException();
-        }
+            var contentJson = JsonConvert.SerializeObject(new UserDto() 
+            { 
+                Email = emailOrLogin, 
+                Password = password
+            });
 
-        public async Task<bool> SendCode(string email)
-        {
-            var response = await _client.Get("Auth", $"Auth/SendCode?to={email}", false);
-            return response.IsSuccessStatusCode;
-        }
 
-        public async Task<bool> VerifyCode(string email, string code)
-        {
-            var response = await _client.Get("Auth", $"Auth/VerifyCode?to={email}&code={code}", false);
-            return response.IsSuccessStatusCode;
-        }
-
-        public async Task<bool> Registration(RegModel model)
-        {
-            var contentJson = JsonConvert.SerializeObject(model);
             var body = new StringContent(contentJson, Encoding.UTF8, "application/json");
-            var response = await _client.Post("Auth", "Register", body, false);
+            var response = await _client.PostAsync("Auth", "Auth/Login", body, false);
 
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                var tokensModel = JsonConvert.DeserializeObject<TokensModel>(content);
+                var model = JsonConvert.DeserializeObject<UserTokenModel>(content);
 
-                await SecureStorage.Default.SetAsync("access_token", tokensModel.Token);
-                await SecureStorage.Default.SetAsync("refresh_token", tokensModel.RefreshToken);
+                _client.SetBearerToken(model.Token);
+                await SecureStorage.Default.SetAsync("access_token", model.Token);
+                await SecureStorage.Default.SetAsync("refresh_token", model.User.RefreshToken);
+                return model.User;
             }
 
+            return null;
+        }
+
+        public async Task<HttpResponseMessage> SendCodeAsync(string email)
+        {
+            return await _client.GetAsync("Auth", $"Auth/SendCode?to={email}", false);
+        }
+
+        public async Task<bool> VerifyCodeAsync(string email, string code)
+        {
+            var response = await _client.GetAsync("Auth", $"Auth/VerifyCode?to={email}&code={code}", false);
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<User> RegistrationAsync(RegModel regModel)
+        {
+            var contentJson = JsonConvert.SerializeObject(regModel);
+            var body = new StringContent(contentJson, Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync("Auth", "Auth/Register", body, false);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var model = JsonConvert.DeserializeObject<UserTokenModel>(content);
+
+                _client.SetBearerToken(model.Token);
+                await SecureStorage.Default.SetAsync("access_token", model.Token);
+                await SecureStorage.Default.SetAsync("refresh_token", model.User.RefreshToken);
+                return model.User;
+
+            }
+            return null;
+        }
+
+        public async Task<User> IsAuthorizedAsync()
+        {
+            var response = await _client.GetAsync("Auth", $"Home/IsAuthorized", false);
+            
+            var content = await response.Content.ReadAsStringAsync();
+            var model = JsonConvert.DeserializeObject<User>(content);
+
+            return model;
+        }
+
+        public async Task<string> RefreshTokenAsync(string token)
+        {
+            var contentJson = JsonConvert.SerializeObject(new RefreshTokenModel() { Token = token});
+            var body = new StringContent(contentJson, Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync("Auth", "Auth/RefreshToken", body, false);
+            
+            if (response.IsSuccessStatusCode)
+            {
+                var new_token = await response.Content.ReadAsStringAsync();
+                _client.SetBearerToken(new_token);
+                return new_token;
+            }
+
+            return string.Empty;
         }
     }
 }

@@ -1,13 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Skedl.App.Models.Reg;
-using Skedl.App.Services.ApiClient;
+using Skedl.App.Pages;
 using Skedl.App.Services.AuthService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Skedl.App.Services.UserService;
 
 namespace Skedl.App.ViewModels.RegViewModels
 {
@@ -32,10 +28,12 @@ namespace Skedl.App.ViewModels.RegViewModels
         private string errorMessage;
 
         private readonly IAuthService _authService;
+        private readonly IUserService _userService;
 
-        public BioViewModel(IAuthService authService)
+        public BioViewModel(IAuthService authService, IUserService userService)
         {
             _authService = authService;
+            _userService = userService;
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -68,11 +66,12 @@ namespace Skedl.App.ViewModels.RegViewModels
             Model.Name = Name;
             Model.Password = Password;
 
-            var resultOk = await _authService.Registration(Model);
+            var user = await _authService.RegistrationAsync(Model);
 
-            if(resultOk)
+            if(user != null)
             {
-                await Shell.Current.GoToAsync(nameof(MainPage));
+                _userService.SaveUser(user);
+                await Shell.Current.GoToAsync(nameof(ChooseUniversityPage));
             }
         }
     }

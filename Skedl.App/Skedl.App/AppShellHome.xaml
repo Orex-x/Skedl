@@ -6,10 +6,9 @@
     xmlns:local="clr-namespace:Skedl.App"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:Pages.RegPages.BioPage}"
-        Route="Pages.RegPages.BioPage" />
-
-  
+    <TabBar>
+        <Tab Title="Расписание">
+            <ShellContent ContentTemplate="{DataTemplate local:Pages.Home.SchedulePage}" />
+        </Tab>
+    </TabBar>
 </Shell>

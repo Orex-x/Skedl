@@ -49,6 +49,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Models\MainViewModel\**" />
+	  <Compile Remove="Models\MainViewModel\**" />
+	  <EmbeddedResource Remove="Models\MainViewModel\**" />
+	  <MauiCss Remove="Models\MainViewModel\**" />
+	  <MauiXaml Remove="Models\MainViewModel\**" />
+	  <None Remove="Models\MainViewModel\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
@@ -69,7 +78,7 @@
 	  <MauiXaml Update="Pages\GroupsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\LoadPage.xaml">
+	  <MauiXaml Update="Pages\Home\SchedulePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\RegPages\BioPage.xaml">
@@ -84,10 +93,6 @@
 	  <MauiXaml Update="Pages\TestPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Models\MainViewModel\" />
 	</ItemGroup>
 
 	<ItemGroup>
