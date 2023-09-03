@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Headers;
+using System.Text;
 
 namespace Skedl.App.Services.ApiClient
 {
@@ -24,21 +25,38 @@ namespace Skedl.App.Services.ApiClient
             _universityUrl = url;
         }
 
-        public async Task<HttpResponseMessage> GetAsync(string server, string endpoint, bool withUniversity = true)
+        public async Task<HttpResponseMessage> GetAsync(string server, string endpoint, bool withUniversity = true, Dictionary<string, object> queryParams = null)
         {
-            var uri = string.Empty;
-            
-            if(withUniversity)
+            var uriBuilder = new UriBuilder(_httpClient.BaseAddress);
+
+            if (withUniversity)
             {
-                uri = $"/{server}/{_universityUrl}/{endpoint}";
+                uriBuilder.Path = $"/{server}/{_universityUrl}/{endpoint}";
             }
             else
             {
-                uri = $"/{server}/{endpoint}";
+                uriBuilder.Path = $"/{server}/{endpoint}";
             }
 
-            return await _httpClient.GetAsync(uri);
+            if (queryParams != null && queryParams.Count > 0)
+            {
+                var query = new StringBuilder();
+                foreach (var param in queryParams)
+                {
+                    if (query.Length > 0)
+                    {
+                        query.Append('&');
+                    }
+
+                    query.Append($"{param.Key}={param.Value}");
+                }
+
+                uriBuilder.Query = query.ToString();
+            }
+
+            return await _httpClient.GetAsync(uriBuilder.Uri);
         }
+
 
         public async Task<HttpResponseMessage> PostAsync(string server, string endpoint, HttpContent content, bool withUniversity = true)
         {

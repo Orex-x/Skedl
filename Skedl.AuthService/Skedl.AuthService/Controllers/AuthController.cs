@@ -133,9 +133,16 @@ public class AuthController : Controller
     [HttpPost]
     public async Task<ActionResult> UpdateUser([FromBody] User user)
     {
-        _context.Users.Update(user);
-        await _context.SaveChangesAsync();
-        return Ok();
+        try
+        {
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex);
+        }
     }
 
     [HttpPost]

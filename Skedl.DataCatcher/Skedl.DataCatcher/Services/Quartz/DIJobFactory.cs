@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 using Quartz.Spi;
+using Skedl.DataCatcher.Services.HttpServices;
+using Skedl.DataCatcher.Services.RabbitMqServices;
 
 namespace Skedl.DataCatcher.Services.Quartz;
 
@@ -59,7 +61,7 @@ public class DiJobFactory : IJobFactory
 
                 if (service is IDisposable disposableService)
                 {
-                    disposableService.Dispose();
+                     disposableService.Dispose();
                 }
             }
         }

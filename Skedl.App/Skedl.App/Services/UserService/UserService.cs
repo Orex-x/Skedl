@@ -27,7 +27,11 @@ namespace Skedl.App.Services.UserService
             }
         }
 
-        public void SetGroup(Group group) => _user.Group = group;
+        public void SetGroup(Group group)
+        {
+            _user.Group = group;
+            _user.GroupId = group.Id;
+        }
 
         public void SetUniversity(string university)
         {
@@ -43,6 +47,12 @@ namespace Skedl.App.Services.UserService
             var body = new StringContent(contentJson, Encoding.UTF8, "application/json");
             var response = await _apiClient.PostAsync("Auth", "Auth/UpdateUser", body, false);
             return response.IsSuccessStatusCode;
+        }
+
+        public int GetGroupId()
+        {
+            if(_user == null) return 0;
+            return _user.GroupId ?? 0;
         }
     }
 }

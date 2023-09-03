@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Skedl.App.Models.Api;
-using Skedl.App.Services.ApiClient;
-using Skedl.App.Services.AuthService;
 using Skedl.App.Services.DataService;
 using Skedl.App.Services.UserService;
 using System.Collections.ObjectModel;

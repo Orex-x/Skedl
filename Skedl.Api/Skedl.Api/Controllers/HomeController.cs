@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Skedl.Api.Models;
 using Skedl.Api.Services.UserService;
 
 namespace Skedl.Api.Controllers;
@@ -20,7 +21,8 @@ public class HomeController : Controller
         var userName = _userService.GetMyName();
         return Ok(userName);
     }
-    
+
+
     [HttpGet]
     public IActionResult Hello()
     {

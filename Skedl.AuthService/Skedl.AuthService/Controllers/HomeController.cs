@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Skedl.AuthService.Services;
 using Skedl.AuthService.Services.UserService;
 
@@ -18,7 +19,9 @@ public class HomeController : Controller
     [Authorize] 
     public ActionResult IsAuthorized()
     {
-        var user = _context.Users.FirstOrDefault(x => x.Email == _userService.GetMyEmail());
+        var user = _context.Users
+            .FirstOrDefault(x => x.Email == _userService.GetMyEmail());
+        
         return Ok(user);
     }
 }

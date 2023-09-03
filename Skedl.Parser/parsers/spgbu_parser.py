@@ -6,28 +6,30 @@ from models.edu_programme import *
 from models.schedule_week import *
 from models.schedule_day import *
 from models.schedule_lecture import *
+from .base_parser import *
 import re
 import time
 import json
 import random
 
 
-class SpbguParser:
+class SpbguParser(BaseParser):
 
     def __init__(self, url):
+        super().__init__()
         self.url = url
     
     def get_fields_of_study(self):
-        r = requests.get(self.url)
+        r = self.retry_request(self.url)
         soup = BeautifulSoup(r.content, 'html.parser')
         work_panels = soup.find_all("div", class_="panel panel-default")
-        panels = work_panels[1].find_all("li", class_="list-group-item")
+        panels = work_panels[0].find_all("li", class_="list-group-item")
         fields_of_study = [BaseLink(panel.text.strip(), panel.a.get('href')[1:]) for panel in panels]
         return fields_of_study
     
 
     def get_field_of_study(self, link):
-        r = requests.get(self.url + "/" +  link)
+        r = self.retry_request(self.url + "/" +  link)
         soup = BeautifulSoup(r.content, 'html.parser')
         fields = soup.find_all(attrs={"data-parent": "#accordion"})
 
@@ -75,7 +77,7 @@ class SpbguParser:
         return fields_of_study
 
     def get_groups(self, link):
-        r = requests.get(self.url + link)
+        r = self.retry_request(self.url + link)
         soup = BeautifulSoup(r.content, 'html.parser')
 
         ul_panel = soup.find(attrs={"class" : "panel-collapse nopadding nomargin"})
@@ -97,9 +99,38 @@ class SpbguParser:
                 base_links.append(base_link)
             
             return base_links
+
+
+
+    def get_groups_with_retry(self, link):
+            response = self.retry_request(self.url + link)
+            if response:
+                soup = BeautifulSoup(response.content, 'html.parser')
+
+                ul_panel = soup.find(attrs={"id" : ["studentGroupsForPreviousYear", "studentGroupsForCurrentYear"]})
+                
+                if ul_panel:
+
+                    link_panels = ul_panel.find_all('li')
+
+                    base_links = [] 
+
+                    for link_panel in link_panels:
+                        onclick_value = link_panel.div.get('onclick')
+                        pattern = r"\'(.*?)\'"
+                        match = re.search(pattern, onclick_value)
+
+                        link = match.group(1)
+                        name = link_panel.find(attrs={"class" : "col-sm-4"}).text
+                        base_link = BaseLink(name.strip(), link.strip())
+                        base_links.append(base_link)
+                    
+                    return base_links
+            return None
     
-    def getScheduleWeek(self, link):
-        r = requests.get(self.url + link)
+
+    def get_schedule_week(self, link):
+        r = self.retry_request(self.url + link)
         soup = BeautifulSoup(r.content, 'html.parser')
 
         previous_week_link = soup.find(attrs={"class" : "prev-week"}).get('href')
@@ -120,15 +151,19 @@ class SpbguParser:
             for lecture_panel in lectures_panel:  
 
                 time_panel = lecture_panel.find(attrs={"title" : "Time"})
+                if not time_panel: continue
                 time = time_panel.span.text.strip() if time_panel.span else time_panel.text.strip()
             
                 subject_panel = lecture_panel.find(attrs={"title" : "Subject"})
+                if not subject_panel: continue
                 subject = subject_panel.span.text.strip() if subject_panel.span else subject_panel.text.strip()
                 
                 locations_panel = lecture_panel.find(attrs={"title": "Locations"})
+                if not locations_panel: continue
                 locations = locations_panel.span.text.strip() if locations_panel.span else locations_panel.text.strip()
 
                 teacher_panel = lecture_panel.find(attrs={"title" : "Teachers"})
+                if not teacher_panel: continue
                 teacher = teacher_panel.span.text.strip() if teacher_panel.span else teacher_panel.text.strip()
 
                 schedule_day.lectures.append(ScheduleLecture(time, subject, locations, teacher))
@@ -150,20 +185,14 @@ class SpbguParser:
 
                     years = edu_programme_item.years
                     for year_item in years:
-
-                        groups = self.get_groups(year_item.link)
+                        groups = self.get_groups_with_retry(year_item.link)
                         print('get groups')
                         if(groups):
                             link_dicts = [link.to_dict() for link in groups]
                             json_string = json.dumps(link_dicts, indent=4)
                             print(json_string)
                             yield json_string
-                        time.sleep(random.uniform(1, 5))
-    
-
-
-
-
+                        time.sleep(random.uniform(5, 15))
 
     def get_content(self):
         return requests.get(self.url)

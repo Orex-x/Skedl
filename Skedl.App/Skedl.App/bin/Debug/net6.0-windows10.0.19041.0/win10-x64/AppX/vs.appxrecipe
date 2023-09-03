@@ -30,13 +30,13 @@
     <AppXManifest Include="C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\bin\Debug\net6.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2023-08-25T08:15:46.890</Modified>
+      <Modified>2023-09-02T10:31:08.285</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\bin\Debug\net6.0-windows10.0.19041.0\win10-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2023-08-25T08:05:25.115</Modified>
+      <Modified>2023-09-02T10:29:55.476</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\bin\Debug\net6.0-windows10.0.19041.0\win10-x64\Skedl.App.runtimeconfig.json">
       <PackagePath>Skedl.App.runtimeconfig.json</PackagePath>
@@ -44,11 +44,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\bin\Debug\net6.0-windows10.0.19041.0\win10-x64\Skedl.App.dll">
       <PackagePath>Skedl.App.dll</PackagePath>
-      <Modified>2023-08-25T08:15:45.721</Modified>
+      <Modified>2023-09-02T10:31:07.201</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>Skedl.App.exe</PackagePath>
-      <Modified>2023-08-25T08:15:45.729</Modified>
+      <Modified>2023-09-02T10:31:07.210</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\bin\Debug\net6.0-windows10.0.19041.0\win10-x64\Skedl.App.deps.json">
       <PackagePath>Skedl.App.deps.json</PackagePath>

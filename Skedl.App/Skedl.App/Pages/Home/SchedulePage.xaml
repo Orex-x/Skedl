@@ -5,7 +5,7 @@
              Title="SchedulePage">
     <VerticalStackLayout>
         <Label 
-            Text="SchedulePage"
+            Text=""
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
     </VerticalStackLayout>

@@ -71,14 +71,31 @@ namespace Skedl.App.Services.AuthService
             return null;
         }
 
+
+      
         public async Task<User> IsAuthorizedAsync()
         {
             var response = await _client.GetAsync("Auth", $"Home/IsAuthorized", false);
-            
-            var content = await response.Content.ReadAsStringAsync();
-            var model = JsonConvert.DeserializeObject<User>(content);
 
-            return model;
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                
+                var body = new StringContent(content, Encoding.UTF8, "application/json");
+                var model = JsonConvert.DeserializeObject<User>(content);
+                _client.SetUniversityUrl(model.University);
+
+                var responeLoadUserDetails = await _client.PostAsync("Api", "LoadUserDetails", body);
+                if (responeLoadUserDetails.IsSuccessStatusCode)
+                {
+                    var contentLoadUserDetails = await responeLoadUserDetails.Content.ReadAsStringAsync();
+                    var user = JsonConvert.DeserializeObject<User>(contentLoadUserDetails);
+                    return user;
+                }
+
+                return model;
+            }
+            return null;
         }
 
         public async Task<string> RefreshTokenAsync(string token)

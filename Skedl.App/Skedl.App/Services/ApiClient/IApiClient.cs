@@ -8,6 +8,6 @@
 
         Task<HttpResponseMessage> PostAsync(string server, string endpoint, HttpContent content, bool withUniversity = true);
 
-        Task<HttpResponseMessage> GetAsync(string server, string endpoint, bool withUniversity = true);
+        Task<HttpResponseMessage> GetAsync(string server, string endpoint, bool withUniversity = true, Dictionary<string, object> queryParams = null);
     }
 }

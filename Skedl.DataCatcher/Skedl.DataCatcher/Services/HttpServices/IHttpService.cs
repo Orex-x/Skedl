@@ -2,5 +2,8 @@
 
 public interface IHttpService
 {
-    Task<string> Get(string endpoint, Dictionary<string, string>? headers = null);
+    Task<HttpResponseMessage> GetAsync(string endpoint, Dictionary<string, string>? headers = null);
+
+    Task<HttpResponseMessage> PostAsync(string endpoint, HttpContent content,
+        Dictionary<string, string>? headers = null);
 }

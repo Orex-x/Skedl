@@ -12,5 +12,7 @@ namespace Skedl.App.Services.UserService
         void SetGroup(Group group);
 
         Task<bool> UpdateUserAsync();
+
+        int GetGroupId();
     }
 }

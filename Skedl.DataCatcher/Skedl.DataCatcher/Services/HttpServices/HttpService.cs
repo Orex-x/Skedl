@@ -10,7 +10,7 @@ public class HttpService : IHttpService
         _httpClient.BaseAddress = new Uri(uri);
     }
     
-    public async Task<string> Get(string endpoint, Dictionary<string, string>? headers = null)
+    public async Task<HttpResponseMessage> GetAsync(string endpoint, Dictionary<string, string>? headers = null)
     {
         var request = new HttpRequestMessage(HttpMethod.Get, endpoint);
 
@@ -22,13 +22,22 @@ public class HttpService : IHttpService
             }
         }
 
-        var response = await _httpClient.SendAsync(request);
-
-        if (response.IsSuccessStatusCode)
+        return await _httpClient.SendAsync(request);
+    }
+    
+    public async Task<HttpResponseMessage> PostAsync(string endpoint, HttpContent content, Dictionary<string, string>? headers = null)
+    {
+        var request = new HttpRequestMessage(HttpMethod.Post, endpoint);
+        request.Content = content;
+        
+        if (headers != null)
         {
-            return await response.Content.ReadAsStringAsync();
+            foreach (var header in headers)
+            {
+                request.Headers.Add(header.Key, header.Value);
+            }
         }
         
-        return $"Request failed with status code: {response.StatusCode}";
+        return await _httpClient.SendAsync(request);
     }
 }
