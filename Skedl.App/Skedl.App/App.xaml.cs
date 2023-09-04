@@ -1,4 +1,5 @@
-﻿using Skedl.App.Pages;
+﻿using Skedl.App.Models.Api;
+using Skedl.App.Pages;
 using Skedl.App.Services.ApiClient;
 using Skedl.App.Services.AuthService;
 using Skedl.App.Services.UserService;
@@ -35,9 +36,31 @@ public partial class App : Application
         }
 
         _client.SetBearerToken(access_token);
+
+        var stop = await NavigateBasedOnUserAuthorizationAsync();
+
+        if (stop) return;
+
+        var new_access_token = await _authService.RefreshTokenAsync(refresh_token);
+        
+        if (string.IsNullOrEmpty(new_access_token))
+        {
+            MainPage = new AppShellAuth();
+            return;
+        }
+
+        stop = await NavigateBasedOnUserAuthorizationAsync();
+
+        if (stop) return;
+
+        MainPage = new AppShellHome();
+    }
+
+    public async Task<bool> NavigateBasedOnUserAuthorizationAsync()
+    {
         var user = await _authService.IsAuthorizedAsync();
 
-        if(user != null)
+        if (user != null)
         {
 
             _userService.SaveUser(user);
@@ -46,28 +69,20 @@ public partial class App : Application
             {
                 MainPage = new AppShellAuth();
                 await Shell.Current.GoToAsync(nameof(ChooseUniversityPage));
-                return;
+                return true;
             }
 
             if (user.Group == null)
             {
                 MainPage = new AppShellAuth();
                 await Shell.Current.GoToAsync(nameof(GroupsPage));
-                return;
+                return true;
             }
 
             MainPage = new AppShellHome();
-            return;
+            return true;
         }
 
-        var new_access_token = await _authService.RefreshTokenAsync(refresh_token);
-
-        if (string.IsNullOrEmpty(new_access_token))
-        {
-            MainPage = new AppShellAuth();
-            return;
-        }
-
-        MainPage = new AppShellHome();
+        return false;
     }
 }

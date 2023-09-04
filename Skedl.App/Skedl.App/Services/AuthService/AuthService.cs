@@ -107,6 +107,7 @@ namespace Skedl.App.Services.AuthService
             if (response.IsSuccessStatusCode)
             {
                 var new_token = await response.Content.ReadAsStringAsync();
+                await SecureStorage.Default.SetAsync("access_token", new_token);
                 _client.SetBearerToken(new_token);
                 return new_token;
             }

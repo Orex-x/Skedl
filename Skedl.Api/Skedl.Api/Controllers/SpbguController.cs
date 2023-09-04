@@ -32,18 +32,7 @@ public class SpbguController : Controller
     public async Task<IEnumerable<Group>> GetGroups() => 
         await _context.Groups.ToListAsync();
 
-    /*[Authorize]
-    public async Task<ScheduleWeek?> GetScheduleWeek(int groupId)
-    {
-        DateTime today = DateTime.Today;
-        DateTime monday = today.AddDays(-(int)today.DayOfWeek + (int)DayOfWeek.Monday);
-        
-        var obj = await _context.ScheduleWeeks
-            .Include(x => x.Days)
-            .ThenInclude(x => x.Lectures)
-            .FirstOrDefaultAsync(x => x.StartDate == monday && x.GroupId == groupId);
-        return obj;
-    }*/
+
     
     [Authorize]
     public async Task<ScheduleWeek?> GetScheduleWeek(string date, int groupId)
