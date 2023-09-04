@@ -129,7 +129,7 @@ class Parser(BaseParser):
             if response:
                 soup = BeautifulSoup(response.content, 'html.parser')
 
-                ul_panel = soup.find(attrs={"id" : ["studentGroupsForPreviousYear", "studentGroupsForCurrentYear"]})
+                ul_panel = soup.find(attrs={"id" : ["studentGroupsForCurrentYear"]})
                 
                 if ul_panel:
 

@@ -4,7 +4,6 @@ from controllers import spbgu_controller
 from services.rabbitmq_service import * 
 from models.fastapi_body.link_model import *
 
-
 channel = RabbitMqService("localhost")
 
 app = FastAPI()

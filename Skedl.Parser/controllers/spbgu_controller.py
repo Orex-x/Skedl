@@ -5,9 +5,12 @@ from typing import Annotated
 import pika
 from models.fastapi_body.link_model import *
 
+
 router = APIRouter(prefix="/spbgu", tags=["spbgu"])
 parser = SpbguParser("https://timetable.spbu.ru")
-channel = RabbitMqService("localhost").get_channel()
+rabbit = RabbitMqService("localhost")
+
+MAX_RECONNECT_ATTEMPTS = 3
 
 @router.get("/")
 async def ping():
@@ -25,11 +28,25 @@ async def get_schedule_week(link_model: LinkModel):
     return parser.get_schedule_week(link_model.link)
 
 
-
 async def publish_groups(reply_to):
     async for result in parser.get_all_groups():
         print(result)
-        channel.basic_publish('', routing_key=reply_to, body=result)
+        reconnect_attempts = 0
+        while reconnect_attempts < MAX_RECONNECT_ATTEMPTS:
+            try:
+                rabbit.get_channel().basic_publish('', routing_key=reply_to, body=result)
+            except pika.exceptions.StreamLostError:
+                print(f"Соединение с RabbitMQ было потеряно. Попытка восстановления {reconnect_attempts + 1} из {MAX_RECONNECT_ATTEMPTS}...")
+                # Пересоздаем соединение с RabbitMQ
+                rabbit.connect()
+                reconnect_attempts += 1
+            else:
+                # Соединение восстановлено успешно, сбрасываем счетчик попыток
+                reconnect_attempts = 0
+                break
+        if reconnect_attempts == MAX_RECONNECT_ATTEMPTS:
+            print(f"Превышено максимальное количество попыток подключения ({MAX_RECONNECT_ATTEMPTS}). Прекращение попыток.")
+
     
-    properties = pika.BasicProperties(headers={'type': 'last', "queueName" : reply_to})
-    channel.basic_publish('', routing_key=reply_to, body='', properties=properties)
+
+    

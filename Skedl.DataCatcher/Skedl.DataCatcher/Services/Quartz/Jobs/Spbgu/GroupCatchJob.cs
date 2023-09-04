@@ -33,7 +33,11 @@ public class GroupCatchJob : IJob
         var replyQueue = _rabbitMqService.QueueDeclare(exclusive: true);
 
         var consumer =_rabbitMqService.StartConsuming(replyQueue.QueueName, AsyncEventHandler);
-
+        
+        _replyQueues.Add(replyQueue.QueueName, consumer);
+        
+        Console.WriteLine($"ReplyTo {replyQueue.QueueName}");
+      
         var headers = new Dictionary<string, string>
         {
             { "Reply-To", replyQueue.QueueName },
@@ -41,12 +45,6 @@ public class GroupCatchJob : IJob
         };
 
         await _httpService.GetAsync("/spbgu/getGroups", headers);
-        
-        _replyQueues.Add(replyQueue.QueueName, consumer);
-        
-        Console.WriteLine($"ReplyTo {replyQueue.QueueName}");
-      
-        await Task.CompletedTask;
     }
     
     
@@ -69,27 +67,17 @@ public class GroupCatchJob : IJob
                 var a = _db.Groups.FirstOrDefault(x => x.Name == groupDto.Name);
                 if (a == null)
                 {
-                     var link = groupDto.Link;
-                     link = link.Replace("Online", "Primary");
-                     link = link.Replace("Attestation", "Primary");
-                     link = link.Replace("Final", "Primary");
-
-                     var group = new Group
+                    var group = new Group
                     {
                         Name = groupDto.Name,
-                        Link = link
+                        Link = groupDto.Link
                     };
 
                     await _db.Groups.AddAsync(group);
                 }
                 else
                 {
-                    var link = groupDto.Link;
-                    link = link.Replace("Online", "Primary");
-                    link = link.Replace("Attestation", "Primary");
-                    link = link.Replace("Final", "Primary");
-                    
-                    a.Link = link;
+                    a.Link = groupDto.Link;
                     _db.Groups.Update(a);
                 }
 
