@@ -27,7 +27,7 @@ var jobFactory = new DiJobFactory(container);
 
 var quartzService = new QuartzService(jobFactory);
 
-await quartzService.AddCatcher<GroupCatchJob>(SystemTime.UtcNow().AddHours(48));
+await quartzService.AddCatcher<GroupCatchJob>(SystemTime.UtcNow().AddMonths(6));
 await quartzService.AddCatcher<ScheduleCatchJob>(SystemTime.UtcNow());
 
 Console.ReadKey();

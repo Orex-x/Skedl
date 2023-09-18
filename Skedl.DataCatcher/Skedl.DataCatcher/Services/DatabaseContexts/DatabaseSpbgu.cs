@@ -8,6 +8,12 @@ public class DatabaseSpbgu : DbContext
     public DbSet<Group> Groups { get; set; }
     public DbSet<ScheduleDay> ScheduleDays { get; set; }
     public DbSet<ScheduleLecture> ScheduleLectures { get; set; }
+
+    public DbSet<ScheduleLectureLocation> ScheduleLectureLocations { get; set; }
+    public DbSet<ScheduleLectureSubject> ScheduleLectureSubjects { get; set; }
+    public DbSet<ScheduleLectureTeacher> ScheduleLectureTeachers { get; set; }
+    public DbSet<ScheduleLectureTime> ScheduleLectureTimes { get; set; }
+    
     public DbSet<ScheduleWeek> ScheduleWeeks { get; set; }
 
     public DatabaseSpbgu()

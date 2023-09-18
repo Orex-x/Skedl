@@ -20,19 +20,34 @@ public class ScheduleCatchJob : IJob
     private readonly Dictionary<string, AsyncEventingBasicConsumer> _replyQueues;
 
     private readonly DatabaseSpbgu _db;
-    
+
+    private List<ScheduleLectureLocation> BufferScheduleLectureLocations;
+    private List<ScheduleLectureSubject> BufferScheduleLectureSubjects;
+    private List<ScheduleLectureTeacher> BufferScheduleLectureTeachers;
+    private List<ScheduleLectureTime> BufferScheduleLectureTimes;
+
     public ScheduleCatchJob(IRabbitMqService rabbitMqService, DatabaseSpbgu db, IHttpService httpService)
     {
         _replyQueues = new Dictionary<string, AsyncEventingBasicConsumer>();
         _rabbitMqService = rabbitMqService;
         _httpService = httpService;
         _db = db;
+
+        BufferScheduleLectureLocations = new();
+        BufferScheduleLectureSubjects = new();
+        BufferScheduleLectureTeachers = new();
+        BufferScheduleLectureTimes = new();
     }
 
     
    
     public async Task Execute(IJobExecutionContext context)
     {
+        BufferScheduleLectureLocations = new();
+        BufferScheduleLectureSubjects = new();
+        BufferScheduleLectureTeachers = new();
+        BufferScheduleLectureTimes = new();
+        
         var groups = await _db.Groups.ToListAsync();
 
         int i = 0;
@@ -88,12 +103,62 @@ public class ScheduleCatchJob : IJob
 
                             foreach (var lecture in scheduleDayDto.Lectures)
                             {
-                                day.Lectures.Add(new ScheduleLecture()
+
+                                var location =
+                                    await _db.ScheduleLectureLocations.FirstOrDefaultAsync(x =>
+                                        x.Name == lecture.Location) ?? 
+                                    BufferScheduleLectureLocations.FirstOrDefault(x =>
+                                        x.Name == lecture.Location);
+
+                                if (location == null)
                                 {
-                                    Location = lecture.Location,
-                                    Subject = lecture.Subject,
-                                    Teacher = lecture.Teacher,
-                                    Time = lecture.Time
+                                    location = new ScheduleLectureLocation { Name = lecture.Location };
+                                    BufferScheduleLectureLocations.Add(location);
+                                }
+
+                                var subject =
+                                    await _db.ScheduleLectureSubjects.FirstOrDefaultAsync(x =>
+                                        x.Name == lecture.Subject) ?? 
+                                    BufferScheduleLectureSubjects.FirstOrDefault(x =>
+                                        x.Name == lecture.Subject);
+                                
+                                if (subject == null)
+                                {
+                                    subject = new ScheduleLectureSubject { Name = lecture.Subject };
+                                    BufferScheduleLectureSubjects.Add(subject);
+                                }
+                                
+                                var teacher =
+                                    await _db.ScheduleLectureTeachers.FirstOrDefaultAsync(x =>
+                                        x.Name == lecture.Teacher) ?? 
+                                    BufferScheduleLectureTeachers.FirstOrDefault(x =>
+                                        x.Name == lecture.Teacher);
+                                
+                                if (teacher == null)
+                                {
+                                    teacher = new ScheduleLectureTeacher { Name = lecture.Teacher };
+                                    BufferScheduleLectureTeachers.Add(teacher);
+                                }
+                                
+                                var time =
+                                    await _db.ScheduleLectureTimes.FirstOrDefaultAsync(x =>
+                                        x.Name == lecture.Time) ??
+                                    BufferScheduleLectureTimes.FirstOrDefault(x =>
+                                        x.Name == lecture.Time);
+                                
+                                if (time == null)
+                                {
+                                    time = new ScheduleLectureTime { Name = lecture.Time };
+                                    BufferScheduleLectureTimes.Add(time);
+                                }
+                                
+                                
+                                day.Lectures.Add(new ScheduleLecture
+                                {
+                                    Location = location,
+                                    Subject = subject,
+                                    Teacher = teacher,
+                                    Time = time
                                 });
                             }
                             
@@ -118,12 +183,61 @@ public class ScheduleCatchJob : IJob
 
                             foreach (var lecture in scheduleDayDto.Lectures)
                             {
-                                day.Lectures.Add(new ScheduleLecture()
+                                var location =
+                                    await _db.ScheduleLectureLocations.FirstOrDefaultAsync(x =>
+                                        x.Name == lecture.Location) ?? 
+                                    BufferScheduleLectureLocations.FirstOrDefault(x =>
+                                        x.Name == lecture.Location);
+
+                                if (location == null)
                                 {
-                                    Location = lecture.Location,
-                                    Subject = lecture.Subject,
-                                    Teacher = lecture.Teacher,
-                                    Time = lecture.Time
+                                    location = new ScheduleLectureLocation { Name = lecture.Location };
+                                    BufferScheduleLectureLocations.Add(location);
+                                }
+
+                                var subject =
+                                    await _db.ScheduleLectureSubjects.FirstOrDefaultAsync(x =>
+                                        x.Name == lecture.Subject) ?? 
+                                    BufferScheduleLectureSubjects.FirstOrDefault(x =>
+                                        x.Name == lecture.Subject);
+                                
+                                if (subject == null)
+                                {
+                                    subject = new ScheduleLectureSubject { Name = lecture.Subject };
+                                    BufferScheduleLectureSubjects.Add(subject);
+                                }
+                                
+                                var teacher =
+                                    await _db.ScheduleLectureTeachers.FirstOrDefaultAsync(x =>
+                                        x.Name == lecture.Teacher) ?? 
+                                    BufferScheduleLectureTeachers.FirstOrDefault(x =>
+                                        x.Name == lecture.Teacher);
+                                
+                                if (teacher == null)
+                                {
+                                    teacher = new ScheduleLectureTeacher { Name = lecture.Teacher };
+                                    BufferScheduleLectureTeachers.Add(teacher);
+                                }
+                                
+                                var time =
+                                    await _db.ScheduleLectureTimes.FirstOrDefaultAsync(x =>
+                                        x.Name == lecture.Time) ??
+                                    BufferScheduleLectureTimes.FirstOrDefault(x =>
+                                        x.Name == lecture.Time);
+                                
+                                if (time == null)
+                                {
+                                    time = new ScheduleLectureTime { Name = lecture.Time };
+                                    BufferScheduleLectureTimes.Add(time);
+                                }
+                                
+                                
+                                day.Lectures.Add(new ScheduleLecture
+                                {
+                                    Location = location,
+                                    Subject = subject,
+                                    Teacher = teacher,
+                                    Time = time
                                 });
                             }
                             
