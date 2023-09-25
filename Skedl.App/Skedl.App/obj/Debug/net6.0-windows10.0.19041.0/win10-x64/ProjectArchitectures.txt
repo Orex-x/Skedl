@@ -1,1 +1,0 @@
-C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\Skedl.App.csproj;x64
