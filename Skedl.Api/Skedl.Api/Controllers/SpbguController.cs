@@ -50,5 +50,4 @@ public class SpbguController : Controller
         
         return null;
     }
-    
 }

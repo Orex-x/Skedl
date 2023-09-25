@@ -14,6 +14,8 @@ public class HttpService : IHttpService
     {
         var request = new HttpRequestMessage(HttpMethod.Get, endpoint);
 
+        Console.WriteLine($"щас будем делать (только уже с полным путем) {_httpClient.BaseAddress}{endpoint}");
+
         if (headers != null)
         {
             foreach (var header in headers)

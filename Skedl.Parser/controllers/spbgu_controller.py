@@ -18,6 +18,7 @@ async def ping():
 
 @router.get("/getGroups")
 async def get_groups(reply_to: str = Header(None, convert_underscores=True)):
+    print('get groups')
     if reply_to:
         await publish_groups(reply_to)
     else:

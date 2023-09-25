@@ -4,7 +4,14 @@
         <name>Skedl.App</name>
     </assembly>
     <members>
+        <member name="T:Skedl.App.Models.HomeViewModels.ButtonViewModel">
+            <inheritdoc/>
+        </member>
+        <member name="P:Skedl.App.Models.HomeViewModels.ButtonViewModel.Background">
+            <inheritdoc cref="F:Skedl.App.Models.HomeViewModels.ButtonViewModel.background"/>
+        </member>
         <member name="T:Skedl.App.ViewModels.AuthViewModel">
+            <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
         </member>
@@ -13,6 +20,12 @@
         </member>
         <member name="P:Skedl.App.ViewModels.AuthViewModel.Password">
             <inheritdoc cref="F:Skedl.App.ViewModels.AuthViewModel.password"/>
+        </member>
+        <member name="F:Skedl.App.ViewModels.AuthViewModel.signInCommand">
+            <summary>The backing field for <see cref="P:Skedl.App.ViewModels.AuthViewModel.SignInCommand"/>.</summary>
+        </member>
+        <member name="P:Skedl.App.ViewModels.AuthViewModel.SignInCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:Skedl.App.ViewModels.AuthViewModel.SignIn"/>.</summary>
         </member>
         <member name="F:Skedl.App.ViewModels.AuthViewModel.regCommand">
             <summary>The backing field for <see cref="P:Skedl.App.ViewModels.AuthViewModel.RegCommand"/>.</summary>
@@ -45,6 +58,28 @@
         </member>
         <member name="P:Skedl.App.ViewModels.GroupsViewModel.TapCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:Skedl.App.ViewModels.GroupsViewModel.Tap(Skedl.App.Models.Api.Group)"/>.</summary>
+        </member>
+        <member name="T:Skedl.App.ViewModels.Home.ScheduleViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:Skedl.App.ViewModels.Home.ScheduleViewModel.Date">
+            <inheritdoc cref="F:Skedl.App.ViewModels.Home.ScheduleViewModel.date"/>
+        </member>
+        <member name="P:Skedl.App.ViewModels.Home.ScheduleViewModel.Buttons">
+            <inheritdoc cref="F:Skedl.App.ViewModels.Home.ScheduleViewModel.buttons"/>
+        </member>
+        <member name="P:Skedl.App.ViewModels.Home.ScheduleViewModel.SelectedScheduleDay">
+            <inheritdoc cref="F:Skedl.App.ViewModels.Home.ScheduleViewModel.selectedScheduleDay"/>
+        </member>
+        <member name="P:Skedl.App.ViewModels.Home.ScheduleViewModel.Spacing">
+            <inheritdoc cref="F:Skedl.App.ViewModels.Home.ScheduleViewModel.spacing"/>
+        </member>
+        <member name="F:Skedl.App.ViewModels.Home.ScheduleViewModel.tapCommand">
+            <summary>The backing field for <see cref="P:Skedl.App.ViewModels.Home.ScheduleViewModel.TapCommand"/>.</summary>
+        </member>
+        <member name="P:Skedl.App.ViewModels.Home.ScheduleViewModel.TapCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:Skedl.App.ViewModels.Home.ScheduleViewModel.Tap(Skedl.App.Models.HomeViewModels.ButtonViewModel)"/>.</summary>
         </member>
         <member name="T:Skedl.App.ViewModels.RegViewModels.BioViewModel">
             <inheritdoc/>
@@ -115,6 +150,9 @@
             for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
             </summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Background">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Background" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.LoginOrEmail">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "LoginOrEmail" generated properties.</summary>
         </member>
@@ -123,6 +161,18 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Items">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Items" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Date">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Date" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Buttons">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Buttons" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedScheduleDay">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedScheduleDay" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Spacing">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Spacing" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Model">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Model" generated properties.</summary>
@@ -151,6 +201,9 @@
             for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
             </summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Background">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Background" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.LoginOrEmail">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "LoginOrEmail" generated properties.</summary>
         </member>
@@ -159,6 +212,18 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Items">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Items" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Date">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Date" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Buttons">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Buttons" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedScheduleDay">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedScheduleDay" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Spacing">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Spacing" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Model">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Model" generated properties.</summary>

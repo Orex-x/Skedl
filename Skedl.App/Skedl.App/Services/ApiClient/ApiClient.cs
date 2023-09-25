@@ -38,6 +38,7 @@ namespace Skedl.App.Services.ApiClient
                 uriBuilder.Path = $"/{server}/{endpoint}";
             }
 
+
             if (queryParams != null && queryParams.Count > 0)
             {
                 var query = new StringBuilder();

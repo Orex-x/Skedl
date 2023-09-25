@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "8jUBhUCfvag0gfMAL9fEVPuH3JVVfKZ0VF56MOw1GEE=",
+  "Source": "Skedl.Api",
+  "BasePath": "_content/Skedl.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

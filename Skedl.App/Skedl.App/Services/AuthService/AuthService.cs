@@ -24,7 +24,7 @@ namespace Skedl.App.Services.AuthService
 
 
             var body = new StringContent(contentJson, Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync("Auth", "Auth/Login", body, false);
+            var response = await _client.PostAsync("auth", "Auth/Login", body, false);
 
             if (response.IsSuccessStatusCode)
             {
@@ -42,12 +42,23 @@ namespace Skedl.App.Services.AuthService
 
         public async Task<HttpResponseMessage> SendCodeAsync(string email)
         {
-            return await _client.GetAsync("Auth", $"Auth/SendCode?to={email}", false);
+            var queryParams = new Dictionary<string, object>
+            {
+                {"to", email},
+            };
+
+            return await _client.GetAsync("auth", $"Auth/SendCode", false, queryParams: queryParams);
         }
 
         public async Task<bool> VerifyCodeAsync(string email, string code)
         {
-            var response = await _client.GetAsync("Auth", $"Auth/VerifyCode?to={email}&code={code}", false);
+            var queryParams = new Dictionary<string, object>
+            {
+                {"to", email},
+                {"code", code}
+            };
+
+            var response = await _client.GetAsync("auth", $"Auth/VerifyCode", false, queryParams: queryParams);
             return response.IsSuccessStatusCode;
         }
 
@@ -55,7 +66,7 @@ namespace Skedl.App.Services.AuthService
         {
             var contentJson = JsonConvert.SerializeObject(regModel);
             var body = new StringContent(contentJson, Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync("Auth", "Auth/Register", body, false);
+            var response = await _client.PostAsync("auth", "Auth/Register", body, false);
 
             if (response.IsSuccessStatusCode)
             {
@@ -75,7 +86,7 @@ namespace Skedl.App.Services.AuthService
       
         public async Task<User> IsAuthorizedAsync()
         {
-            var response = await _client.GetAsync("Auth", $"Home/IsAuthorized", false);
+            var response = await _client.GetAsync("auth", $"Home/IsAuthorized", false);
 
             if (response.IsSuccessStatusCode)
             {
@@ -85,7 +96,7 @@ namespace Skedl.App.Services.AuthService
                 var model = JsonConvert.DeserializeObject<User>(content);
                 _client.SetUniversityUrl(model.University);
 
-                var responeLoadUserDetails = await _client.PostAsync("Api", "LoadUserDetails", body);
+                var responeLoadUserDetails = await _client.PostAsync("auth", "LoadUserDetails", body);
                 if (responeLoadUserDetails.IsSuccessStatusCode)
                 {
                     var contentLoadUserDetails = await responeLoadUserDetails.Content.ReadAsStringAsync();
@@ -102,7 +113,7 @@ namespace Skedl.App.Services.AuthService
         {
             var contentJson = JsonConvert.SerializeObject(new RefreshTokenModel() { Token = token});
             var body = new StringContent(contentJson, Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync("Auth", "Auth/RefreshToken", body, false);
+            var response = await _client.PostAsync("auth", "Auth/RefreshToken", body, false);
             
             if (response.IsSuccessStatusCode)
             {

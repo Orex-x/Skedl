@@ -25,6 +25,6 @@ public class DatabaseContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(
-            "host=localhost;port=5432;database=SkedlAuth;username=postgres;password=123");
+            "host=postgres;port=5432;database=SkedlAuth;username=postgres;password=pass123");
     }
 }

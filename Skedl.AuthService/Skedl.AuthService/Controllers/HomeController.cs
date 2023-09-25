@@ -23,4 +23,10 @@ public class HomeController : Controller
         
         return Ok(user);
     }
+
+    [HttpGet]
+    public IActionResult Hello()
+    {
+        return Ok("Hello");
+    }
 }

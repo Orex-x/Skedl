@@ -22,7 +22,7 @@ public class QuartzService
         await _scheduler.Start(); 
     }
     
-    public async Task AddCatcher<T>(DateTimeOffset startTimeUtc) where T : IJob
+    public async Task AddCatcherRepeat<T>(DateTimeOffset startTimeUtc, int withIntervalInHours) where T : IJob
     {
         if(_scheduler == null) return;
         
@@ -32,7 +32,7 @@ public class QuartzService
         ITrigger trigger = TriggerBuilder.Create()
             .StartAt(startTimeUtc)
             .WithSimpleSchedule(x => x
-                .WithIntervalInHours(24)
+                .WithIntervalInHours(withIntervalInHours)
                 .RepeatForever())
             .Build();
         

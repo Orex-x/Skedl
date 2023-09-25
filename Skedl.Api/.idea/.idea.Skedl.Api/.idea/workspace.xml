@@ -15,12 +15,11 @@
     <list default="true" id="db0eaf16-08d1-4be0-8e97-abe102e4c44b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Skedl.Api/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Skedl.Api/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Skedl.Api/Controllers/SpbguController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.Api/Controllers/SpbguController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Skedl.Api/bin/Debug/net7.0/Skedl.Api.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.Api/bin/Debug/net7.0/Skedl.Api.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Skedl.Api/bin/Debug/net7.0/Skedl.Api.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.Api/bin/Debug/net7.0/Skedl.Api.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Skedl.Api/obj/Debug/net7.0/Skedl.Api.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.Api/obj/Debug/net7.0/Skedl.Api.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Skedl.Api/obj/Debug/net7.0/Skedl.Api.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Skedl.Api/obj/Debug/net7.0/Skedl.Api.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Skedl.AuthService/.idea/.idea.Skedl.AuthService/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Skedl.AuthService/.idea/.idea.Skedl.AuthService/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/Controllers/HomeController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/bin/Debug/net7.0/Skedl.AuthService.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/bin/Debug/net7.0/Skedl.AuthService.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/bin/Debug/net7.0/Skedl.AuthService.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/bin/Debug/net7.0/Skedl.AuthService.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/obj/Debug/net7.0/Skedl.AuthService.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/obj/Debug/net7.0/Skedl.AuthService.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/obj/Debug/net7.0/Skedl.AuthService.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../Skedl.AuthService/Skedl.AuthService/obj/Debug/net7.0/Skedl.AuthService.pdb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,6 +165,7 @@
       <workItem from="1693602497574" duration="5124000" />
       <workItem from="1693725888467" duration="853000" />
       <workItem from="1693839882397" duration="1543000" />
+      <workItem from="1695128850441" duration="637000" />
     </task>
     <servers />
   </component>

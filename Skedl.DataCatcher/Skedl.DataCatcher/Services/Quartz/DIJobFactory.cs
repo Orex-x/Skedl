@@ -1,10 +1,8 @@
-﻿using System.Collections.Concurrent;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 using Quartz.Spi;
-using Skedl.DataCatcher.Services.HttpServices;
-using Skedl.DataCatcher.Services.RabbitMqServices;
+using System.Collections.Concurrent;
 
 namespace Skedl.DataCatcher.Services.Quartz;
 

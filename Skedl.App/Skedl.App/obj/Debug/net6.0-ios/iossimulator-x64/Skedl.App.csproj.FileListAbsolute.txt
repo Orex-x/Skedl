@@ -263,3 +263,5 @@ C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\obj\Debug\net6.0-ios\iossim
 C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\obj\Debug\net6.0-ios\iossimulator-x64\Skedl.App.pdb
 C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\obj\Debug\net6.0-ios\iossimulator-x64\Skedl.App.genruntimeconfig.cache
 C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\obj\Debug\net6.0-ios\iossimulator-x64\ref\Skedl.App.dll
+C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\bin\Debug\net6.0-ios\iossimulator-x64\CommunityToolkit.Mvvm.dll
+C:\Users\orex\source\repos\Skedl\Skedl.App\Skedl.App\bin\Debug\net6.0-ios\iossimulator-x64\Newtonsoft.Json.dll

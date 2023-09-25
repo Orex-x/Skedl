@@ -20,7 +20,9 @@ public class GroupCatchJob : IJob
 
     private readonly DatabaseSpbgu _db;
     
-    public GroupCatchJob(IRabbitMqService rabbitMqService, DatabaseSpbgu db, IHttpService httpService)
+    public GroupCatchJob(IRabbitMqService rabbitMqService, 
+        DatabaseSpbgu db,
+        IHttpService httpService)
     {
         _replyQueues = new Dictionary<string, AsyncEventingBasicConsumer>();
         _rabbitMqService = rabbitMqService;
@@ -43,27 +45,39 @@ public class GroupCatchJob : IJob
             { "Reply-To", replyQueue.QueueName },
             { "User-Agent", "Skedl-DataCatcher" }
         };
-
-        await _httpService.GetAsync("/spbgu/getGroups", headers);
+        Console.WriteLine("щас будем делать /spbgu/getGroups");
+        var responseMessage = await _httpService.GetAsync("spbgu/getGroups", headers);
+        if (responseMessage.IsSuccessStatusCode)
+        {
+            Console.WriteLine(responseMessage.IsSuccessStatusCode);
+        }
+        else
+        {
+            Console.WriteLine($"{responseMessage.StatusCode} : {await responseMessage.Content.ReadAsStringAsync()}");
+        }
     }
     
     
    
     private async Task AsyncEventHandler(object sender, BasicDeliverEventArgs ea)
     {
+
         try
         {
-            if (IsStopMessage(ea)) 
+            if (IsStopMessage(ea))
                 return;
 
             var body = ea.Body.ToArray();
             var message = Encoding.UTF8.GetString(body);
+            Console.WriteLine(message);
 
             var list = JsonConvert.DeserializeObject<List<GroupDto>>(message);
 
+            if(list == null) return;
+
             foreach (var groupDto in list)
             {
-            
+
                 var a = _db.Groups.FirstOrDefault(x => x.Name == groupDto.Name);
                 if (a == null)
                 {
@@ -83,14 +97,12 @@ public class GroupCatchJob : IJob
 
                 await _db.SaveChangesAsync();
             }
-        
-            Console.WriteLine(message);
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
         }
-     
+
         await Task.CompletedTask;
     }
     

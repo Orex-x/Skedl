@@ -55,7 +55,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseCors("NgOrigins");
@@ -66,6 +66,6 @@ app.UseAuthorization();     // авторизация
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "Auth/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

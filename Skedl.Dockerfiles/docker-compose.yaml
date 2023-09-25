@@ -1,0 +1,94 @@
+version: "3.3"
+services:
+
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: pass123
+      POSTGRES_USER: postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - mainnet
+
+  pgadmin:
+    image: dpage/pgadmin4:6.15
+    environment:
+      PGADMIN_DEFAULT_EMAIL: orexkashtan@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: pass123
+      PGADMIN_LISTEN_PORT: 80
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - mainnet
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=rmuser
+      - RABBITMQ_DEFAULT_PASS=rmpassword3214341
+      - RABBITMQ_MANAGEMENT_PATH_PREFIX=/manage/rabbitmq
+    networks:
+      - mainnet
+
+  nginx:
+    build: ./nginx
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    networks:
+      - mainnet
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    depends_on:
+      - nginx
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+  parser:
+    build: ./SkedlParser
+    restart: always
+    networks:
+      - mainnet
+    ports:
+      - 8080:80
+
+  datacatcher:
+    build: ./SkedlDataCatcher
+    restart: always
+    networks:
+      - mainnet
+
+  auth:
+    build: ./SkedlAuth
+    restart: always
+    networks:
+      - mainnet
+
+  api:
+    build: ./SkedlApi
+    restart: always
+    networks:
+      - mainnet
+
+networks:
+  mainnet:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:

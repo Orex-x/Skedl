@@ -1,7 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Quartz;
 using RabbitMQ.Client.Events;
@@ -10,6 +7,8 @@ using Skedl.DataCatcher.Models.DTO;
 using Skedl.DataCatcher.Services.DatabaseContexts;
 using Skedl.DataCatcher.Services.HttpServices;
 using Skedl.DataCatcher.Services.RabbitMqServices;
+using System.Globalization;
+using System.Text;
 
 namespace Skedl.DataCatcher.Services.Quartz.Spbgu;
 

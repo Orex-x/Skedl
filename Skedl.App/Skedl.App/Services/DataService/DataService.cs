@@ -17,7 +17,7 @@ namespace Skedl.App.Services.DataService
         {
             try
             {
-                var response = await _client.GetAsync("Api", "GetGroups");
+                var response = await _client.GetAsync("api", "GetGroups");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -41,7 +41,7 @@ namespace Skedl.App.Services.DataService
                 };
 
 
-                var response = await _client.GetAsync("Api", "GetScheduleWeek", queryParams: queryParams);
+                var response = await _client.GetAsync("api", "GetScheduleWeek", queryParams: queryParams);
 
                 if (response.IsSuccessStatusCode)
                 {

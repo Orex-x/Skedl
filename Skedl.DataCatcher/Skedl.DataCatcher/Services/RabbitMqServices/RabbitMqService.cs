@@ -14,8 +14,11 @@ public class RabbitMqService : IRabbitMqService
     {
         ConnectionFactory connection = new ConnectionFactory()
         {
-            HostName = "localhost"
+            HostName = "rabbitmq",
+            UserName = "rmuser",
+            Password = "rmpassword3214341"
         };
+
         connection.DispatchConsumersAsync = true;
         _connection = connection.CreateConnection();
         _model = _connection.CreateModel();

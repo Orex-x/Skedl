@@ -10,5 +10,8 @@
         <Tab Title="Расписание">
             <ShellContent ContentTemplate="{DataTemplate local:Pages.Home.SchedulePage}" />
         </Tab>
+        <Tab Title="Аккаунт">
+            <ShellContent ContentTemplate="{DataTemplate local:Pages.Home.AccountPage}" />
+        </Tab>
     </TabBar>
 </Shell>

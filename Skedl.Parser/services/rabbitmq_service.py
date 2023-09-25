@@ -13,7 +13,18 @@ class RabbitMqService:
 
     def __init__(self, host):
         self.host = host
-        self.connection_parameters = pika.ConnectionParameters('localhost')
+        self.connection_parameters = pika.ConnectionParameters(host)
+        connection = pika.BlockingConnection(self.connection_parameters)
+        self.channel = connection.channel()
+
+    def __init__(self, host):
+        self.host = host
+        self.username = 'guest'
+        self.password = 'guest'
+        self.connection_parameters = pika.ConnectionParameters(
+            host=self.host,
+            credentials=pika.PlainCredentials(username=self.username, password=self.password)
+        )
         connection = pika.BlockingConnection(self.connection_parameters)
         self.channel = connection.channel()
     
