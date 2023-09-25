@@ -45,7 +45,7 @@ namespace Skedl.App.Services.UserService
 
             var contentJson = JsonConvert.SerializeObject(_user);
             var body = new StringContent(contentJson, Encoding.UTF8, "application/json");
-            var response = await _apiClient.PostAsync("Auth", "Auth/UpdateUser", body, false);
+            var response = await _apiClient.PostAsync("auth", "Auth/UpdateUser", body, false);
             return response.IsSuccessStatusCode;
         }
 

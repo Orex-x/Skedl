@@ -14,13 +14,15 @@ public class HomeController : Controller
         _userService = userService;
     }
     
+
     [HttpGet, Authorize]
-    
     public ActionResult<string> GetMe()
     {
         var userName = _userService.GetMyName();
         return Ok(userName);
     }
+
+  
 
 
     [HttpGet]

@@ -96,7 +96,7 @@ namespace Skedl.App.Services.AuthService
                 var model = JsonConvert.DeserializeObject<User>(content);
                 _client.SetUniversityUrl(model.University);
 
-                var responeLoadUserDetails = await _client.PostAsync("auth", "LoadUserDetails", body);
+                var responeLoadUserDetails = await _client.PostAsync("api", "LoadUserDetails", body);
                 if (responeLoadUserDetails.IsSuccessStatusCode)
                 {
                     var contentLoadUserDetails = await responeLoadUserDetails.Content.ReadAsStringAsync();

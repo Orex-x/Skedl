@@ -35,19 +35,44 @@ public class SpbguController : Controller
 
     
     [Authorize]
-    public async Task<ScheduleWeek?> GetScheduleWeek(string date, int groupId)
+    public async Task<IActionResult> GetScheduleWeek(string date, int groupId)
     {
-        if (DateTime.TryParseExact(date, "dd.MM.yyyy H:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var today))
+        try
         {
-            DateTime monday = today.AddDays(-(int)today.DayOfWeek + 1);
-        
-            var obj = await _context.ScheduleWeeks
-                .Include(x => x.Days)
-                .ThenInclude(x => x.Lectures)
-                .FirstOrDefaultAsync(x => x.StartDate == monday && x.GroupId == groupId);
-            return obj;
+            Console.WriteLine($"GetScheduleWeek date {date} | groupId {groupId}") ;
+            if (DateTime.TryParseExact(date, "dd.MM.yyyy H:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var today))
+            {
+                Console.WriteLine("Parse true");
+                DateTime monday = today.AddDays(-(int)today.DayOfWeek + 1);
+
+                var obj = await _context.ScheduleWeeks
+                    .Include(x => x.Days)
+                    .ThenInclude(x => x.Lectures)
+                    .ThenInclude(x => x.Location)
+                    .Include(x => x.Days)
+                    .ThenInclude(x => x.Lectures)
+                    .ThenInclude(x => x.Subject)
+                    .Include(x => x.Days)
+                    .ThenInclude(x => x.Lectures)
+                    .ThenInclude(x => x.Teacher)
+                    .Include(x => x.Days)
+                    .ThenInclude(x => x.Lectures)
+                    .ThenInclude(x => x.Time)
+                    .FirstOrDefaultAsync(x => x.StartDate == monday && x.GroupId == groupId);
+
+                if (obj == null) return Ok(obj);
+
+                Console.WriteLine($"Obhect: {obj.NextWeekLink} | {obj.PreviousWeekLink} | {obj.Days.Count}");
+
+                return Ok(obj);
+            }
         }
-        
-        return null;
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return BadRequest(ex);
+        }
+
+        return NoContent();
     }
 }
