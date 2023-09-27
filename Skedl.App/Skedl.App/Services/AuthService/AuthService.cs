@@ -22,7 +22,6 @@ namespace Skedl.App.Services.AuthService
                 Password = password
             });
 
-
             var body = new StringContent(contentJson, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync("auth", "Auth/Login", body, false);
 
@@ -32,8 +31,22 @@ namespace Skedl.App.Services.AuthService
                 var model = JsonConvert.DeserializeObject<UserTokenModel>(content);
 
                 _client.SetBearerToken(model.Token);
+                _client.SetUniversityUrl(model.User.University);
+
                 await SecureStorage.Default.SetAsync("access_token", model.Token);
                 await SecureStorage.Default.SetAsync("refresh_token", model.User.RefreshToken);
+
+                var userJson = JsonConvert.SerializeObject(model.User);
+                var userBody = new StringContent(userJson, Encoding.UTF8, "application/json");
+
+                var responeLoadUserDetails = await _client.PostAsync("api", "LoadUserDetails", userBody);
+                if (responeLoadUserDetails.IsSuccessStatusCode)
+                {
+                    var contentLoadUserDetails = await responeLoadUserDetails.Content.ReadAsStringAsync();
+                    var user = JsonConvert.DeserializeObject<User>(contentLoadUserDetails);
+                    return user;
+                }
+
                 return model.User;
             }
 
@@ -81,8 +94,6 @@ namespace Skedl.App.Services.AuthService
             }
             return null;
         }
-
-
       
         public async Task<User> IsAuthorizedAsync()
         {

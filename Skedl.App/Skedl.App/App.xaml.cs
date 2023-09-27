@@ -22,6 +22,17 @@ public partial class App : Application
 		MainPage = new AppShellAuth();
 	}
 
+    public void SetShellAuth()
+    {
+        MainPage = new AppShellAuth();
+    }
+
+    public void SetShellHome()
+    {
+        MainPage = new AppShellHome();
+
+
+    }
     protected override async void OnStart()
     {
         base.OnStart();

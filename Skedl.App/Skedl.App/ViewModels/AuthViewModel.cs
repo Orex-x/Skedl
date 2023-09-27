@@ -30,7 +30,6 @@ namespace Skedl.App.ViewModels
         {
             if(string.IsNullOrEmpty(LoginOrEmail) || string.IsNullOrEmpty(Password))
             {
-
                 return;
             }
 
@@ -51,8 +50,9 @@ namespace Skedl.App.ViewModels
                     await Shell.Current.GoToAsync(nameof(GroupsPage));
                     return;
                 }
-            }
 
+                (Application.Current as App).SetShellHome();
+            }
         }
 
         [RelayCommand]
