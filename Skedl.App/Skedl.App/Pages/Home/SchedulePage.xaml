@@ -16,8 +16,6 @@
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
-        
-
         <Grid Grid.Row="0" Margin="20,30,20,0">
             <CollectionView
                 ItemsSource="{Binding Buttons}"
@@ -25,14 +23,12 @@
                 SelectionMode="None">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout 
-                        Orientation="Horizontal"
-                        ItemSpacing="{Binding Spacing}"/>
-
+                        Orientation="Horizontal"/>
                 </CollectionView.ItemsLayout>
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type model:ButtonViewModel}">
-                        <Grid>
+                        <Grid Margin="10,0,0,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="25"/>
                                 <RowDefinition/>
