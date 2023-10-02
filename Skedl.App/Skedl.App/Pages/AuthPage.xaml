@@ -51,8 +51,10 @@
             VerticalOptions="End" 
             Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AuthViewModel}}, Path=RegCommand}"
             Text="Нет аккаунта?" 
+            TextColor="Blue"
             BackgroundColor="Transparent" 
-            BorderColor="Transparent"/>
+            
+            BorderWidth="0"/>
     </Grid>
 </ContentPage>
     
