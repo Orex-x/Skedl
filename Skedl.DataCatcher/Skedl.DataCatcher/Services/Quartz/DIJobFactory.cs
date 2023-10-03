@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 using Quartz.Spi;
 using System.Collections.Concurrent;

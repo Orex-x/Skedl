@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -84,16 +85,19 @@ public class AuthController : Controller
         
         if(currentUser != null)
             return BadRequest("the login is already in use");
-        
-        
+
+
+        var hasher = new PasswordHasher<User>();
+
         var user = new User
         {
             Email = model.Email,
             Name = model.Name,
-            Password = model.Password,
             Login = model.Login
         };
-        
+
+        user.Password = hasher.HashPassword(user, model.Password);
+
         string token = CreateToken(user);
         var refreshToken = GenerateRefreshToken();
         SetRefreshToken(refreshToken, user);
@@ -111,7 +115,7 @@ public class AuthController : Controller
     [HttpPost]
     public async Task<ActionResult> Login([FromBody] UserDto request)
     {
-        var user = Authenticate(request);
+        var user = await Authenticate(request);
 
         if (user == null) 
             return BadRequest("Wrong email or password.");
@@ -212,13 +216,21 @@ public class AuthController : Controller
         return refreshToken;
     }
     
-    private User? Authenticate(UserDto userDto)
+    private async Task<User?> Authenticate(UserDto userDto)
     {
-        var currentUser =
-            _context.Users.FirstOrDefault(
-                x => (x.Email == userDto.Email || x.Login == userDto.Email) 
-                     && x.Password == userDto.Password);
+        var hasher = new PasswordHasher<User>();
 
-        return currentUser!;
+        var user = await _context.Users
+            .FirstOrDefaultAsync(x => (x.Email == userDto.Email || x.Login == userDto.Email));
+
+        if (user != null)
+        {
+            var s = hasher.VerifyHashedPassword(user, user.Password, userDto.Password);
+            if (s == PasswordVerificationResult.Success)
+            {
+                return user;
+            }
+        }
+        return null;
     }
 }

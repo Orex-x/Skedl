@@ -1,52 +1,98 @@
-п»їusing Microsoft.Extensions.DependencyInjection;
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Quartz;
-using RabbitMQ.Client;
+using Skedl.Api.Services.UserService;
 using Skedl.DataCatcher.Services.DatabaseContexts;
 using Skedl.DataCatcher.Services.HttpServices;
 using Skedl.DataCatcher.Services.Quartz;
 using Skedl.DataCatcher.Services.Quartz.Spbgu;
 using Skedl.DataCatcher.Services.RabbitMqServices;
-using System.Reflection.PortableExecutable;
+using System.Text;
 
-var services = new ServiceCollection();
+IConfiguration configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .Build();
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-services.AddDbContext<DatabaseSpbgu>();
+var builder = WebApplication.CreateBuilder(args);
 
-//spbguJobs
-services.AddTransient<GroupCatchJob>();
-services.AddTransient<ScheduleCatchJob>();
+builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
 
-var httpService = new HttpService("http://parser");
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
 
-services.AddSingleton<IRabbitMqService, RabbitMqService>();
-services.AddSingleton<IHttpService>(httpService);
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddTransient<SpbguGroupCatchJob>();
+builder.Services.AddTransient<SpbguScheduleCatchJob>();
+var httpService = new HttpService(configuration["HttpService:BaseUrl"]!);
 
-var container = services.BuildServiceProvider();
+builder.Services.AddSingleton<IRabbitMqService>(
+    new RabbitMqService(configuration["Rabbitmq:HostName"]!, configuration["Rabbitmq:UserName"]!, configuration["Rabbitmq:Password"]!));
+builder.Services.AddSingleton<IHttpService>(httpService);
+builder.Services.AddDbContext<DatabaseSpbgu>(op => op.UseNpgsql(configuration["ConnectionStrings:Spbgu"]!));
 
+var container = builder.Services.BuildServiceProvider();
 // Create an instance of the job factory
 var jobFactory = new DiJobFactory(container);
-
 var quartzService = new QuartzService(jobFactory);
 
-await quartzService.AddCatcherRepeat<GroupCatchJob>(SystemTime.UtcNow().AddMinutes(1), 4320);
-await quartzService.AddCatcherRepeat<ScheduleCatchJob>(SystemTime.UtcNow().AddHours(6), 144);
 
-Console.WriteLine("Start DataCatcher");
 
-await Task.Delay(25000);
+await quartzService.AddCatcherRepeat<SpbguGroupCatchJob>(Convert.ToInt32(configuration["Quartz:SpbguGroupCatchJob:IntervalInHours"]!));
+await quartzService.AddCatcherRepeatWithCron<SpbguScheduleCatchJob>(configuration["Quartz:SpbguScheduleCatchJob:CronSchedule"]!);
 
-var responseMessage = await httpService.GetAsync("spbgu");
-if (responseMessage.IsSuccessStatusCode)
+builder.Services.AddSingleton(quartzService);
+
+builder.Services.AddMvc(setupAction => {
+    setupAction.EnableEndpointRouting = false;})
+    .AddJsonOptions(jsonOptions => {
+        jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null;})
+    .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            ValidateLifetime = true, // Включаем проверку срока действия токена
+            ClockSkew = TimeSpan.Zero, // Не разрешаем "небольшую погрешность" в проверке времени
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+                .GetBytes(configuration["Jwt:Key"]!)),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+
+        };
+    });
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
 {
-    Console.WriteLine(await responseMessage.Content.ReadAsStringAsync());
-}
-else
-{
-    Console.WriteLine($"{responseMessage.StatusCode} : {await responseMessage.Content.ReadAsStringAsync()}");
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
 }
 
+app.UseHttpsRedirection();
+app.UseStaticFiles();
 
-while (true);
+app.UseCors("NgOrigins");
+app.UseRouting();
 
+app.UseAuthentication();    // аутентификация
+app.UseAuthorization();     // авторизация
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "DataCatcher/{controller=Home}/{action=Index}/{id?}");
+
+app.Run();

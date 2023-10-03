@@ -26,8 +26,7 @@ builder.Services.AddMvc(setupAction=> {
     }).AddJsonOptions(jsonOptions =>
     {
         jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null;
-    })
-    .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+    }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -38,8 +37,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidateLifetime = true, // Включаем проверку срока действия токена
             ClockSkew = TimeSpan.Zero, // Не разрешаем "небольшую погрешность" в проверке времени
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-                .GetBytes(configuration["Jwt:Key"]!)),
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!)),
             ValidateIssuer = false,
             ValidateAudience = false,
 

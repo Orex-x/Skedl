@@ -10,7 +10,7 @@ class BaseParser:
     def retry_request(self, url, retries=3, delay_range=(30, 60)):
         for _ in range(retries):
             try:
-                response = self.session.get(url)
+                response = self.session.get(url, headers={"Cookie":"_culture=ru"})
                 response.raise_for_status()
                 return response
             except (ConnectionError, Timeout, TooManyRedirects, HTTPError) as e:

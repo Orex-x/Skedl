@@ -194,5 +194,6 @@ class SpbguParser(BaseParser):
                             yield json_string
                         time.sleep(random.uniform(5, 15))
 
-    def get_content(self):
-        return requests.get(self.url)
+    def get_content(self, url):
+        r = self.retry_request(self.url + url)
+        return BeautifulSoup(r.content, 'html.parser')

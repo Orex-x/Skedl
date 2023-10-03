@@ -10,13 +10,13 @@ public class RabbitMqService : IRabbitMqService
     private IModel _model;
     private readonly string _baseQueueName = "request_queue_data_catcher";
     
-    public RabbitMqService()
+    public RabbitMqService(string hostName, string userName, string password)
     {
         ConnectionFactory connection = new ConnectionFactory()
         {
-            HostName = "rabbitmq",
-            UserName = "rmuser",
-            Password = "rmpassword3214341"
+            HostName = hostName,
+            UserName = userName,
+            Password = password // guest
         };
 
         connection.DispatchConsumersAsync = true;
