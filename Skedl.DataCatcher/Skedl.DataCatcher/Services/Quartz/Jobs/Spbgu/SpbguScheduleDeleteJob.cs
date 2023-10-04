@@ -1,27 +1,20 @@
 ﻿using Quartz;
-using Skedl.DataCatcher.Services.DatabaseContexts;
+using Skedl.DataCatcher.Services.Spbgu;
 
 namespace Skedl.DataCatcher.Services.Quartz.Jobs.Spbgu
 {
     public class SpbguScheduleDeleteJob : IJob
     {
-        private readonly DatabaseSpbgu _db;
+        private readonly ISpbguScheduleDelete _scheduleDelete;
 
-        public SpbguScheduleDeleteJob(DatabaseSpbgu db)
+        public SpbguScheduleDeleteJob(ISpbguScheduleDelete scheduleDelete)
         {
-            _db = db;
+            _scheduleDelete = scheduleDelete;
         }
 
         public async Task Execute(IJobExecutionContext context)
         {
-            var day = DateTime.Now.AddDays(-8);
-            DateTime monday = day.AddDays(-(int)day.DayOfWeek + (int)DayOfWeek.Monday);
-
-            var scheduleWeek = _db.ScheduleWeeks.FirstOrDefault(x => x.StartDate == monday);
-            if (scheduleWeek == null) return;
-
-            _db.ScheduleWeeks.Remove(scheduleWeek);
-            await _db.SaveChangesAsync();
+            await _scheduleDelete.DeleteLastWeek();
         }
     }
 }

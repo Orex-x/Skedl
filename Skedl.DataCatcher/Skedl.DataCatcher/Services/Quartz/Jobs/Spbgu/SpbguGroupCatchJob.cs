@@ -5,9 +5,9 @@ namespace Skedl.DataCatcher.Services.Quartz.Spbgu;
 
 public class SpbguGroupCatchJob : IJob
 {
-    private readonly SpbguGroupCatch _spbguGroupCatch;
+    private readonly ISpbguGroupCatch _spbguGroupCatch;
 
-    public SpbguGroupCatchJob(SpbguGroupCatch spbguGroupCatch)
+    public SpbguGroupCatchJob(ISpbguGroupCatch spbguGroupCatch)
     {
         _spbguGroupCatch = spbguGroupCatch;
     }

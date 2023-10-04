@@ -51,7 +51,6 @@ builder.Services.AddSingleton<IHttpService>(httpService);
 builder.Services.AddDbContext<DatabaseSpbgu>(op => op.UseNpgsql(connectionStringsSpbgu));
 
 var container = builder.Services.BuildServiceProvider();
-// Create an instance of the job factory
 var jobFactory = new DiJobFactory(container);
 var quartzService = new QuartzService(jobFactory);
 
@@ -61,7 +60,12 @@ await quartzService.AddCatcherRepeatWithCron<SpbguScheduleDeleteJob>(spbguSchedu
 
 builder.Services.AddSingleton(quartzService);
 
+
 builder.Services.AddScoped<ISpbguGroupCatch, SpbguGroupCatch>();
+builder.Services.AddScoped<ISpbguScheduleDelete, SpbguScheduleDelete>();
+
+
+
 
 
 builder.Services.AddMvc(setupAction => {
