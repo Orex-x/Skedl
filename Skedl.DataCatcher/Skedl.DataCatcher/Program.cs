@@ -63,6 +63,7 @@ builder.Services.AddSingleton(quartzService);
 
 builder.Services.AddScoped<ISpbguGroupCatch, SpbguGroupCatch>();
 builder.Services.AddScoped<ISpbguScheduleDelete, SpbguScheduleDelete>();
+builder.Services.AddScoped<ISpbguScheduleCatch, SpbguScheduleCatch>();
 
 
 
