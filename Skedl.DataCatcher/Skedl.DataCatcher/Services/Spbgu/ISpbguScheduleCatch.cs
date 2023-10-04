@@ -2,6 +2,6 @@
 {
     public interface ISpbguScheduleCatch
     {
-        Task CatchSchedule();
+        Task CatchScheduleAsync(int countWeek);
     }
 }

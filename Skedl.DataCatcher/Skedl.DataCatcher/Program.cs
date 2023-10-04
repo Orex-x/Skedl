@@ -66,9 +66,6 @@ builder.Services.AddScoped<ISpbguScheduleDelete, SpbguScheduleDelete>();
 builder.Services.AddScoped<ISpbguScheduleCatch, SpbguScheduleCatch>();
 
 
-
-
-
 builder.Services.AddMvc(setupAction => {
     setupAction.EnableEndpointRouting = false;})
     .AddJsonOptions(jsonOptions => {
