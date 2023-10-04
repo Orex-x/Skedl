@@ -11,6 +11,7 @@ using Skedl.DataCatcher.Services.Quartz;
 using Skedl.DataCatcher.Services.Quartz.Jobs.Spbgu;
 using Skedl.DataCatcher.Services.Quartz.Spbgu;
 using Skedl.DataCatcher.Services.RabbitMqServices;
+using Skedl.DataCatcher.Services.Spbgu;
 using System.Text;
 
 IConfiguration configuration = new ConfigurationBuilder()
@@ -59,6 +60,9 @@ await quartzService.AddCatcherRepeatWithCron<SpbguScheduleCatchJob>(spbguSchedul
 await quartzService.AddCatcherRepeatWithCron<SpbguScheduleDeleteJob>(spbguScheduleDeleteJobCronSchedule);
 
 builder.Services.AddSingleton(quartzService);
+
+builder.Services.AddScoped<ISpbguGroupCatch, SpbguGroupCatch>();
+
 
 builder.Services.AddMvc(setupAction => {
     setupAction.EnableEndpointRouting = false;})
