@@ -17,6 +17,17 @@ IConfiguration configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
     .Build();
 
+var httpServiceBaseUrl = configuration["HttpService:BaseUrl"]!;
+var rabbitmqHostName = configuration["Rabbitmq:HostName"]!;
+var rabbitmqUserName = configuration["Rabbitmq:UserName"]!;
+var rabbitmqPassword = configuration["Rabbitmq:Password"]!;
+var connectionStringsSpbgu = configuration["ConnectionStrings:Spbgu"]!;
+var spbguGroupCatchJobIntervalInHours = Convert.ToInt32(configuration["Quartz:SpbguGroupCatchJob:IntervalInHours"]!); 
+var spbguScheduleCatchJobCronSchedule = configuration["Quartz:SpbguScheduleCatchJob:CronSchedule"]!; 
+var spbguScheduleDeleteJobCronSchedule = configuration["Quartz:SpbguScheduleDeleteJob:CronSchedule"]!; 
+var jwtKey = configuration["Jwt:Key"]!; 
+
+
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,24 +41,22 @@ builder.Services.AddSession();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddTransient<SpbguGroupCatchJob>();
 builder.Services.AddTransient<SpbguScheduleCatchJob>();
-var httpService = new HttpService(configuration["HttpService:BaseUrl"]!);
+var httpService = new HttpService(httpServiceBaseUrl);
 
 builder.Services.AddSingleton<IRabbitMqService>(
-    new RabbitMqService(configuration["Rabbitmq:HostName"]!, configuration["Rabbitmq:UserName"]!, configuration["Rabbitmq:Password"]!));
+    new RabbitMqService(rabbitmqHostName, rabbitmqUserName, rabbitmqPassword));
 
 builder.Services.AddSingleton<IHttpService>(httpService);
-builder.Services.AddDbContext<DatabaseSpbgu>(op => op.UseNpgsql(configuration["ConnectionStrings:Spbgu"]!));
+builder.Services.AddDbContext<DatabaseSpbgu>(op => op.UseNpgsql(connectionStringsSpbgu));
 
 var container = builder.Services.BuildServiceProvider();
 // Create an instance of the job factory
 var jobFactory = new DiJobFactory(container);
 var quartzService = new QuartzService(jobFactory);
 
-
-
-await quartzService.AddCatcherRepeat<SpbguGroupCatchJob>(Convert.ToInt32(configuration["Quartz:SpbguGroupCatchJob:IntervalInHours"]!));
-await quartzService.AddCatcherRepeatWithCron<SpbguScheduleCatchJob>(configuration["Quartz:SpbguScheduleCatchJob:CronSchedule"]!);
-await quartzService.AddCatcherRepeatWithCron<SpbguScheduleDeleteJob>(configuration["Quartz:SpbguScheduleDeleteJob:CronSchedule"]!);
+await quartzService.AddCatcherRepeat<SpbguGroupCatchJob>(spbguGroupCatchJobIntervalInHours);
+await quartzService.AddCatcherRepeatWithCron<SpbguScheduleCatchJob>(spbguScheduleCatchJobCronSchedule);
+await quartzService.AddCatcherRepeatWithCron<SpbguScheduleDeleteJob>(spbguScheduleDeleteJobCronSchedule);
 
 builder.Services.AddSingleton(quartzService);
 
@@ -68,7 +77,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateLifetime = true, // Включаем проверку срока действия токена
             ClockSkew = TimeSpan.Zero, // Не разрешаем "небольшую погрешность" в проверке времени
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-                .GetBytes(configuration["Jwt:Key"]!)),
+                .GetBytes(jwtKey)),
             ValidateIssuer = false,
             ValidateAudience = false,
 
@@ -81,7 +90,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

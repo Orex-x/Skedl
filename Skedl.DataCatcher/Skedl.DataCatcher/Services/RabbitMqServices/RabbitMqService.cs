@@ -16,7 +16,7 @@ public class RabbitMqService : IRabbitMqService
         {
             HostName = hostName,
             UserName = userName,
-            Password = password // guest
+            Password = password
         };
 
         connection.DispatchConsumersAsync = true;
