@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Skedl.DataCatcher.Services.Quartz;
 using Skedl.DataCatcher.Services.Quartz.Spbgu;
 

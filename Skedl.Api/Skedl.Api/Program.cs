@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Skedl.Api.Services.Databases;
 using Skedl.Api.Services.UserService;
@@ -8,8 +9,9 @@ using Skedl.Api.Services.UserService;
 IConfiguration configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
     .Build();
-    
-    
+
+var connectionStringsSpbgu = configuration["ConnectionStrings:Spbgu"]!;
+
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +21,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
-builder.Services.AddDbContext<DatabaseSpbgu>();
+builder.Services.AddDbContext<DatabaseSpbgu>(op => op.UseNpgsql(connectionStringsSpbgu));
 
 builder.Services.AddMvc(setupAction=> {
         setupAction.EnableEndpointRouting = false;

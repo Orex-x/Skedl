@@ -1,5 +1,6 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Skedl.AuthService.Services;
 using Skedl.AuthService.Services.CodeGeneration;
@@ -14,6 +15,7 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionStringsSpbgu = configuration["ConnectionStrings:Spbgu"]!;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -23,7 +25,7 @@ builder.Services.AddSingleton(configuration);
 builder.Services.AddScoped<ICodeGenerator, CodeGenerator>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMailService, GmailService>();
-builder.Services.AddDbContext<DatabaseContext>();
+builder.Services.AddDbContext<DatabaseContext>(op => op.UseNpgsql(connectionStringsSpbgu));
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 

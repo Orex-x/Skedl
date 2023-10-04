@@ -39,7 +39,8 @@ public class SpbguController : Controller
     {
         try
         {
-            Console.WriteLine($"GetScheduleWeek date {date} | groupId {groupId}") ;
+            Console.WriteLine($"GetScheduleWeek date {date} | groupId {groupId}");
+
             if (DateTime.TryParseExact(date, "dd.MM.yyyy H:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var today))
             {
                 Console.WriteLine("Parse true");
