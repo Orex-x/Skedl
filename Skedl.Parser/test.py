@@ -8,6 +8,6 @@ from models.fastapi_body.link_model import *
 
 parser = SpbguParser("https://timetable.spbu.ru")
 
-cont = parser.get_content('/GSOM/StudentGroupEvents/Primary/367163')
+cont = parser.get_schedule_week('/AGSM/StudentGroupEvents/Primary/387609/2023-10-09')
 
 print(cont)

@@ -38,8 +38,6 @@ public class SpbguScheduleCatchJob : IJob
         BufferScheduleLectureTimes = new();
     }
 
-    
-   
     public async Task Execute(IJobExecutionContext context)
     {
         BufferScheduleLectureLocations = new();
@@ -57,7 +55,6 @@ public class SpbguScheduleCatchJob : IJob
             try
             { 
                 await Task.Delay(2000);
-                
                 string json = JsonConvert.SerializeObject(new { link = group.Link});
                 
                 var body = new StringContent(json, Encoding.UTF8, "application/json");

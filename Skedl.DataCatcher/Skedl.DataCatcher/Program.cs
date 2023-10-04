@@ -8,6 +8,7 @@ using Skedl.Api.Services.UserService;
 using Skedl.DataCatcher.Services.DatabaseContexts;
 using Skedl.DataCatcher.Services.HttpServices;
 using Skedl.DataCatcher.Services.Quartz;
+using Skedl.DataCatcher.Services.Quartz.Jobs.Spbgu;
 using Skedl.DataCatcher.Services.Quartz.Spbgu;
 using Skedl.DataCatcher.Services.RabbitMqServices;
 using System.Text;
@@ -33,6 +34,7 @@ var httpService = new HttpService(configuration["HttpService:BaseUrl"]!);
 
 builder.Services.AddSingleton<IRabbitMqService>(
     new RabbitMqService(configuration["Rabbitmq:HostName"]!, configuration["Rabbitmq:UserName"]!, configuration["Rabbitmq:Password"]!));
+
 builder.Services.AddSingleton<IHttpService>(httpService);
 builder.Services.AddDbContext<DatabaseSpbgu>(op => op.UseNpgsql(configuration["ConnectionStrings:Spbgu"]!));
 
@@ -45,6 +47,7 @@ var quartzService = new QuartzService(jobFactory);
 
 await quartzService.AddCatcherRepeat<SpbguGroupCatchJob>(Convert.ToInt32(configuration["Quartz:SpbguGroupCatchJob:IntervalInHours"]!));
 await quartzService.AddCatcherRepeatWithCron<SpbguScheduleCatchJob>(configuration["Quartz:SpbguScheduleCatchJob:CronSchedule"]!);
+await quartzService.AddCatcherRepeatWithCron<SpbguScheduleDeleteJob>(configuration["Quartz:SpbguScheduleDeleteJob:CronSchedule"]!);
 
 builder.Services.AddSingleton(quartzService);
 
