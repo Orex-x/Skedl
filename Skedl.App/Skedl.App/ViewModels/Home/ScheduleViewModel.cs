@@ -65,21 +65,21 @@ namespace Skedl.App.ViewModels.Home
                     DateTime = day.Date
                 });
             }
-
-            
         }
 
 
         [RelayCommand]
         async Task Tap(ButtonViewModel button)
         {
-            Date = button.DateTime.ToShortDateString();
-            button.Background = Brush.DarkBlue;
+            await Task.Run(() => {
+                Date = button.DateTime.ToShortDateString();
+                button.Background = Brush.DarkBlue;
 
-            SelectedScheduleDay = days[button.DateTime];
+                SelectedScheduleDay = days[button.DateTime];
 
-            Buttons[currentSelectedButton].Background = Brush.Blue;
-            currentSelectedButton = Buttons.IndexOf(button);
+                Buttons[currentSelectedButton].Background = Brush.Blue;
+                currentSelectedButton = Buttons.IndexOf(button);
+            });
         }
     }
 }
