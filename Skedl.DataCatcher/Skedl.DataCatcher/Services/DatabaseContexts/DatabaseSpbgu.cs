@@ -16,7 +16,8 @@ public class DatabaseSpbgu : DbContext
     
     public DbSet<ScheduleWeek> ScheduleWeeks { get; set; }
 
-    public DatabaseSpbgu(string connectionString)
+
+    public DatabaseSpbgu(DbContextOptions<DatabaseSpbgu> options) : base(options)
     {
         try
         {
@@ -27,7 +28,8 @@ public class DatabaseSpbgu : DbContext
             // ignored
         }
     }
-    
+
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ScheduleWeek>()

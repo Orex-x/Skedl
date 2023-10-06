@@ -99,7 +99,7 @@ namespace Skedl.DataCatcher.Services.Spbgu
 
             if (model.Days.Count == 0) return string.Empty;
 
-            var dateStart = ParseDateTime(model.Days.First().Date);
+            var dateStart = ParseDateTimeRu(model.Days.First().Date);
 
             DateTime monday = dateStart.AddDays(-(int)dateStart.DayOfWeek + (int)DayOfWeek.Monday);
 
@@ -137,7 +137,7 @@ namespace Skedl.DataCatcher.Services.Spbgu
             {
                 var day = new ScheduleDay()
                 {
-                    Date = ParseDateTime(scheduleDayDto.Date),
+                    Date = ParseDateTimeRu(scheduleDayDto.Date),
                     Lectures = new List<ScheduleLecture>()
                 };
 
@@ -191,13 +191,15 @@ namespace Skedl.DataCatcher.Services.Spbgu
                         BufferScheduleLectureTimes.Add(time);
                     }
 
+                    var s = lecture.Status;
 
                     day.Lectures.Add(new ScheduleLecture
                     {
                         Location = location,
                         Subject = subject,
                         Teacher = teacher,
-                        Time = time
+                        Time = time,
+                        Status = s
                     });
                 }
 
@@ -221,5 +223,22 @@ namespace Skedl.DataCatcher.Services.Spbgu
 
             return DateTime.Now.AddDays(-10);
         }
+
+        private DateTime ParseDateTimeRu(string dateString)
+        {
+            try
+            {
+                var provider = new CultureInfo("ru-RU"); // Устанавливаем русскую культуру
+                string format = "dddd, d MMMM";
+                return DateTime.ParseExact(dateString, format, provider);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return DateTime.Now.AddDays(-10);
+        }
+
     }
 }

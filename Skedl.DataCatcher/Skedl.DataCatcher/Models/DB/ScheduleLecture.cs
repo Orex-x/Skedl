@@ -1,4 +1,6 @@
-﻿namespace Skedl.DataCatcher.Models.DB;
+﻿using Skedl.DataCatcher.Models.DTO;
+
+namespace Skedl.DataCatcher.Models.DB;
 
 public class ScheduleLecture
 {
@@ -7,4 +9,5 @@ public class ScheduleLecture
     public ScheduleLectureSubject Subject { get; set; }
     public ScheduleLectureLocation Location { get; set; }
     public ScheduleLectureTeacher Teacher { get; set; }
+    public ScheduleLectureStatus Status { get; set; }
 }

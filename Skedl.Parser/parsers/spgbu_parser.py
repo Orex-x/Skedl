@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from models.field_of_study import *
 from models.base_link import *
 from models.edu_programme import *
+from models.schedule_lecture_status import ScheduleLectureStatus
 from models.schedule_week import *
 from models.schedule_day import *
 from models.schedule_lecture import *
@@ -150,23 +151,33 @@ class SpbguParser(BaseParser):
 
             for lecture_panel in lectures_panel:  
 
-                time_panel = lecture_panel.find(attrs={"title" : "Time"})
+                moreinfo = lecture_panel.find_all(attrs={"class" : "moreinfo"})
+                hoverable = lecture_panel.find_all(attrs={"class" : "hoverable"})
+
+                time_panel = moreinfo[0]
                 if not time_panel: continue
                 time = time_panel.span.text.strip() if time_panel.span else time_panel.text.strip()
-            
-                subject_panel = lecture_panel.find(attrs={"title" : "Subject"})
+
+                subject_panel = moreinfo[1]
                 if not subject_panel: continue
                 subject = subject_panel.span.text.strip() if subject_panel.span else subject_panel.text.strip()
                 
-                locations_panel = lecture_panel.find(attrs={"title": "Locations"})
+                locations_panel = hoverable[0]
                 if not locations_panel: continue
                 locations = locations_panel.span.text.strip() if locations_panel.span else locations_panel.text.strip()
 
-                teacher_panel = lecture_panel.find(attrs={"title" : "Teachers"})
+                teacher_panel = hoverable[1]
                 if not teacher_panel: continue
                 teacher = teacher_panel.span.text.strip() if teacher_panel.span else teacher_panel.text.strip()
 
-                schedule_day.lectures.append(ScheduleLecture(time, subject, locations, teacher))
+                cl = teacher_panel.get('class')
+
+                status = ScheduleLectureStatus.SCHEDULED
+
+                if "cancelled" in cl:
+                    status = ScheduleLectureStatus.CANCELLATION
+                    
+                schedule_day.lectures.append(ScheduleLecture(time, subject, locations, teacher, status))
             
             schedule_week.days.append(schedule_day)
         

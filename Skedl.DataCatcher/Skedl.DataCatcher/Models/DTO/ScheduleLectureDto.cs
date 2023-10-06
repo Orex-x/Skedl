@@ -6,4 +6,5 @@ public class ScheduleLectureDto
     public string Subject { get; set; }
     public string Location { get; set; }
     public string Teacher { get; set; }
+    public ScheduleLectureStatus Status { get; set; }
 }

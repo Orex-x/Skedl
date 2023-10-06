@@ -15,6 +15,6 @@ public class SpbguScheduleCatchJob : IJob
 
     public async Task Execute(IJobExecutionContext context)
     {
-        await _spbguScheduleCatch.CatchSchedule();
+        await _spbguScheduleCatch.CatchScheduleAsync(1);
     }
 }

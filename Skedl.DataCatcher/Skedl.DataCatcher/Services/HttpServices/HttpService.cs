@@ -37,7 +37,7 @@ public class HttpService : IHttpService
                 request.Headers.Add(header.Key, header.Value);
             }
         }
-        
-        return await _httpClient.SendAsync(request);
+        var r = await _httpClient.SendAsync(request);
+        return r;
     }
 }

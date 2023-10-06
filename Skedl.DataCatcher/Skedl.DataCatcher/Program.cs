@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Quartz;
 using Skedl.Api.Services.UserService;
 using Skedl.DataCatcher.Services.DatabaseContexts;
 using Skedl.DataCatcher.Services.HttpServices;
@@ -35,7 +34,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
-
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 
@@ -48,7 +46,13 @@ builder.Services.AddSingleton<IRabbitMqService>(
     new RabbitMqService(rabbitmqHostName, rabbitmqUserName, rabbitmqPassword));
 
 builder.Services.AddSingleton<IHttpService>(httpService);
+
 builder.Services.AddDbContext<DatabaseSpbgu>(op => op.UseNpgsql(connectionStringsSpbgu));
+
+
+builder.Services.AddScoped<ISpbguGroupCatch, SpbguGroupCatch>();
+builder.Services.AddScoped<ISpbguScheduleDelete, SpbguScheduleDelete>();
+builder.Services.AddScoped<ISpbguScheduleCatch, SpbguScheduleCatch>();
 
 var container = builder.Services.BuildServiceProvider();
 var jobFactory = new DiJobFactory(container);
@@ -59,12 +63,6 @@ await quartzService.AddCatcherRepeatWithCron<SpbguScheduleCatchJob>(spbguSchedul
 await quartzService.AddCatcherRepeatWithCron<SpbguScheduleDeleteJob>(spbguScheduleDeleteJobCronSchedule);
 
 builder.Services.AddSingleton(quartzService);
-
-
-builder.Services.AddScoped<ISpbguGroupCatch, SpbguGroupCatch>();
-builder.Services.AddScoped<ISpbguScheduleDelete, SpbguScheduleDelete>();
-builder.Services.AddScoped<ISpbguScheduleCatch, SpbguScheduleCatch>();
-
 
 builder.Services.AddMvc(setupAction => {
     setupAction.EnableEndpointRouting = false;})
