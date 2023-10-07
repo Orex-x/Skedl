@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Skedl.Api.Services.Databases;
 using Skedl.Api.Services.UserService;
 
+// хз допустим изменения 
 IConfiguration configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
     .Build();
