@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+#JSON Config
+
+*/appsettings.json
+
 # User-specific files
 *.rsuser
 *.suo
@@ -75,6 +79,7 @@ StyleCopReport.xml
 *.ilk
 *.meta
 *.obj
+*.bin
 *.iobj
 *.pch
 *.pdb
