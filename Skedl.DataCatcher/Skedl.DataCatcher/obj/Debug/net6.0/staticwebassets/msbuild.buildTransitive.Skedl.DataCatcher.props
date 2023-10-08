@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\Skedl.DataCatcher.props" />
-</Project>
