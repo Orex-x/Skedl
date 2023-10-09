@@ -4,11 +4,18 @@ from services.rabbitmq_service import *
 from typing import Annotated
 import pika
 from models.fastapi_body.link_model import *
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
+SPBGU_PARSER_BASE_URL = os.getenv('SPBGU_PARSER_BASE_URL')
+RABBIT_MQ_HOST = os.getenv('RABBIT_MQ_HOST')
+RABBIT_MQ_USERNAME = os.getenv('RABBIT_MQ_USERNAME')
+RABBIT_MQ_PASSWORD = os.getenv('RABBIT_MQ_PASSWORD')
 
 router = APIRouter(prefix="/spbgu", tags=["spbgu"])
-parser = SpbguParser("https://timetable.spbu.ru")
-rabbit = RabbitMqService("localhost")
+parser = SpbguParser(SPBGU_PARSER_BASE_URL)
+rabbit = RabbitMqService(host=RABBIT_MQ_HOST, username=RABBIT_MQ_USERNAME, password=RABBIT_MQ_PASSWORD)
 
 MAX_RECONNECT_ATTEMPTS = 3
 

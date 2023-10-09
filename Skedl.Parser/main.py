@@ -3,8 +3,16 @@ from fastapi.responses import JSONResponse, FileResponse
 from controllers import spbgu_controller
 from services.rabbitmq_service import * 
 from models.fastapi_body.link_model import *
+import os
+from dotenv import load_dotenv
 
-channel = RabbitMqService("localhost")
+load_dotenv()
+
+RABBIT_MQ_HOST = os.getenv('RABBIT_MQ_HOST')
+RABBIT_MQ_USERNAME = os.getenv('RABBIT_MQ_USERNAME')
+RABBIT_MQ_PASSWORD = os.getenv('RABBIT_MQ_PASSWORD')
+
+channel = RabbitMqService(host=RABBIT_MQ_HOST, username=RABBIT_MQ_USERNAME, password=RABBIT_MQ_PASSWORD)
 
 app = FastAPI()
 app.include_router(spbgu_controller.router)
