@@ -1,4 +1,4 @@
-﻿namespace Skedl.DataCatcher.Models.DTO
+﻿namespace Skedl.DataCatcher.Models.DB
 {
     public enum ScheduleLectureStatus
     {

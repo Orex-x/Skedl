@@ -1,6 +1,4 @@
-﻿using Skedl.DataCatcher.Models.DTO;
-
-namespace Skedl.DataCatcher.Models.DB;
+﻿namespace Skedl.DataCatcher.Models.DB;
 
 public class ScheduleLecture
 {
