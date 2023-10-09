@@ -10,6 +10,8 @@ namespace Skedl.App.Services.AuthService
         Task<User> RegistrationAsync(RegModel model);
 
         Task<HttpResponseMessage> SendCodeAsync(string email);
+        Task<HttpResponseMessage> SendCodeForRecoverPassword(string emailOrLogin);
+        Task<HttpResponseMessage> RecoverPassword(string emailOrLogin, string oldPassword, string newPassword);
 
         Task<bool> VerifyCodeAsync(string email, string code);
 

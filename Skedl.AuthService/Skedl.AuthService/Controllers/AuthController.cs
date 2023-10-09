@@ -35,12 +35,12 @@ public class AuthController : Controller
         var userCodes = _context.UserCodes.Where(x => x.Email == to);
         _context.UserCodes.RemoveRange(userCodes);
         await _context.SaveChangesAsync();
-        
+
         var currentUser = _context.Users.FirstOrDefault(x => x.Email == to);
-        
-        if(currentUser != null)
+
+        if (currentUser != null)
             return BadRequest("Почта занята");
-        
+
         var code = _codeGenerator.Generation(5);
 
         await _mailService.SendMessage(to, "Подтверждения пароля", $"Ваш код подтверждения {code}");
@@ -52,9 +52,54 @@ public class AuthController : Controller
         });
 
         await _context.SaveChangesAsync();
-        
+
         return Ok("Code sent successfully");
     }
+
+
+    [HttpGet]
+    public async Task<ActionResult<string>> SendCodeForRecoverPassword(string emailOrLogin)
+    {
+        var userCodes = _context.UserCodes.Where(x => x.Email == emailOrLogin);
+        _context.UserCodes.RemoveRange(userCodes);
+        await _context.SaveChangesAsync();
+
+        var currentUser = _context.Users.FirstOrDefault(x => x.Email == emailOrLogin || x.Login == emailOrLogin);
+
+        if (currentUser == null)
+            return BadRequest("Пользователь не найден");
+
+        var code = _codeGenerator.Generation(5);
+
+        await _mailService.SendMessage(currentUser.Email, "Подтверждения пароля", $"Ваш код подтверждения {code}");
+
+        await _context.UserCodes.AddAsync(new UserCode()
+        {
+            Code = code,
+            Email = emailOrLogin
+        });
+
+        await _context.SaveChangesAsync();
+
+        return Ok("Code sent successfully");
+    }
+
+    [HttpGet]
+    public async Task<ActionResult> RecoverPassword(string emailOrLogin, string oldPassword,  string newPassword) 
+    {
+        var currentUser = _context.Users.FirstOrDefault(x => 
+        (x.Email == emailOrLogin || x.Login == emailOrLogin) && x.Password == oldPassword);
+
+        if (currentUser == null)
+            return BadRequest("Пользователь не найден");
+
+        currentUser.Password = newPassword;
+        _context.Users.Update(currentUser);
+        await _context.SaveChangesAsync();
+
+        return Ok();
+    }
+
 
     [HttpGet]
     public async Task<ActionResult> VerifyCode(string to, string code)
@@ -118,7 +163,7 @@ public class AuthController : Controller
         var user = await Authenticate(request);
 
         if (user == null) 
-            return BadRequest("Wrong email or password.");
+            return BadRequest("Wrong email or newPassword.");
         
         string token = CreateToken(user);
         var refreshToken = GenerateRefreshToken();

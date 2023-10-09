@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Skedl.App.Pages;
+using Skedl.App.Pages.RecoverPasswordPages;
 using Skedl.App.Pages.RegPages;
 using Skedl.App.Services.ApiClient;
 using Skedl.App.Services.AuthService;
 using Skedl.App.Services.UserService;
+using Skedl.App.ViewModels.RecoverPasswordViewModels;
 
 namespace Skedl.App.ViewModels
 {
@@ -59,6 +61,12 @@ namespace Skedl.App.ViewModels
         async Task Reg()
         {
             await Shell.Current.GoToAsync(nameof(MailPage));
+        }
+
+        [RelayCommand]
+        async Task RecoverPassword()
+        {
+            await Shell.Current.GoToAsync(nameof(MailOrLoginPage));
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Maui.ApplicationModel.Communication;
+using Newtonsoft.Json;
 using Skedl.App.Models.Api;
 using Skedl.App.Models.Reg;
 using Skedl.App.Services.ApiClient;
 using System.Text;
+using static ObjCRuntime.Dlfcn;
 
 namespace Skedl.App.Services.AuthService
 {
@@ -135,6 +137,31 @@ namespace Skedl.App.Services.AuthService
             }
 
             return string.Empty;
+        }
+
+        public async Task<HttpResponseMessage> SendCodeForRecoverPassword(string emailOrLogin)
+        {
+            var queryParams = new Dictionary<string, object>
+            {
+                {"emailOrLogin", emailOrLogin}
+            };
+
+            var response = await _client.GetAsync("auth", $"Auth/SendCodeForRecoverPassword", false, queryParams: queryParams);
+            return response;
+        }
+
+
+        public async Task<HttpResponseMessage> RecoverPassword(string emailOrLogin, string oldPassword, string newPassword)
+        {
+            var queryParams = new Dictionary<string, object>
+            {
+                {"emailOrLogin", emailOrLogin},
+                {"oldPassword", oldPassword},
+                {"newPassword", newPassword}
+            };
+
+            var response = await _client.GetAsync("auth", $"Auth/RecoverPassword", false, queryParams: queryParams);
+            return response;
         }
     }
 }

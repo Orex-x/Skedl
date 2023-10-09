@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using Skedl.App.Models.Reg;
 using Skedl.App.Pages.RegPages;
-using Skedl.App.Services.ApiClient;
 using Skedl.App.Services.AuthService;
 
 namespace Skedl.App.ViewModels.RegViewModels

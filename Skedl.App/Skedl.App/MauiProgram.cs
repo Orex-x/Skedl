@@ -1,5 +1,6 @@
 ﻿using Skedl.App.Pages;
 using Skedl.App.Pages.Home;
+using Skedl.App.Pages.RecoverPasswordPages;
 using Skedl.App.Pages.RegPages;
 using Skedl.App.Services.ApiClient;
 using Skedl.App.Services.AuthService;
@@ -7,6 +8,7 @@ using Skedl.App.Services.DataService;
 using Skedl.App.Services.UserService;
 using Skedl.App.ViewModels;
 using Skedl.App.ViewModels.Home;
+using Skedl.App.ViewModels.RecoverPasswordViewModels;
 using Skedl.App.ViewModels.RegViewModels;
 
 namespace Skedl.App;
@@ -58,6 +60,15 @@ public static class MauiProgram
 
         builder.Services.AddTransient<AccountPage>();
         builder.Services.AddTransient<AccountViewModel>();
+
+        builder.Services.AddTransient<MailOrLoginPage>();
+        builder.Services.AddTransient<MailOrLoginViewModel>();
+        
+        builder.Services.AddTransient<CodePage>();
+        builder.Services.AddTransient<CodeViewModel>();
+
+        builder.Services.AddTransient<RecoverPasswordPage>();
+        builder.Services.AddTransient<RecoverPasswordViewModel>();
 
         return builder.Build();
 	}

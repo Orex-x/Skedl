@@ -88,6 +88,15 @@
 	  <MauiXaml Update="Pages\Home\SchedulePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\RecoverPasswordPages\CodePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\RecoverPasswordPages\MailOrLoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\RecoverPasswordPages\RecoverPasswordPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\RegPages\BioPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
