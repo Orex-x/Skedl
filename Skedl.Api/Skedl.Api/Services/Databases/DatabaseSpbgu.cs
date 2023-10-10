@@ -18,7 +18,7 @@ public class DatabaseSpbgu : DbContext
 
 
 
-    public DatabaseSpbgu()
+    public DatabaseSpbgu(DbContextOptions<DatabaseSpbgu> options) : base(options)
     {
         try
         {
