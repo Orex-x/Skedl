@@ -9,7 +9,9 @@ using Microsoft.IdentityModel.Tokens;
 using Skedl.AuthService.Models;
 using Skedl.AuthService.Services;
 using Skedl.AuthService.Services.CodeGeneration;
+using Skedl.AuthService.Services.FileService;
 using Skedl.AuthService.Services.MailService;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Skedl.AuthService.Controllers;
 
@@ -19,13 +21,20 @@ public class AuthController : Controller
     private readonly IConfiguration _configuration;
     private readonly IMailService _mailService;
     private readonly ICodeGenerator _codeGenerator;
+    private readonly IFileService _fileService;
 
-    public AuthController(DatabaseContext context, IConfiguration configuration, IMailService mailService, ICodeGenerator codeGenerator)
+    public AuthController(
+        DatabaseContext context, 
+        IConfiguration configuration, 
+        IMailService mailService, 
+        ICodeGenerator codeGenerator,
+        IFileService fileService)
     {
         _context = context;
         _configuration = configuration;
         _mailService = mailService;
         _codeGenerator = codeGenerator;
+        _fileService = fileService;
     }
 
 
@@ -131,7 +140,6 @@ public class AuthController : Controller
         if(currentUser != null)
             return BadRequest("the login is already in use");
 
-
         var hasher = new PasswordHasher<User>();
 
         var user = new User
@@ -146,6 +154,18 @@ public class AuthController : Controller
         string token = CreateToken(user);
         var refreshToken = GenerateRefreshToken();
         SetRefreshToken(refreshToken, user);
+
+        if (model.Avatar != null)
+        {
+            string uniqueFileName = Guid.NewGuid().ToString() + model.AvatarName;
+            string filePath = Path.Combine("Files/Images", uniqueFileName);
+            bool ok = _fileService.ByteArrayToFile(filePath, model.Avatar);
+
+            if (ok)
+            {
+                model.AvatarName = uniqueFileName;
+            }
+        }
 
         await _context.Users.AddAsync(user);
         await _context.SaveChangesAsync();
@@ -171,7 +191,10 @@ public class AuthController : Controller
 
         _context.Users.Update(user);
         await _context.SaveChangesAsync();
-    
+
+        //грузим аву
+        user.Avatar = _fileService.ConvertToByteArray(user.AvatarName);
+
         return Ok(new Dictionary<string, object>()
         {
             {"user", user},

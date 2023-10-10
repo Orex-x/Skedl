@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Skedl.AuthService.Models;
 
@@ -13,6 +14,11 @@ public class User
     public string Email { get; set; } 
     
     public string Password { get; set; }
+
+    public string AvatarName { get; set; }
+
+    [NotMapped]
+    public byte[] Avatar { get; set; }
     
     public int? GroupId { get; set; }
     

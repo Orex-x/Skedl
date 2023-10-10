@@ -5,75 +5,88 @@
              xmlns:viewmodel="clr-namespace:Skedl.App.ViewModels.RegViewModels"
              x:DataType="viewmodel:BioViewModel"
              Title="BioPage">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="60"/>
-        </Grid.RowDefinitions>
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
 
-        <Label 
-            FontSize="24"
-            Text="Информация о вас" 
-            VerticalOptions="Start" 
-            Margin="0,10,0,0" 
-            HorizontalOptions="Center"/>
+            <Label 
+                FontSize="24"
+                Text="Информация о вас" 
+                VerticalOptions="Start" 
+                Margin="0,10,0,0" 
+                HorizontalOptions="Center"/>
 
-        <Entry
-            Grid.Row="2"
-            Text="{Binding Name}"
-            Margin="20,0,20,0"
-            Keyboard="Numeric"
-            Placeholder="Имя"/>
+            <ImageButton 
+                Grid.Row="1"
+                WidthRequest="150"
+                HeightRequest="150"
+                CornerRadius="100"
+                Padding="{Binding AvatarPadding}"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BioViewModel}}, Path=LoadAvatarCommand}"
+                Source="{Binding AvatarSource}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+            
+            <Entry
+                Grid.Row="2"
+                Text="{Binding Name}"
+                Margin="20,0,20,0"
+                Keyboard="Numeric"
+                Placeholder="Имя"/>
 
-        <Entry
-            Grid.Row="4"
-            Margin="20,0,20,0"
-            Text="{Binding Login}"
-            Keyboard="Numeric"
-            Placeholder="Логин"/>
+            <Entry
+                Grid.Row="4"
+                Margin="20,0,20,0"
+                Text="{Binding Login}"
+                Keyboard="Numeric"
+                Placeholder="Логин"/>
 
-        <Entry
-            Grid.Row="6"
-            Margin="20,0,20,0"
-            Keyboard="Numeric"
-            IsPassword="True"
-            Text="{Binding Password}"
-            Placeholder="Пароль"/>
+            <Entry
+                Grid.Row="6"
+                Margin="20,0,20,0"
+                Keyboard="Numeric"
+                IsPassword="True"
+                Text="{Binding Password}"
+                Placeholder="Пароль"/>
 
-        <Entry
-            Grid.Row="8"
-            Margin="20,0,20,0"
-            Keyboard="Numeric"
-            Text="{Binding RPassword}"
-            IsPassword="True"
-            Placeholder="Повторите пароль"/>
+            <Entry
+                Grid.Row="8"
+                Margin="20,0,20,0"
+                Keyboard="Numeric"
+                Text="{Binding RPassword}"
+                IsPassword="True"
+                Placeholder="Повторите пароль"/>
 
 
-        <Label 
-            Grid.Row="11"
-            FontSize="14"
-            Text="{Binding ErrorMessage}" 
-            TextColor="Red"
-            VerticalOptions="End" 
-            Margin="0,10,0,0" 
-            HorizontalOptions="Center"/>
+            <Label 
+                Grid.Row="11"
+                FontSize="14"
+                Text="{Binding ErrorMessage}" 
+                TextColor="Red"
+                VerticalOptions="End" 
+                Margin="0,10,0,0" 
+                HorizontalOptions="Center"/>
 
-        <Button 
-            Margin="20,0,20,20"
-            Text="Далее"
-            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BioViewModel}}, Path=NextCommand}"
-            Grid.Row="60"/>
-    </Grid>
+            <Button 
+                Margin="20,0,20,20"
+                Text="Далее"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BioViewModel}}, Path=NextCommand}"
+                Grid.Row="60"/>
+        </Grid>
+    </ScrollView>
 </ContentPage>

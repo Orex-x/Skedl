@@ -12,10 +12,18 @@ namespace Skedl.App.ViewModels.Home
         [ObservableProperty]
         private User user;
 
+        [ObservableProperty]
+        private ImageSource avatarSource;
+        
+
 
         public AccountViewModel(IUserService userService) 
         {
             User = userService.GetUser();
+
+            MemoryStream memory = new MemoryStream(user.Avatar);
+            AvatarSource = ImageSource.FromStream(() => memory);
+
         }
 
         [RelayCommand]

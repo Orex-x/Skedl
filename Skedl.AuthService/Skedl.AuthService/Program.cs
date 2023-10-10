@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Skedl.AuthService.Services;
 using Skedl.AuthService.Services.CodeGeneration;
+using Skedl.AuthService.Services.FileService;
 using Skedl.AuthService.Services.MailService;
 using Skedl.AuthService.Services.UserService;
 
@@ -22,6 +23,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton(configuration);
+builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<ICodeGenerator, CodeGenerator>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMailService, GmailService>();

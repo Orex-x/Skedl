@@ -4,7 +4,6 @@ using Skedl.App.Models.Api;
 using Skedl.App.Models.Reg;
 using Skedl.App.Services.ApiClient;
 using System.Text;
-using static ObjCRuntime.Dlfcn;
 
 namespace Skedl.App.Services.AuthService
 {

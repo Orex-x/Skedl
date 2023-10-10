@@ -34,8 +34,8 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <Ellipse 
-                        Fill="Gray"
+                    <Image 
+                        Source="{Binding AvatarSource}"
                         HorizontalOptions="Start" />
 
                     <Grid Grid.Column="1">

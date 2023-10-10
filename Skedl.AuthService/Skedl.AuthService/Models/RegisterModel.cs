@@ -13,4 +13,9 @@ public class RegisterModel
     public string Email { get; set; } 
     
     public string Password { get; set; }
+
+    public byte[] Avatar { get; set; }
+
+    public string AvatarName { get; set; }
+
 }

@@ -7,10 +7,8 @@ public class DatabaseContext : DbContext
 {
     public DbSet<UserCode> UserCodes { get; set; }
     public DbSet<User> Users { get; set; }
-    
 
-    
-    public DatabaseContext()
+    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {
         try
         {

@@ -27,6 +27,12 @@ namespace Skedl.App.ViewModels.RegViewModels
         [ObservableProperty]
         private string errorMessage;
 
+        [ObservableProperty]
+        private ImageSource avatarSource;
+
+        [ObservableProperty]
+        private int avatarPadding = 30;
+
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
 
@@ -34,6 +40,7 @@ namespace Skedl.App.ViewModels.RegViewModels
         {
             _authService = authService;
             _userService = userService;
+            AvatarSource = "avatar.png";
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -73,6 +80,64 @@ namespace Skedl.App.ViewModels.RegViewModels
                 _userService.SaveUser(user);
                 await Shell.Current.GoToAsync(nameof(ChooseUniversityPage));
             }
+        }
+
+
+        [RelayCommand]
+        async Task LoadAvatar()
+        {
+            PickOptions options = new()
+            {
+                PickerTitle = "Please select a image file",
+                FileTypes = FilePickerFileType.Images,
+            };
+
+            var result = await PickAndShow(options);
+
+            if (result != null)
+            {
+                using var fileStream = File.OpenRead(result.FullPath);
+
+                byte[] bytes;
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    await fileStream.CopyToAsync(memoryStream);
+                    bytes = memoryStream.ToArray();
+                }
+
+                Model.Avatar = bytes;
+                Model.AvatarName = result.FileName;
+
+                MemoryStream memory = new MemoryStream(bytes);
+                AvatarSource = ImageSource.FromStream(() => memory);
+                AvatarPadding = 0;
+            }
+        }
+        
+        public async Task<FileResult> PickAndShow(PickOptions options)
+        {
+            try
+            {
+                var result = await FilePicker.Default.PickAsync(options);
+                if (result != null)
+                {
+                    if (result.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) ||
+                        result.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase))
+                    {
+                        using var stream = await result.OpenReadAsync();
+                        var image = ImageSource.FromStream(() => stream);
+                    }
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                // The user canceled or something went wrong
+            }
+
+            return null;
         }
     }
 }
