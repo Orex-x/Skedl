@@ -26,8 +26,7 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-        //builder.Services.AddSingleton<IApiClient>(new ApiClient("https://skedl.ru"));
-        builder.Services.AddSingleton<IApiClient>(new ApiClient("https://localhost:44326"));
+        builder.Services.AddSingleton<IApiClient>(new ApiClient("https://skedl.ru"));
 
         
         builder.Services.AddSingleton<IAuthService, AuthService>();

@@ -15,7 +15,7 @@ public class User
     
     public string Password { get; set; }
 
-    public string AvatarName { get; set; }
+    public string? AvatarName { get; set; }
 
     [NotMapped]
     public byte[] Avatar { get; set; }

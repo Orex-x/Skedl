@@ -37,6 +37,8 @@ public partial class App : Application
     {
         base.OnStart();
 
+        //SecureStorage.Default.RemoveAll();
+
         var access_token = await SecureStorage.GetAsync("access_token");
         var refresh_token = await SecureStorage.GetAsync("refresh_token");
 

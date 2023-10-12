@@ -163,7 +163,8 @@ public class AuthController : Controller
 
             if (ok)
             {
-                model.AvatarName = uniqueFileName;
+                user.AvatarName = filePath;
+                user.Avatar = model.Avatar;
             }
         }
 
@@ -192,8 +193,11 @@ public class AuthController : Controller
         _context.Users.Update(user);
         await _context.SaveChangesAsync();
 
-        //грузим аву
-        user.Avatar = _fileService.ConvertToByteArray(user.AvatarName);
+        if (user.AvatarName != null)
+        {
+            user.Avatar = _fileService.ConvertToByteArray(user.AvatarName);
+        }
+      
 
         return Ok(new Dictionary<string, object>()
         {
