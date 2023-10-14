@@ -209,7 +209,6 @@ class TestParser(BaseParser):
         r = self.retry_request(self.url + url)
         return BeautifulSoup(r.content, 'html.parser')
 
-
 parser = TestParser("https://timetable.spbu.ru")
 
 cont = parser.get_schedule_week('/GSOM/StudentGroupEvents/Primary/367163')

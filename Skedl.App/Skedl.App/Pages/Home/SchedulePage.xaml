@@ -58,7 +58,14 @@
 
         <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="1" Text="{Binding Date}"/>
 
+        
         <Grid Grid.Row="2" Margin="20,30,20,0">
+
+            <Label 
+                Text="{Binding Message}"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"/>
+
             <CollectionView 
                 ItemsSource="{Binding SelectedScheduleDay.Lectures}"
                 VerticalScrollBarVisibility="Never"

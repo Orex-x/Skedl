@@ -34,10 +34,16 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <Image 
-                        Source="{Binding AvatarSource}"
-                        HorizontalOptions="Start" />
+                   
 
+                    <Frame 
+                        Padding="0"
+                        CornerRadius="70">
+                        <Image
+                            Aspect="AspectFill"
+                            Source="{Binding AvatarSource}"/>
+                    </Frame>
+                   
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition/>

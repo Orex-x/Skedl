@@ -113,6 +113,9 @@ namespace Skedl.App.Services.AuthService
                 {
                     var contentLoadUserDetails = await responeLoadUserDetails.Content.ReadAsStringAsync();
                     var user = JsonConvert.DeserializeObject<User>(contentLoadUserDetails);
+                    
+                    user.Avatar = model.Avatar;
+                    user.AvatarName = model.AvatarName;
                     return user;
                 }
 

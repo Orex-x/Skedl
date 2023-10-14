@@ -21,9 +21,11 @@ namespace Skedl.App.ViewModels.Home
         {
             User = userService.GetUser();
 
-            MemoryStream memory = new MemoryStream(user.Avatar);
-            AvatarSource = ImageSource.FromStream(() => memory);
-
+            if(user.Avatar != null)
+            {
+                MemoryStream memory = new MemoryStream(user.Avatar);
+                AvatarSource = ImageSource.FromStream(() => memory);
+            }
         }
 
         [RelayCommand]

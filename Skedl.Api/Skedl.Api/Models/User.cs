@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Skedl.Api.Models;
 
@@ -16,7 +17,9 @@ public class User
     
     public int? GroupId { get; set; }
     public Group? Group { get; set; }
-    
+
+    public string? AvatarName { get; set; }
+
     public string? University { get; set; }
     
     public string RefreshToken { get; set; } = string.Empty;

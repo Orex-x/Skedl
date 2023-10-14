@@ -122,11 +122,29 @@ namespace Skedl.DataCatcher.Services.Spbgu
             }
             else
             {
+                UnificationSheduleDays(ref list, scheduleWeekFinder);
                 scheduleWeekFinder.Days = list;
                 _db.ScheduleWeeks.Update(scheduleWeekFinder);
             }
 
             return model.Next_Week_Link;
+        }
+        
+        public void UnificationSheduleDays(ref List<ScheduleDay> list, ScheduleWeek scheduleWeek) 
+        {
+            var pairs = new Dictionary<DateTime, ScheduleDay>();
+
+            foreach (var day in scheduleWeek!.Days)
+                pairs.Add(day.Date, day);
+            
+
+            foreach (var day in list)
+            { 
+                if(pairs.TryGetValue(day.Date, out var scheduleDay))
+                {
+                    day.Id = scheduleDay.Id;
+                }
+            }
         }
 
         public async Task<List<ScheduleDay>> ImportScheduleDataAsync(ScheduleWeekDto model)
@@ -135,6 +153,7 @@ namespace Skedl.DataCatcher.Services.Spbgu
 
             foreach (var scheduleDayDto in model.Days)
             {
+                //тут косяк
                 var day = new ScheduleDay()
                 {
                     Date = ParseDateTimeRu(scheduleDayDto.Date),
@@ -191,15 +210,13 @@ namespace Skedl.DataCatcher.Services.Spbgu
                         BufferScheduleLectureTimes.Add(time);
                     }
 
-                    var s = lecture.Status;
-
                     day.Lectures.Add(new ScheduleLecture
                     {
                         Location = location,
                         Subject = subject,
                         Teacher = teacher,
                         Time = time,
-                        Status = s
+                        Status = lecture.Status
                     });
                 }
 

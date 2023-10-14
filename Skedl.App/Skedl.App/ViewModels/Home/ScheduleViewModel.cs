@@ -17,6 +17,9 @@ namespace Skedl.App.ViewModels.Home
         private string date;
 
         [ObservableProperty]
+        private string message;
+
+        [ObservableProperty]
         ObservableCollection<ButtonViewModel> buttons;
 
         private Dictionary<DateTime, ScheduleDay> days;
@@ -40,12 +43,60 @@ namespace Skedl.App.ViewModels.Home
 
         private async void Init()
         {
-            var sw = await _dataService.GetScheduleWeek(DateTime.Today.Date, _userService.GetGroupId());
+            var today = DateTime.Today.Date;
+
+            var sw = await _dataService.GetScheduleWeek(today, _userService.GetGroupId());
             if (sw == null) return;
 
-            foreach(var day in sw.Days) {
+            DateTime monday = today.AddDays(-(int)today.DayOfWeek + 1);
 
+            foreach (var day in sw.Days)
+            {
                 days.Add(day.Date, day);
+            }
+
+            for (int i = 0; i < 14; i++)
+            {
+                var currentDate = monday.AddDays(i);
+                var day = days.GetValueOrDefault(currentDate);
+                if(day == null)
+                {
+                    day = new ScheduleDay()
+                    {
+                        Date = currentDate,
+                        Lectures = new List<ScheduleLecture>()
+                    };
+                    days.Add(currentDate, day);
+                }
+
+                string dayOfWeek = day.Date.ToString("ddd", new System.Globalization.CultureInfo("ru-RU"));
+                string dayOfMonth = day.Date.Day.ToString();
+                var brush = day.Date == DateTime.Today ? Brush.DarkBlue : Brush.Blue;
+
+                if (day.Date == DateTime.Today)
+                {
+                    SelectedScheduleDay = day;
+                    Date = day.Date.ToShortDateString();
+                    if (SelectedScheduleDay.Lectures.Count == 0)
+                    {
+                        Message = "На сегодня отдых :3";
+                    }
+                    else
+                        Message = "";
+                }
+
+                Buttons.Add(new ButtonViewModel()
+                {
+                    Text = dayOfWeek,
+                    DayNumber = dayOfMonth,
+                    Background = brush,
+                    DateTime = day.Date
+                });
+            }
+
+           /* foreach(var day in sw.Days) {
+
+                //days.Add(day.Date, day);
 
                 string dayOfWeek = day.Date.ToString("ddd", new System.Globalization.CultureInfo("ru-RU"));
                 string dayOfMonth = day.Date.Day.ToString();
@@ -64,7 +115,7 @@ namespace Skedl.App.ViewModels.Home
                     Background = brush,
                     DateTime = day.Date
                 });
-            }
+            }*/
         }
 
 
@@ -76,6 +127,13 @@ namespace Skedl.App.ViewModels.Home
                 button.Background = Brush.DarkBlue;
 
                 SelectedScheduleDay = days[button.DateTime];
+
+                if (SelectedScheduleDay.Lectures.Count == 0)
+                {
+                    Message = "На сегодня отдых :3";
+                }
+                else
+                    Message = "";
 
                 Buttons[currentSelectedButton].Background = Brush.Blue;
                 currentSelectedButton = Buttons.IndexOf(button);
