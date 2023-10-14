@@ -54,6 +54,8 @@ builder.Services.AddScoped<ISpbguGroupCatch, SpbguGroupCatch>();
 builder.Services.AddScoped<ISpbguScheduleDelete, SpbguScheduleDelete>();
 builder.Services.AddScoped<ISpbguScheduleCatch, SpbguScheduleCatch>();
 
+
+
 var container = builder.Services.BuildServiceProvider();
 var jobFactory = new DiJobFactory(container);
 var quartzService = new QuartzService(jobFactory);
@@ -63,6 +65,8 @@ await quartzService.AddCatcherRepeatWithCron<SpbguScheduleCatchJob>(spbguSchedul
 await quartzService.AddCatcherRepeatWithCron<SpbguScheduleDeleteJob>(spbguScheduleDeleteJobCronSchedule);
 
 builder.Services.AddSingleton(quartzService);
+
+
 
 builder.Services.AddMvc(setupAction => {
     setupAction.EnableEndpointRouting = false;})

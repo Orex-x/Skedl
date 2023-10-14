@@ -12,7 +12,7 @@ public class RabbitMqService : IRabbitMqService
     
     public RabbitMqService(string hostName, string userName, string password)
     {
-        ConnectionFactory connection = new ConnectionFactory()
+        /*ConnectionFactory connection = new ConnectionFactory()
         {
             HostName = hostName,
             UserName = userName,
@@ -23,7 +23,7 @@ public class RabbitMqService : IRabbitMqService
         _connection = connection.CreateConnection();
         _model = _connection.CreateModel();
 
-        StartBaseConsuming();
+        StartBaseConsuming();*/
     }
 
     private async void StartBaseConsuming()

@@ -44,14 +44,12 @@ namespace Skedl.DataCatcher.Services.Spbgu
             return await _httpService.PostAsync("/spbgu/getScheduleWeek", body);
         }
 
-        public async Task CatchScheduleAsync(int countWeek = 1)
+        public async Task StartCatch(List<Group> groups, int countWeek)
         {
             BufferScheduleLectureLocations = new();
             BufferScheduleLectureSubjects = new();
             BufferScheduleLectureTeachers = new();
             BufferScheduleLectureTimes = new();
-
-            var groups = await _db.Groups.ToListAsync();
 
             foreach (var group in groups)
             {
@@ -60,6 +58,23 @@ namespace Skedl.DataCatcher.Services.Spbgu
 
             await _db.SaveChangesAsync();
         }
+
+        public async Task CatchScheduleAsync(int countWeek)
+        {
+            var groups = await _db.Groups.ToListAsync();
+            await StartCatch(groups, countWeek);
+        }
+
+        public async Task CatchScheduleAsyncByGroup(int countWeek, string groupName)
+        {
+            var groups = await _db.Groups
+                .Where(x => x.Name.ToLower() == groupName.ToLower())
+                .ToListAsync();
+
+            await StartCatch(groups, countWeek);
+        }
+
+
 
         public async Task FetchGroupDataForWeeksAsync(Group group, int countWeek)
         {
