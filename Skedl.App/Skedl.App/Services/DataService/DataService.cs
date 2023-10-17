@@ -53,5 +53,31 @@ namespace Skedl.App.Services.DataService
 
             return new ScheduleWeek();
         }
+
+
+        public async Task<List<ScheduleDay>> GetSchedule(DateTime date, int groupId, int weekCount = 1)
+        {
+            try
+            {
+                var queryParams = new Dictionary<string, object>
+                {
+                    {"date", date},
+                    {"groupId", groupId},
+                    {"weekCount", weekCount},
+                };
+
+
+                var response = await _client.GetAsync("api", "GetSchedule", queryParams: queryParams);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<List<ScheduleDay>>(result);
+                }
+            }
+            catch (Exception ex) { }
+
+            return new List<ScheduleDay>();
+        }
     }
 }

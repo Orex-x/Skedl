@@ -45,12 +45,12 @@ namespace Skedl.App.ViewModels.Home
         {
             var today = DateTime.Today.Date;
 
-            var sw = await _dataService.GetScheduleWeek(today, _userService.GetGroupId());
-            if (sw == null) return;
+            var scheduleDays = await _dataService.GetSchedule(today, _userService.GetGroupId(), 2);
+            if (scheduleDays == null) return;
 
             DateTime monday = today.AddDays(-(int)today.DayOfWeek + 1);
 
-            foreach (var day in sw.Days)
+            foreach (var day in scheduleDays)
             {
                 days.Add(day.Date, day);
             }
@@ -93,29 +93,6 @@ namespace Skedl.App.ViewModels.Home
                     DateTime = day.Date
                 });
             }
-
-           /* foreach(var day in sw.Days) {
-
-                //days.Add(day.Date, day);
-
-                string dayOfWeek = day.Date.ToString("ddd", new System.Globalization.CultureInfo("ru-RU"));
-                string dayOfMonth = day.Date.Day.ToString();
-                var brush = day.Date == DateTime.Today ? Brush.DarkBlue : Brush.Blue;
-                
-                if(day.Date == DateTime.Today)
-                {
-                    SelectedScheduleDay = day;
-                    Date = day.Date.ToShortDateString();
-                }
-                
-                Buttons.Add(new ButtonViewModel()
-                {
-                    Text = dayOfWeek,
-                    DayNumber = dayOfMonth,
-                    Background = brush,
-                    DateTime = day.Date
-                });
-            }*/
         }
 
 

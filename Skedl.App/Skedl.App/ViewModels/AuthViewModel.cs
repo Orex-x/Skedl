@@ -19,6 +19,9 @@ namespace Skedl.App.ViewModels
         [ObservableProperty]
         private string password;
 
+        [ObservableProperty]
+        private string errorMessage;
+
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
         public AuthViewModel(IAuthService authService, IUserService userService)
@@ -32,29 +35,33 @@ namespace Skedl.App.ViewModels
         {
             if(string.IsNullOrEmpty(LoginOrEmail) || string.IsNullOrEmpty(Password))
             {
+                ErrorMessage = "Заполните поля";
                 return;
             }
 
             var user = await _authService.SignInAsync(LoginOrEmail, Password);
 
-            if (user != null)
+            if(user == null)
             {
-                _userService.SaveUser(user);
-
-                if(user.University == null)
-                {
-                    await Shell.Current.GoToAsync(nameof(ChooseUniversityPage));
-                    return;
-                }
-
-                if (user.Group == null)
-                {
-                    await Shell.Current.GoToAsync(nameof(GroupsPage));
-                    return;
-                }
-
-                (Application.Current as App).SetShellHome();
+                ErrorMessage = "Не верные логин или пароль";
+                return;
             }
+
+            _userService.SaveUser(user);
+
+            if (user.University == null)
+            {
+                await Shell.Current.GoToAsync(nameof(ChooseUniversityPage));
+                return;
+            }
+
+            if (user.Group == null)
+            {
+                await Shell.Current.GoToAsync(nameof(GroupsPage));
+                return;
+            }
+            
+            (Application.Current as App).SetShellHome();
         }
 
         [RelayCommand]

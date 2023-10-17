@@ -5,5 +5,7 @@ namespace Skedl.App.Services.DataService
     {
         Task<ICollection<Group>> GetGroupsAsync();
         Task<ScheduleWeek> GetScheduleWeek(DateTime date, int groupId);
+
+        Task<List<ScheduleDay>> GetSchedule(DateTime date, int groupId, int weekCount = 1);
     }
 }
