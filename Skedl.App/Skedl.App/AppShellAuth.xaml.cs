@@ -1,4 +1,5 @@
 ﻿using Skedl.App.Pages;
+using Skedl.App.Pages.Home;
 using Skedl.App.Pages.RecoverPasswordPages;
 using Skedl.App.Pages.RegPages;
 
@@ -19,5 +20,6 @@ public partial class AppShellAuth : Shell
         Routing.RegisterRoute(nameof(MailOrLoginPage), typeof(MailOrLoginPage));
         Routing.RegisterRoute(nameof(CodePage), typeof(CodePage));
         Routing.RegisterRoute(nameof(RecoverPasswordPage), typeof(RecoverPasswordPage));
+        Routing.RegisterRoute(nameof(SchedulePage), typeof(SchedulePage));
     }
 }

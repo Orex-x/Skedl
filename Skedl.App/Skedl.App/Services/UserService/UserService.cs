@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Maui.Storage;
+using Newtonsoft.Json;
 using Skedl.App.Models.Api;
 using Skedl.App.Services.ApiClient;
 using System.Text;
@@ -10,10 +11,12 @@ namespace Skedl.App.Services.UserService
         private User _user;
 
         private readonly IApiClient _apiClient;
+
         public UserService(IApiClient apiClient)
         {
             _apiClient = apiClient;
         }
+
 
         public User GetUser() => _user;
 
@@ -27,15 +30,33 @@ namespace Skedl.App.Services.UserService
             }
         }
 
-        public void SetGroup(Group group)
+        public async Task SetGroup(Group group)
         {
-            _user.Group = group;
-            _user.GroupId = group.Id;
+            if(_user != null)
+            {
+                _user.Group = group;
+                _user.GroupId = group.Id;
+            }
+            else
+            {
+                await SecureStorage.Default
+                    .SetAsync("group_id", group.Id.ToString());
+            }
         }
 
-        public void SetUniversity(string university)
+        public async Task SetUniversity(string university)
         {
-            _user.University = university;
+            if (_user != null)
+            {
+                _user.University = university;
+            }
+            else
+            {
+                await SecureStorage.Default
+                    .SetAsync("university", university);
+            }
+
+           
             _apiClient.SetUniversityUrl(university);
         }
 
@@ -49,9 +70,10 @@ namespace Skedl.App.Services.UserService
             return response.IsSuccessStatusCode;
         }
 
-        public int GetGroupId()
+        public async Task<int> GetGroupId()
         {
-            if(_user == null) return 0;
+            if(_user == null) 
+                return Convert.ToInt32(await SecureStorage.GetAsync("group_id"));
             return _user.GroupId ?? 0;
         }
     }

@@ -30,9 +30,8 @@ public partial class App : Application
     public void SetShellHome()
     {
         MainPage = new AppShellHome();
-
-
     }
+
     protected override async void OnStart()
     {
         base.OnStart();
@@ -42,9 +41,9 @@ public partial class App : Application
         var access_token = await SecureStorage.GetAsync("access_token");
         var refresh_token = await SecureStorage.GetAsync("refresh_token");
 
-        if(string.IsNullOrEmpty(access_token) || string.IsNullOrEmpty(refresh_token))
+        if (string.IsNullOrEmpty(access_token) || string.IsNullOrEmpty(refresh_token))
         {
-            MainPage = new AppShellAuth();
+            await NavigateNotAuthUser();
             return;
         }
 
@@ -58,7 +57,7 @@ public partial class App : Application
         
         if (string.IsNullOrEmpty(new_access_token))
         {
-            MainPage = new AppShellAuth();
+            await NavigateNotAuthUser();
             return;
         }
 
@@ -66,7 +65,29 @@ public partial class App : Application
 
         if (stop) return;
 
-        MainPage = new AppShellHome();
+        MainPage = new AppShellAuth();
+    }
+
+    public async Task NavigateNotAuthUser() 
+    {
+        var university = await SecureStorage.GetAsync("university");
+        var group_id = await SecureStorage.GetAsync("group_id");
+
+        MainPage = new AppShellAuth();
+
+        if (string.IsNullOrEmpty(university))
+        {
+            await Shell.Current.GoToAsync(nameof(ChooseUniversityPage));
+            return;
+        }
+
+        _client.SetUniversityUrl(university);
+
+        if (string.IsNullOrEmpty(group_id))
+        {
+            await Shell.Current.GoToAsync(nameof(GroupsPage));
+            return;
+        }
     }
 
     public async Task<bool> NavigateBasedOnUserAuthorizationAsync()
@@ -75,7 +96,6 @@ public partial class App : Application
 
         if (user != null)
         {
-
             _userService.SaveUser(user);
 
             if (user.University == null)

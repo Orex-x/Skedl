@@ -5,14 +5,10 @@ namespace Skedl.App.Services.UserService
     public interface IUserService
     {
         User GetUser();
-
         void SaveUser(User user);
-
-        void SetUniversity(string  university);
-        void SetGroup(Group group);
-
+        Task SetUniversity(string university);
+        Task SetGroup(Group group);
         Task<bool> UpdateUserAsync();
-
-        int GetGroupId();
+        Task<int> GetGroupId();
     }
 }

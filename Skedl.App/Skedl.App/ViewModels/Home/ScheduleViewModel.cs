@@ -43,9 +43,13 @@ namespace Skedl.App.ViewModels.Home
 
         private async void Init()
         {
+            var groupId = await _userService.GetGroupId();
+            if (groupId == 0) return;
+
             var today = DateTime.Today.Date;
 
-            var scheduleDays = await _dataService.GetSchedule(today, _userService.GetGroupId(), 2);
+            var scheduleDays = await _dataService.GetSchedule(today, groupId, 2);
+
             if (scheduleDays == null) return;
 
             DateTime monday = today.AddDays(-(int)today.DayOfWeek + 1);

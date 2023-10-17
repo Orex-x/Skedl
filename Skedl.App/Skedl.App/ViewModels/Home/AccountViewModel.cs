@@ -14,16 +14,15 @@ namespace Skedl.App.ViewModels.Home
 
         [ObservableProperty]
         private ImageSource avatarSource;
-        
-
 
         public AccountViewModel(IUserService userService) 
         {
             User = userService.GetUser();
 
-            if(user.Avatar != null)
+           
+            if(User.Avatar != null)
             {
-                MemoryStream memory = new MemoryStream(user.Avatar);
+                MemoryStream memory = new MemoryStream(User.Avatar);
                 AvatarSource = ImageSource.FromStream(() => memory);
             }
         }
@@ -31,7 +30,9 @@ namespace Skedl.App.ViewModels.Home
         [RelayCommand]
         async Task SignOut()
         {
-            SecureStorage.Default.RemoveAll();
+            SecureStorage.Default.Remove("access_token");
+            SecureStorage.Default.Remove("refresh_token");
+
             (Application.Current as App).SetShellAuth();
         }
 

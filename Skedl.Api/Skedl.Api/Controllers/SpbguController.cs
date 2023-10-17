@@ -8,7 +8,6 @@ using Skedl.Api.Services.UserService;
 
 namespace Skedl.Api.Controllers;
 
-[Authorize]
 public class SpbguController : Controller
 {
     private readonly DatabaseSpbgu _context;
@@ -32,9 +31,6 @@ public class SpbguController : Controller
     public async Task<IEnumerable<Group>> GetGroups() => 
         await _context.Groups.ToListAsync();
 
-
-    
-    [Authorize]
     public async Task<IActionResult> GetScheduleWeek(string date, int groupId)
     {
         try
@@ -77,7 +73,6 @@ public class SpbguController : Controller
     }
 
 
-    [Authorize]
     public async Task<IActionResult> GetSchedule(string date, int groupId, int weekCount = 1)
     {
         try
@@ -109,7 +104,7 @@ public class SpbguController : Controller
 
                     if (scheduleWeek == null) continue;
 
-                    Console.WriteLine($"Obhect: {scheduleWeek.NextWeekLink} | {scheduleWeek.PreviousWeekLink} | {scheduleWeek.Days.Count}");
+                    Console.WriteLine($"Object: {scheduleWeek.NextWeekLink} | {scheduleWeek.PreviousWeekLink} | {scheduleWeek.Days.Count}");
 
                     list.AddRange(scheduleWeek.Days);
                 }

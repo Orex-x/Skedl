@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Skedl.App.Models.Reg;
 using Skedl.App.Pages;
+using Skedl.App.Pages.Home;
 using Skedl.App.Services.AuthService;
 using Skedl.App.Services.UserService;
 
@@ -77,8 +78,25 @@ namespace Skedl.App.ViewModels.RegViewModels
 
             if(user != null)
             {
+                var university = await SecureStorage.GetAsync("university");
+                var group_id = await SecureStorage.GetAsync("group_id");
+
+                if(string.IsNullOrEmpty(university))
+                {
+                    await Shell.Current.GoToAsync(nameof(ChooseUniversityPage));
+                    return;
+                }
+
                 _userService.SaveUser(user);
-                await Shell.Current.GoToAsync(nameof(ChooseUniversityPage));
+
+                if (string.IsNullOrEmpty(group_id))
+                {
+                    await Shell.Current.GoToAsync(nameof(GroupsPage));
+                    return;
+                }
+
+                Application.Current.MainPage = new AppShellHome();
+                await Shell.Current.GoToAsync(nameof(SchedulePage));
             }
         }
 

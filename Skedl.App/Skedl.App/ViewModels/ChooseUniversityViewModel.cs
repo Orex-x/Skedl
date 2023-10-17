@@ -31,7 +31,7 @@ namespace Skedl.App.ViewModels
         [RelayCommand]
         async Task Tap(ListItem item)
         {
-            _userService.SetUniversity(item.Link);
+            await _userService.SetUniversity(item.Link);
             await _userService.UpdateUserAsync();
             await Shell.Current.GoToAsync(nameof(GroupsPage));
         }

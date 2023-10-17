@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Skedl.App.Models.Api;
+using Skedl.App.Pages.Home;
 using Skedl.App.Services.DataService;
 using Skedl.App.Services.UserService;
 using System.Collections.ObjectModel;
@@ -52,13 +53,11 @@ namespace Skedl.App.ViewModels
         [RelayCommand]
         async Task Tap(Group group)
         {
-            _userService.SetGroup(group);
+            await _userService.SetGroup(group);
             await _userService.UpdateUserAsync();
-            Application.Current.MainPage = new AppShellHome();
+            await Shell.Current.GoToAsync(nameof(SchedulePage));
+            //Application.Current.MainPage = new AppShellHome();
         }
-
-
-        
 
         public async void SearchAsync()
         {

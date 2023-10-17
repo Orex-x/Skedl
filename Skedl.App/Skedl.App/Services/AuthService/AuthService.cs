@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Skedl.App.Models.Api;
 using Skedl.App.Models.Reg;
 using Skedl.App.Services.ApiClient;
+using Skedl.App.Services.UserService;
 using System.Text;
 
 namespace Skedl.App.Services.AuthService
@@ -10,9 +11,11 @@ namespace Skedl.App.Services.AuthService
     public class AuthService : IAuthService
     {
         private readonly IApiClient _client;
-        public AuthService(IApiClient client)
+        private readonly IUserService _userService;
+        public AuthService(IApiClient client, IUserService userService)
         {
             _client = client;
+            _userService = userService;
         }
 
         public async Task<User> SignInAsync(string emailOrLogin, string password)
@@ -37,7 +40,22 @@ namespace Skedl.App.Services.AuthService
                 await SecureStorage.Default.SetAsync("access_token", model.Token);
                 await SecureStorage.Default.SetAsync("refresh_token", model.User.RefreshToken);
 
+                var university = await SecureStorage.GetAsync("university");
+                var group_id = await _userService.GetGroupId();
+
+                if (model.User.GroupId == 0 && group_id != 0)
+                {
+                    model.User.GroupId = group_id;
+                }
+
+                if(string.IsNullOrEmpty(model.User.University) && !string.IsNullOrEmpty(university))
+                {
+                    model.User.University = university;
+                    _client.SetUniversityUrl(university);
+                }
+
                 var userJson = JsonConvert.SerializeObject(model.User);
+
                 var userBody = new StringContent(userJson, Encoding.UTF8, "application/json");
 
                 var responeLoadUserDetails = await _client.PostAsync("api", "LoadUserDetails", userBody);
