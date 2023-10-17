@@ -11,7 +11,7 @@ namespace Skedl.App.Services.AuthService
 
         Task<HttpResponseMessage> SendCodeAsync(string email);
         Task<HttpResponseMessage> SendCodeForRecoverPassword(string emailOrLogin);
-        Task<HttpResponseMessage> RecoverPassword(string emailOrLogin, string oldPassword, string newPassword);
+        Task<HttpResponseMessage> RecoverPassword(RecoverPasswordModel model);
 
         Task<bool> VerifyCodeAsync(string email, string code);
 

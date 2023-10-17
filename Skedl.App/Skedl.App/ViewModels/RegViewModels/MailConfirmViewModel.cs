@@ -27,7 +27,7 @@ namespace Skedl.App.ViewModels.RegViewModels
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            Model = query["model"] as RegModel;
+            Model = query["passwordModel"] as RegModel;
         }
 
         [RelayCommand]
@@ -39,7 +39,7 @@ namespace Skedl.App.ViewModels.RegViewModels
             {
                 await Shell.Current.GoToAsync(nameof(BioPage), new Dictionary<string, object>()
                 {
-                    { "model", Model }
+                    { "passwordModel", Model }
                 });
             }
             else

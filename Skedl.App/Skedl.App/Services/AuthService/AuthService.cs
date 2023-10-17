@@ -153,17 +153,11 @@ namespace Skedl.App.Services.AuthService
         }
 
 
-        public async Task<HttpResponseMessage> RecoverPassword(string emailOrLogin, string oldPassword, string newPassword)
-        {
-            var queryParams = new Dictionary<string, object>
-            {
-                {"emailOrLogin", emailOrLogin},
-                {"oldPassword", oldPassword},
-                {"newPassword", newPassword}
-            };
-
-            var response = await _client.GetAsync("auth", $"Auth/RecoverPassword", false, queryParams: queryParams);
-            return response;
+        public async Task<HttpResponseMessage> RecoverPassword(RecoverPasswordModel model)
+        {   
+            var contentJson = JsonConvert.SerializeObject(model);
+            var body = new StringContent(contentJson, Encoding.UTF8, "application/json");
+            return await _client.PostAsync("auth", "Auth/RecoverPassword", body, false);
         }
     }
 }

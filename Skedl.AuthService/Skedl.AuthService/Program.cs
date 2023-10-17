@@ -9,7 +9,7 @@ using Skedl.AuthService.Services.MailService;
 using Skedl.AuthService.Services.UserService;
 
 IConfiguration configuration = new ConfigurationBuilder()
-    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddJsonFile("appsettings.Home.json", optional: true, reloadOnChange: true)
     .Build();
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -17,6 +17,7 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionStringsSpbgu = configuration["ConnectionStrings:Spbgu"]!;
+var asd= configuration["GmailSettings:From"]!;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

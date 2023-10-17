@@ -1,4 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -90,19 +91,20 @@ public class AuthController : Controller
 
         await _context.SaveChangesAsync();
 
-        return Ok("Code sent successfully");
+        return Ok(currentUser.Password);
     }
 
-    [HttpGet]
-    public async Task<ActionResult> RecoverPassword(string emailOrLogin, string oldPassword,  string newPassword) 
+    [HttpPost]
+    public async Task<ActionResult> RecoverPassword([FromBody] RecoverPasswordModel model) 
     {
         var currentUser = _context.Users.FirstOrDefault(x => 
-        (x.Email == emailOrLogin || x.Login == emailOrLogin) && x.Password == oldPassword);
+        (x.Email == model.EmailOrLogin || x.Login == model.EmailOrLogin) && x.Password == model.OldPassword);
 
         if (currentUser == null)
             return BadRequest("Пользователь не найден");
 
-        currentUser.Password = newPassword;
+        var hasher = new PasswordHasher<User>();
+        currentUser.Password = hasher.HashPassword(currentUser, model.NewPassword);
         _context.Users.Update(currentUser);
         await _context.SaveChangesAsync();
 

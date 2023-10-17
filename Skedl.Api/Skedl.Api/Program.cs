@@ -8,7 +8,7 @@ using Skedl.Api.Services.UserService;
 
 // хз допустим изменения 
 IConfiguration configuration = new ConfigurationBuilder()
-    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddJsonFile("appsettings.Home.json", optional: true, reloadOnChange: true)
     .Build();
 
 var connectionStringsSpbgu = configuration["ConnectionStrings:Spbgu"]!;

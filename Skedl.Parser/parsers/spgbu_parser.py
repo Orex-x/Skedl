@@ -170,12 +170,27 @@ class SpbguParser(BaseParser):
                 if not teacher_panel: continue
                 teacher = teacher_panel.span.text.strip() if teacher_panel.span else teacher_panel.text.strip()
 
-                cl = teacher_panel.get('class')
+                time_panel_class = time_panel.get('class')
+                subject_panel_class = subject_panel.get('class')
+                locations_panel_class = locations_panel.get('class')
+                teacher_panel_class = teacher_panel.get('class')
 
                 status = ScheduleLectureStatus.SCHEDULED
 
-                if "cancelled" in cl:
+                if "cancelled" in teacher_panel_class:
                     status = ScheduleLectureStatus.CANCELLATION
+                
+                if "changed" in time_panel_class:
+                    status = ScheduleLectureStatus.REPLACEMENT
+                
+                if "changed" in subject_panel_class:
+                    status = ScheduleLectureStatus.REPLACEMENT
+                
+                if "changed" in locations_panel_class:
+                    status = ScheduleLectureStatus.REPLACEMENT
+                
+                if "changed" in teacher_panel_class:
+                    status = ScheduleLectureStatus.REPLACEMENT
                     
                 schedule_day.lectures.append(ScheduleLecture(time, subject, locations, teacher, status))
             

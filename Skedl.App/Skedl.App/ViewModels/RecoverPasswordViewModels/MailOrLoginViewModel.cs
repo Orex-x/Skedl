@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Skedl.App.Models.Reg;
 using Skedl.App.Pages.RecoverPasswordPages;
 using Skedl.App.Services.AuthService;
 
@@ -20,7 +21,6 @@ namespace Skedl.App.ViewModels.RecoverPasswordViewModels
             _authService = authService;
         }
 
-
         [RelayCommand]
         async Task Next()
         {
@@ -29,7 +29,17 @@ namespace Skedl.App.ViewModels.RecoverPasswordViewModels
             if (result.IsSuccessStatusCode)
             {
                 var oldPassword = await result.Content.ReadAsStringAsync();
-                await Shell.Current.GoToAsync($"{nameof(CodePage)}?EmailOrLogin={EmailOrLogin}&OldPassword={oldPassword}");
+
+                var model = new RecoverPasswordModel() 
+                {
+                    OldPassword = oldPassword,
+                    EmailOrLogin = EmailOrLogin
+                };
+
+                await Shell.Current.GoToAsync($"{nameof(CodePage)}", new Dictionary<string, object>()
+                {
+                    { "model", model },
+                });
             }
             else
             {

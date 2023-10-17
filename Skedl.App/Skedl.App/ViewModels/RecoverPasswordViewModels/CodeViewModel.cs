@@ -1,22 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Skedl.App.Models.Reg;
 using Skedl.App.Pages.RecoverPasswordPages;
 using Skedl.App.Services.AuthService;
 
 namespace Skedl.App.ViewModels.RecoverPasswordViewModels
 {
-    [QueryProperty("EmailOrLogin", "EmailOrLogin")]
-    [QueryProperty("OldPassword", "OldPassword")]
-    public partial class CodeViewModel : ObservableObject
+    public partial class CodeViewModel : ObservableObject, IQueryAttributable
     {
         [ObservableProperty]
-        private string oldPassword;
+        private RecoverPasswordModel model;
 
         [ObservableProperty]
         private string code; 
-        
-        [ObservableProperty]
-        private string emailOrLogin;
 
         [ObservableProperty]
         private string errorMessage;
@@ -28,14 +24,22 @@ namespace Skedl.App.ViewModels.RecoverPasswordViewModels
             _authService = authService;
         }
 
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            Model = query["model"] as RecoverPasswordModel;
+        }
+
         [RelayCommand]
         async Task Next()
         {
-            var resultOk = await _authService.VerifyCodeAsync(EmailOrLogin, Code);
+            var resultOk = await _authService.VerifyCodeAsync(Model.EmailOrLogin, Code);
 
             if (resultOk)
             {
-                await Shell.Current.GoToAsync($"{nameof(RecoverPasswordPage)}?EmailOrLogin={EmailOrLogin}&OldPassword={OldPassword}");
+                await Shell.Current.GoToAsync($"{nameof(RecoverPasswordPage)}", new Dictionary<string, object>()
+                {
+                    { "model", Model }
+                });
             }
             else
             {

@@ -36,7 +36,7 @@ namespace Skedl.App.ViewModels.RegViewModels
 
                 await Shell.Current.GoToAsync(nameof(MailConfirmPage), new Dictionary<string, object>()
                 {
-                    { "model", model }
+                    { "passwordModel", model }
                 });
             }
             else

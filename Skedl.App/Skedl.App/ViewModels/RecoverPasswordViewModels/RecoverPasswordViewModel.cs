@@ -1,21 +1,20 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Skedl.App.Models.Reg;
 using Skedl.App.Pages;
 using Skedl.App.Services.AuthService;
 using Skedl.App.Services.UserService;
 
 namespace Skedl.App.ViewModels.RecoverPasswordViewModels
 {
-    [QueryProperty("EmailOrLogin", "EmailOrLogin")]
-    [QueryProperty("OldPassword", "OldPassword")]
-    public partial class RecoverPasswordViewModel : ObservableObject
+    public partial class RecoverPasswordViewModel : ObservableObject, IQueryAttributable
     {
 
         [ObservableProperty]
-        private string emailOrLogin;
+        private RecoverPasswordModel model;
 
         [ObservableProperty]
-        private string oldPassword;
+        private string emailOrLogin;
         
         [ObservableProperty]
         private string password;
@@ -35,6 +34,13 @@ namespace Skedl.App.ViewModels.RecoverPasswordViewModels
             _userService = userService;
         }
 
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            Model = query["model"] as RecoverPasswordModel;
+        }
+
+
+
         [RelayCommand]
         async Task Next()
         {
@@ -50,7 +56,9 @@ namespace Skedl.App.ViewModels.RecoverPasswordViewModels
                 return;
             }
 
-            var result = await _authService.RecoverPassword(EmailOrLogin, OldPassword, Password);
+            Model.NewPassword = Password;
+
+            var result = await _authService.RecoverPassword(Model);
 
             if (result.IsSuccessStatusCode)
             {

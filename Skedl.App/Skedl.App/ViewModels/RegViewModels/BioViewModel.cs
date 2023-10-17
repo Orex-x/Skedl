@@ -45,7 +45,7 @@ namespace Skedl.App.ViewModels.RegViewModels
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            Model = query["model"] as RegModel;
+            Model = query["passwordModel"] as RegModel;
         }
 
         [RelayCommand]

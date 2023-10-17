@@ -75,7 +75,6 @@ namespace Skedl.DataCatcher.Services.Spbgu
         }
 
 
-
         public async Task FetchGroupDataForWeeksAsync(Group group, int countWeek)
         {
             string link = group.Link;
@@ -118,7 +117,23 @@ namespace Skedl.DataCatcher.Services.Spbgu
 
             DateTime monday = dateStart.AddDays(-(int)dateStart.DayOfWeek + (int)DayOfWeek.Monday);
 
-            var scheduleWeekFinder = await _db.ScheduleWeeks.FindAsync(monday, group.Id);
+            var scheduleWeekFinder2 = await _db.ScheduleWeeks
+                .FindAsync(monday, group.Id);
+
+            var scheduleWeekFinder = await _db.ScheduleWeeks
+                .Include(x => x.Days)
+                .ThenInclude(x => x.Lectures)
+                .ThenInclude(x => x.Time)
+                .Include(x => x.Days)
+                .ThenInclude(x => x.Lectures)
+                .ThenInclude(x => x.Subject)
+                .Include(x => x.Days)
+                .ThenInclude(x => x.Lectures)
+                .ThenInclude(x => x.Location)
+                .Include(x => x.Days)
+                .ThenInclude(x => x.Lectures)
+                .ThenInclude(x => x.Teacher)
+                .FirstOrDefaultAsync(x => x.GroupId == group.Id && x.StartDate == monday);
 
             var list = await ImportScheduleDataAsync(model);
 
@@ -137,14 +152,37 @@ namespace Skedl.DataCatcher.Services.Spbgu
             }
             else
             {
-                UnificationSheduleDays(ref list, scheduleWeekFinder);
-                scheduleWeekFinder.Days = list;
+                UnificationSheduleDays2(list, ref scheduleWeekFinder);
                 _db.ScheduleWeeks.Update(scheduleWeekFinder);
             }
 
             return model.Next_Week_Link;
         }
-        
+
+        //здесь идея заполнить обьект бд из листа
+        public void UnificationSheduleDays2(List<ScheduleDay> list, ref ScheduleWeek scheduleWeek)
+        {
+            var pairs = new Dictionary<DateTime, ScheduleDay>();
+
+            foreach (var day in list)
+                pairs.Add(day.Date, day);
+
+
+            foreach (var day in scheduleWeek.Days)
+            {
+                if (pairs.TryGetValue(day.Date, out var scheduleDay))
+                {
+                    foreach (var lecture in day.Lectures)
+                        _db.ScheduleLectures.Remove(lecture);
+
+                    day.Lectures = scheduleDay.Lectures;
+                }
+            }
+
+            _db.SaveChanges();
+        }
+
+        //сдесь идея заполнить лист из обьекта бд
         public void UnificationSheduleDays(ref List<ScheduleDay> list, ScheduleWeek scheduleWeek) 
         {
             var pairs = new Dictionary<DateTime, ScheduleDay>();
@@ -158,6 +196,9 @@ namespace Skedl.DataCatcher.Services.Spbgu
                 if(pairs.TryGetValue(day.Date, out var scheduleDay))
                 {
                     day.Id = scheduleDay.Id;
+                    foreach(var lecture in scheduleDay.Lectures)
+                        _db.ScheduleLectures.Remove(lecture);
+                    _db.SaveChanges();
                 }
             }
         }
@@ -225,6 +266,7 @@ namespace Skedl.DataCatcher.Services.Spbgu
                         BufferScheduleLectureTimes.Add(time);
                     }
 
+                    //и тут тоже
                     day.Lectures.Add(new ScheduleLecture
                     {
                         Location = location,

@@ -5,6 +5,7 @@ from services.rabbitmq_service import *
 from models.fastapi_body.link_model import *
 import os
 from dotenv import load_dotenv
+from fastapi import APIRouter, FastAPI
 
 load_dotenv()
 
@@ -22,10 +23,11 @@ app.include_router(spbgu_controller.router)
 async def root():
     return {"message": "Hello Bigger Applications!"}
 
+
 @app.post("/getScheduleWeek")
 async def get_schedule_week(link_model: LinkModel):
     return link_model.link
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="::", port=80)
+    uvicorn.run(app, host="0.0.0.0", port=5004)

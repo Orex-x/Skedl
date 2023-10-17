@@ -34,7 +34,7 @@
         <Label 
             Grid.Row="2"
             FontSize="14"
-            Text="{Binding EmailOrLogin}" 
+            Text="{Binding Model.EmailOrLogin}" 
             VerticalOptions="Start" 
             Margin="0,10,0,0" 
             HorizontalOptions="Center"/>
