@@ -18,8 +18,8 @@
 
         <Label 
             FontSize="24"
-            Text="Подтвердите что аккаунт принадлежит вам" 
-            VerticalOptions="Start" 
+            Text="Подтвердите что аккаунт ваш" 
+            VerticalOptions="Center"
             Margin="0,10,0,0" 
             HorizontalOptions="Center"/>
 

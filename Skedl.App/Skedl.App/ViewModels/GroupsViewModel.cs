@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Skedl.App.Models.Api;
 using Skedl.App.Pages.Home;
+using Skedl.App.Services;
 using Skedl.App.Services.DataService;
 using Skedl.App.Services.UserService;
 using System.Collections.ObjectModel;
@@ -9,6 +10,7 @@ using System.Collections.ObjectModel;
 
 namespace Skedl.App.ViewModels
 {
+    [QueryProperty("NavigateBack", "NavigateBack")]
     public partial class GroupsViewModel : ObservableObject
     {
 
@@ -16,6 +18,9 @@ namespace Skedl.App.ViewModels
 
         [ObservableProperty]
         ObservableCollection<Group> items;
+
+        [ObservableProperty]
+        private string navigateBack;
 
 
         private string searchQuery;
@@ -32,12 +37,14 @@ namespace Skedl.App.ViewModels
             }
         }
 
-
         private readonly IDataService _dataService;
         private readonly IUserService _userService;
+        private readonly EventProvider _eventProvider;
 
-        public GroupsViewModel(IDataService dataService, IUserService userService)
+
+        public GroupsViewModel(EventProvider eventProvider, IDataService dataService, IUserService userService)
         {
+            _eventProvider = eventProvider;
             _dataService = dataService;
             _userService = userService;
             Init();
@@ -55,8 +62,8 @@ namespace Skedl.App.ViewModels
         {
             await _userService.SetGroup(group);
             await _userService.UpdateUserAsync();
-            await Shell.Current.GoToAsync(nameof(SchedulePage));
-            //Application.Current.MainPage = new AppShellHome();
+            _eventProvider.CallUserDataReady();
+            await Shell.Current.GoToAsync(NavigateBack ?? "..");
         }
 
         public async void SearchAsync()

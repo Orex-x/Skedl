@@ -78,25 +78,8 @@ namespace Skedl.App.ViewModels.RegViewModels
 
             if(user != null)
             {
-                var university = await SecureStorage.GetAsync("university");
-                var group_id = await SecureStorage.GetAsync("group_id");
-
-                if(string.IsNullOrEmpty(university))
-                {
-                    await Shell.Current.GoToAsync(nameof(ChooseUniversityPage));
-                    return;
-                }
-
                 _userService.SaveUser(user);
-
-                if (string.IsNullOrEmpty(group_id))
-                {
-                    await Shell.Current.GoToAsync(nameof(GroupsPage));
-                    return;
-                }
-
-                Application.Current.MainPage = new AppShellHome();
-                await Shell.Current.GoToAsync(nameof(SchedulePage));
+                await Shell.Current.GoToAsync(nameof(AccountPage));
             }
         }
 

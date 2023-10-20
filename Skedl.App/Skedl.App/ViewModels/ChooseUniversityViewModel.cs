@@ -33,7 +33,8 @@ namespace Skedl.App.ViewModels
         {
             await _userService.SetUniversity(item.Link);
             await _userService.UpdateUserAsync();
-            await Shell.Current.GoToAsync(nameof(GroupsPage));
+            await Shell.Current.GoToAsync($"{nameof(GroupsPage)}", 
+                new Dictionary<string, object>() { { "NavigateBack", "../../" } });
         }
     }
 }

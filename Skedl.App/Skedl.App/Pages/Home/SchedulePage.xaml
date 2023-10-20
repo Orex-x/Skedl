@@ -6,37 +6,50 @@
              xmlns:model="clr-namespace:Skedl.App.Models.HomeViewModels"
              xmlns:apimodel="clr-namespace:Skedl.App.Models.Api"
              x:DataType="viewmodel:ScheduleViewModel"
+             NavigationPage.HasBackButton="False"
+             Shell.NavBarIsVisible="False"
              Title="SchedulePage">
-    
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition/>
-            <RowDefinition Height="30"/>
-        </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Margin="20,30,20,0">
-            <CollectionView
+    <Grid>
+        <Grid>
+            <Grid IsVisible="{Binding VisibilityBtnChooseUniversity}">
+                <Button 
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ScheduleViewModel}}, Path=ChooseUniversityCommand}"
+                    Text="Выбрать расписание"/>
+            </Grid>
+        </Grid>
+
+        <Grid IsVisible="{Binding VisibilitySchedule}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="20,30,20,0">
+                <CollectionView
                 ItemsSource="{Binding Buttons}"
                 HorizontalScrollBarVisibility="Never"
                 SelectionMode="None">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout 
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout 
                         Orientation="Horizontal"/>
-                </CollectionView.ItemsLayout>
+                    </CollectionView.ItemsLayout>
 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type model:ButtonViewModel}">
-                        <Grid Margin="10,0,0,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="25"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type model:ButtonViewModel}">
+                            <Grid Margin="10,0,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="25"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
 
-                            <Label Text="{Binding Text}" HorizontalOptions="Center"/>
+                                <Label Text="{Binding Text}" HorizontalOptions="Center"/>
 
-                            <Button 
+                                <Button 
                                 Grid.Row="1" 
                                 Text="{Binding DayNumber}"
                                 FontSize="14"
@@ -50,50 +63,50 @@
                                 Background="{Binding Background}"
                                 HorizontalOptions="Center" 
                                 VerticalOptions="Start"/>
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
 
-        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="1" Text="{Binding Date}"/>
+            <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="1" Text="{Binding Date}"/>
 
-        
-        <Grid Grid.Row="2" Margin="20,30,20,0">
 
-            <Label 
+            <Grid Grid.Row="2" Margin="20,30,20,0">
+
+                <Label 
                 Text="{Binding Message}"
                 VerticalOptions="Center" 
                 HorizontalOptions="Center"/>
 
-            <CollectionView 
+                <CollectionView 
                 ItemsSource="{Binding SelectedScheduleDay.Lectures}"
                 VerticalScrollBarVisibility="Never"
                 SelectionMode="None">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type apimodel:ScheduleLecture}">
-                        <Grid Margin="0,10,0,0">
-                            <Frame>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" Text="{Binding Time.Name}"/>
-                                    <Label Grid.Row="1" Text="{Binding Subject.Name}"/>
-                                    <Label Grid.Row="2" Text="{Binding Location.Name}"/>
-                                    <Label Grid.Row="3" Text="{Binding Teacher.Name}"/>
-                                    <Label Grid.Row="4" Text="{Binding Status}"/>
-                                </Grid>
-                            </Frame>
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type apimodel:ScheduleLecture}">
+                            <Grid Margin="0,10,0,0">
+                                <Frame>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" Text="{Binding Time.Name}"/>
+                                        <Label Grid.Row="1" Text="{Binding Subject.Name}"/>
+                                        <Label Grid.Row="2" Text="{Binding Location.Name}"/>
+                                        <Label Grid.Row="3" Text="{Binding Teacher.Name}"/>
+                                        <Label Grid.Row="4" Text="{Binding Status}"/>
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
         </Grid>
-
     </Grid>
 </ContentPage>

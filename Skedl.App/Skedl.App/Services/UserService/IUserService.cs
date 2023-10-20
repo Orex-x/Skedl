@@ -10,5 +10,6 @@ namespace Skedl.App.Services.UserService
         Task SetGroup(Group group);
         Task<bool> UpdateUserAsync();
         Task<int> GetGroupId();
+        void LogoutUser();
     }
 }

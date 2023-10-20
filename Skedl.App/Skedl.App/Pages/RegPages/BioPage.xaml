@@ -46,20 +46,17 @@
                 Grid.Row="2"
                 Text="{Binding Name}"
                 Margin="20,0,20,0"
-                Keyboard="Numeric"
                 Placeholder="Имя"/>
 
             <Entry
                 Grid.Row="4"
                 Margin="20,0,20,0"
                 Text="{Binding Login}"
-                Keyboard="Numeric"
                 Placeholder="Логин"/>
 
             <Entry
                 Grid.Row="6"
                 Margin="20,0,20,0"
-                Keyboard="Numeric"
                 IsPassword="True"
                 Text="{Binding Password}"
                 Placeholder="Пароль"/>
@@ -67,7 +64,6 @@
             <Entry
                 Grid.Row="8"
                 Margin="20,0,20,0"
-                Keyboard="Numeric"
                 Text="{Binding RPassword}"
                 IsPassword="True"
                 Placeholder="Повторите пароль"/>

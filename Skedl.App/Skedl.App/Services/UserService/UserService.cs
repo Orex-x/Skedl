@@ -18,13 +18,16 @@ namespace Skedl.App.Services.UserService
         }
 
 
-        public User GetUser() => _user;
+        public User GetUser() => this._user;
 
         public void SaveUser(User user)
         {
+            SecureStorage.Default.Remove("university");
+            SecureStorage.Default.Remove("group_id");
+
             _user = user;
 
-            if(_user.University != null)
+            if (_user.University != null)
             {
                 _apiClient.SetUniversityUrl(user.University);
             }
@@ -75,6 +78,15 @@ namespace Skedl.App.Services.UserService
             if(_user == null) 
                 return Convert.ToInt32(await SecureStorage.GetAsync("group_id"));
             return _user.GroupId ?? 0;
+        }
+
+        public void LogoutUser()
+        {
+            SecureStorage.Default.Remove("access_token");
+            SecureStorage.Default.Remove("refresh_token");
+            SecureStorage.Default.Remove("university");
+            SecureStorage.Default.Remove("group_id");
+            _user = null;
         }
     }
 }

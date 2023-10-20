@@ -1,6 +1,8 @@
-﻿namespace Skedl.App.Models.Api
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace Skedl.App.Models.Api
 {
-    public class User
+    public partial class User : ObservableObject
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -8,7 +10,10 @@
         public string Email { get; set; }
         public string Password { get; set; }
         public int? GroupId { get; set; }
-        public Group Group { get; set; }
+
+        [ObservableProperty]
+        private Group group;
+
         public string AvatarName { get; set; }
         public byte[] Avatar { get; set; }
         public string University { get; set; }

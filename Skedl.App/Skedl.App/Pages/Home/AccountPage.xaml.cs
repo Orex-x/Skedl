@@ -9,4 +9,10 @@ public partial class AccountPage : ContentPage
 		InitializeComponent();
         BindingContext = vm;
     }
+
+    protected override bool OnBackButtonPressed()
+    {
+        Application.Current.Quit();
+        return true;
+    }
 }

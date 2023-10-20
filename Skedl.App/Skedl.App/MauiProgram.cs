@@ -2,6 +2,7 @@
 using Skedl.App.Pages.Home;
 using Skedl.App.Pages.RecoverPasswordPages;
 using Skedl.App.Pages.RegPages;
+using Skedl.App.Services;
 using Skedl.App.Services.ApiClient;
 using Skedl.App.Services.AuthService;
 using Skedl.App.Services.DataService;
@@ -26,17 +27,13 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-        //builder.Services.AddSingleton<IApiClient>(new ApiClient("https://skedl.ru"));
-        builder.Services.AddSingleton<IApiClient>(new ApiClient("http://192.168.0.117/"));
-
-        
+        builder.Services.AddSingleton<IApiClient>(new ApiClient("https://skedl.ru"));
         builder.Services.AddSingleton<IAuthService, AuthService>();
         builder.Services.AddSingleton<IUserService, UserService>();
         builder.Services.AddSingleton<IDataService, DataService>();
-        
+        builder.Services.AddSingleton<LoadDataService>();
+        builder.Services.AddSingleton<EventProvider>();
 
-        builder.Services.AddSingleton<MainPage>();
-        builder.Services.AddSingleton<MainViewModel>();
 
         builder.Services.AddTransient<GroupsPage>();
         builder.Services.AddTransient<GroupsViewModel>();
@@ -54,11 +51,11 @@ public static class MauiProgram
         builder.Services.AddTransient<BioViewModel>();
         
         builder.Services.AddTransient<ChooseUniversityPage>();
-        builder.Services.AddTransient<ChooseUniversityViewModel>(); 
-        
+        builder.Services.AddTransient<ChooseUniversityViewModel>();
+
         builder.Services.AddTransient<SchedulePage>();
         builder.Services.AddTransient<ScheduleViewModel>();
-
+       
         builder.Services.AddTransient<AccountPage>();
         builder.Services.AddTransient<AccountViewModel>();
 

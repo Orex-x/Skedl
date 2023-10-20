@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Skedl.App.Models.Reg;
 using Skedl.App.Pages;
+using Skedl.App.Pages.Home;
 using Skedl.App.Services.AuthService;
 using Skedl.App.Services.UserService;
 
@@ -62,7 +63,7 @@ namespace Skedl.App.ViewModels.RecoverPasswordViewModels
 
             if (result.IsSuccessStatusCode)
             {
-                await Shell.Current.GoToAsync(nameof(AuthPage));
+                await Shell.Current.GoToAsync(nameof(AccountPage));
             }
             else
             {
