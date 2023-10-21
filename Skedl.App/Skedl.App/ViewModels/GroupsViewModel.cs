@@ -47,15 +47,21 @@ namespace Skedl.App.ViewModels
             _eventProvider = eventProvider;
             _dataService = dataService;
             _userService = userService;
-            Init();
+            eventProvider.LoadGroups += EventProviderLoadGroups;
         }
 
-        public async void Init()
+        private void EventProviderLoadGroups(object sender, EventArgs e)
+        {
+            Task.Run(async () => await LoadDataAsync());
+        }
+
+        public async Task LoadDataAsync()
         {
             var list = await _dataService.GetGroupsAsync();
             _groups = list;
-            Items = new(list);
+            Items = new ObservableCollection<Group>(list);
         }
+
 
         [RelayCommand]
         async Task Tap(Group group)

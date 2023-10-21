@@ -7,6 +7,7 @@ public partial class AccountPage : ContentPage
 	public AccountPage(AccountViewModel vm)
 	{
 		InitializeComponent();
+        vm.Navigation = Navigation;
         BindingContext = vm;
     }
 
@@ -15,4 +16,6 @@ public partial class AccountPage : ContentPage
         Application.Current.Quit();
         return true;
     }
+
+
 }

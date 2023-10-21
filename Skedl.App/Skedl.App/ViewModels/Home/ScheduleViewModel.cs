@@ -52,17 +52,18 @@ namespace Skedl.App.ViewModels.Home
             days = new Dictionary<DateTime, ScheduleDay>();
             _eventProvider.UserDataReady += EventUserDataReady;
             _eventProvider.UserLogout += EventUserLogout;
-            LoadDataFromStorage();
+
+            Task.Run(async () => await LoadDataFromStorage());
         }
 
-        private void EventUserLogout(object sender, EventArgs e)
+        private async void EventUserLogout(object sender, EventArgs e)
         {
             days.Clear();
             Buttons.Clear();
-            LoadDataFromStorage();
+            await LoadDataFromStorage();
         }
 
-        public async void LoadDataFromStorage()
+        public async Task LoadDataFromStorage()
         {
             VisibilityBtnChooseUniversity = false;
             VisibilitySchedule = true;

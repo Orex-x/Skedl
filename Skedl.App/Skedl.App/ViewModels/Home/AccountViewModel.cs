@@ -29,40 +29,44 @@ namespace Skedl.App.ViewModels.Home
         private readonly IUserService _userService;
         private readonly EventProvider _eventProvider;
 
+        public INavigation Navigation { get; set; }
+
         public AccountViewModel(EventProvider eventProvider, IUserService userService) 
         {
             _eventProvider = eventProvider;
             _userService = userService;
             eventProvider.UserDataReady += LoadDataServiceUserDataReady;
-            Init();
+            Task.Run(async () => await Init());
         }
 
-        private void LoadDataServiceUserDataReady(object sender, EventArgs e)
+        private async void LoadDataServiceUserDataReady(object sender, EventArgs e)
         {
-            Init();
+            await Init();
         }
 
-        public void Init()
+        public async Task Init()
         {
-            User = _userService.GetUser();
-
-            if (User == null)
+            await Task.Run(() =>
             {
-                VisibleAccount = false;
-                VisibleAuth = true;
-            }
-            else
-            {
-                VisibleAccount = true;
-                VisibleAuth = false;
+                User = _userService.GetUser();
 
-                if (User.Avatar != null)
+                if (User == null)
                 {
-                    string imageUrl = "https://lavar.com.ua/image/cache/catalog/vafelni-kartynku/vk-1172-750x750-product_thumb.jpg";
-                    AvatarSource = ImageSource.FromUri(new Uri(imageUrl));
-
+                    VisibleAccount = false;
+                    VisibleAuth = true;
                 }
-            }
+                else
+                {
+                    VisibleAccount = true;
+                    VisibleAuth = false;
+
+                    if (User.Avatar != null)
+                    {
+                        string imageUrl = "https://lavar.com.ua/image/cache/catalog/vafelni-kartynku/vk-1172-750x750-product_thumb.jpg";
+                        AvatarSource = ImageSource.FromUri(new Uri(imageUrl));
+                    }
+                }
+            });
         }
 
         [RelayCommand]
@@ -86,7 +90,7 @@ namespace Skedl.App.ViewModels.Home
             if (string.IsNullOrEmpty(User.University))
                 nav = nameof(ChooseUniversityPage);
 
-            await Shell.Current.GoToAsync(nav, 
+            await Shell.Current.GoToAsync(nav,
                 new Dictionary<string, object>() { { "NavigateBack", nameof(AccountPage) } });
         }
         

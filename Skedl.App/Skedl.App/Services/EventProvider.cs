@@ -5,6 +5,8 @@
         public event EventHandler UserDataReady;
         public event EventHandler UserLogout;
 
+        public event EventHandler LoadGroups;
+
         public EventProvider()
         {
 
@@ -18,6 +20,11 @@
         public void CallUserLogout()
         {
             UserLogout.Invoke(this, new EventArgs());
+        }
+        
+        public void CallLoadGroups()
+        {
+            LoadGroups.Invoke(this, new EventArgs());
         }
     }
 }
