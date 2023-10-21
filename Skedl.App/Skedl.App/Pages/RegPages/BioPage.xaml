@@ -35,8 +35,9 @@
                 Grid.Row="1"
                 WidthRequest="150"
                 HeightRequest="150"
-                CornerRadius="100"
+                CornerRadius="45"
                 Padding="{Binding AvatarPadding}"
+            
                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BioViewModel}}, Path=LoadAvatarCommand}"
                 Source="{Binding AvatarSource}"
                 HorizontalOptions="Center"

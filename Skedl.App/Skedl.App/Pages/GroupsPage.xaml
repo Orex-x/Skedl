@@ -43,7 +43,7 @@
                                     CommandParameter="{Binding .}"/>
                             </Frame.GestureRecognizers>
 
-                            <Label Text="{Binding Name}"/>
+                            <Label TextColor="Blue" Text="{Binding Name}"/>
                         </Frame>
                     </Grid>
                 </DataTemplate>

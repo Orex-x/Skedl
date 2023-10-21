@@ -112,7 +112,7 @@ namespace Skedl.App.ViewModels.RegViewModels
 
                 MemoryStream memory = new MemoryStream(bytes);
                 AvatarSource = ImageSource.FromStream(() => memory);
-                AvatarPadding = 0;
+                AvatarPadding = -40;
             }
         }
         
