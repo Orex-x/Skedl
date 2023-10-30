@@ -38,11 +38,11 @@
                         </Grid.ColumnDefinitions>
 
                         <Frame 
-                        Padding="0"
-                        CornerRadius="70">
+                            Padding="0"
+                            CornerRadius="70">
                             <Image
-                            Aspect="AspectFill"
-                            Source="{Binding AvatarSource}"/>
+                                Aspect="AspectFill"
+                                Source="{Binding AvatarSource}"/>
                         </Frame>
 
                         <Grid Grid.Column="1">
@@ -52,16 +52,16 @@
                             </Grid.RowDefinitions>
 
                             <Label 
-                            Grid.Row="0" 
-                            Margin="20,0,20,0"
-                            Text="{Binding User.Name}" 
-                            FontSize="20"/>
+                                Grid.Row="0" 
+                                Margin="20,0,20,0"
+                                Text="{Binding User.Name}" 
+                                FontSize="20"/>
 
                             <Label 
-                            Grid.Row="2" 
-                            Margin="20,0,20,0"
-                            Text="{Binding User.Login}" 
-                            FontSize="20"/>
+                                Grid.Row="2" 
+                                Margin="20,0,20,0"
+                                Text="{Binding User.Login}" 
+                                FontSize="20"/>
                         </Grid>
                     </Grid>
 
@@ -79,9 +79,9 @@
 
                             <Label Text="Вуз:"/>
                             <Label 
-                            Grid.Column="1"
-                            Margin="5,0,0,0" 
-                            Text="{Binding User.University}"/>
+                                Grid.Column="1"
+                                Margin="5,0,0,0" 
+                                Text="{Binding User.University}"/>
                         </Grid>
 
                         <Grid Grid.Column="1">
@@ -92,9 +92,9 @@
 
                             <Label Text="Группа:"/>
                             <Label 
-                            Grid.Column="1"
-                            Margin="5,0,0,0" 
-                            Text="{Binding User.Group.Name}"/>
+                                Grid.Column="1"
+                                Margin="5,0,0,0" 
+                                Text="{Binding User.Group.Name}"/>
                         </Grid>
                     </Grid>
 
@@ -108,36 +108,34 @@
                     </Grid.ColumnDefinitions>
 
                     <Label 
-                    Text="Настройки" 
-                    TextColor="Gray" 
-                    Grid.Column="1" 
-                    VerticalOptions="Center" 
-                    HorizontalOptions="Center"/>
+                        Text="Настройки" 
+                        TextColor="Gray" 
+                        Grid.Column="1" 
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Center"/>
 
                     <Line Grid.Column="0" 
-                    HeightRequest="1" 
-                    Margin="20,0,10,0" 
-                    BackgroundColor="Gray"/>
+                        HeightRequest="1" 
+                        Margin="20,0,10,0" 
+                        BackgroundColor="Gray"/>
 
                     <Line Grid.Column="2" 
-                    HeightRequest="1" 
-                    Margin="10,0,20,0" 
-                    BackgroundColor="Gray"/>
+                        HeightRequest="1" 
+                        Margin="10,0,20,0" 
+                        BackgroundColor="Gray"/>
                 </Grid>
 
-
+                <Button 
+                    Grid.Row="2" 
+                    Margin="20,0,20,0" 
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AccountViewModel}}, Path=ChangeGroupCommand}"
+                    Text="Сменить группу"/>
 
                 <Button 
-                Grid.Row="2" 
-                Margin="20,0,20,0" 
-                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AccountViewModel}}, Path=ChangeGroupCommand}"
-                Text="Сменить группу"/>
-
-                <Button 
-                Grid.Row="4" 
-                Margin="20,0,20,0" 
-                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AccountViewModel}}, Path=ChangeUniversityCommand}"
-                Text="Сменить ВУЗ"/>
+                    Grid.Row="4" 
+                    Margin="20,0,20,0" 
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AccountViewModel}}, Path=ChangeUniversityCommand}"
+                    Text="Сменить ВУЗ"/>
 
                 <Button 
                     Grid.Row="20" 
@@ -165,7 +163,9 @@
                     Grid.Row="2" 
                     Margin="20,0,20,10" 
                     TextColor="Blue"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AccountViewModel}}, Path=GoToAuthCommand}"
+                    Command="{Binding Source={RelativeSource 
+                        AncestorType={x:Type viewmodel:AccountViewModel}}, 
+                        Path=GoToAuthCommand}"
                     Text="Войти в аккаунт"/>
             </Grid>
         </Grid>

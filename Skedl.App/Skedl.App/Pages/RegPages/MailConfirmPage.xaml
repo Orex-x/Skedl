@@ -5,61 +5,63 @@
              xmlns:viewmodel="clr-namespace:Skedl.App.ViewModels.RegViewModels"
              x:DataType="viewmodel:MailConfirmViewModel"
              Title="MailConfirmPage">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition/>
-            <RowDefinition Height="60"/>
-        </Grid.RowDefinitions>
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
 
-        <Label 
-            FontSize="24"
-            Text="Подтвердите почту" 
-            VerticalOptions="Start" 
-            Margin="0,10,0,0" 
-            HorizontalOptions="Center"/>
+            <Label 
+                FontSize="24"
+                Text="Подтвердите почту" 
+                VerticalOptions="Start" 
+                Margin="0,10,0,0" 
+                HorizontalOptions="Center"/>
 
-        <Label 
-            Grid.Row="1"
-            FontSize="14"
-            Text="Мы отправили письмо с кодом на почту" 
-            VerticalOptions="End" 
-            Margin="0,10,0,0" 
-            HorizontalOptions="Center"/>
+            <Label 
+                Grid.Row="1"
+                FontSize="14"
+                Text="Мы отправили письмо с кодом на почту" 
+                VerticalOptions="End" 
+                Margin="0,10,0,0" 
+                HorizontalOptions="Center"/>
 
-        <Label 
-            Grid.Row="2"
-            FontSize="14"
-            Text="{Binding Model.Email}" 
-            VerticalOptions="Start" 
-            Margin="0,10,0,0" 
-            HorizontalOptions="Center"/>
+            <Label 
+                Grid.Row="2"
+                FontSize="14"
+                Text="{Binding Model.Email}" 
+                VerticalOptions="Start" 
+                Margin="0,10,0,0" 
+                HorizontalOptions="Center"/>
 
-        <Entry
-            Grid.Row="3"
-            WidthRequest="200"
-            Text="{Binding Code}"
-            HorizontalTextAlignment="Center"
-            Keyboard="Numeric"
-            Placeholder="12345"/>
-        
-        <Label 
-            Grid.Row="4"
-            FontSize="14"
-            Text="{Binding ErrorMessage}" 
-            VerticalOptions="Start" 
-            TextColor="Red"
-            Margin="0,10,0,0" 
-            HorizontalOptions="Center"/>
+            <Entry
+                Grid.Row="3"
+                WidthRequest="200"
+                Text="{Binding Code}"
+                HorizontalTextAlignment="Center"
+                Keyboard="Numeric"
+                Placeholder="12345"/>
 
-        <Button 
-            Margin="20,0,20,20"
-            Text="Далее"
-            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MailConfirmViewModel}}, Path=NextCommand}"
-            Grid.Row="6"/>
-    </Grid>
+            <Label 
+                Grid.Row="4"
+                FontSize="14"
+                Text="{Binding ErrorMessage}" 
+                VerticalOptions="Start" 
+                TextColor="Red"
+                Margin="0,10,0,0" 
+                HorizontalOptions="Center"/>
+
+            <Button 
+                Margin="20,0,20,20"
+                Text="Далее"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MailConfirmViewModel}}, Path=NextCommand}"
+                Grid.Row="6"/>
+        </Grid>
+    </ScrollView>
 </ContentPage>

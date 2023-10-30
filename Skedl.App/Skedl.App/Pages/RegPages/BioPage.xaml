@@ -38,7 +38,10 @@
                 CornerRadius="45"
                 Padding="{Binding AvatarPadding}"
             
-                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BioViewModel}}, Path=LoadAvatarCommand}"
+                Command="{Binding Source={RelativeSource 
+                    AncestorType={x:Type viewmodel:BioViewModel}}, 
+                    Path=LoadAvatarCommand}"
+                
                 Source="{Binding AvatarSource}"
                 HorizontalOptions="Center"
                 VerticalOptions="Center" />

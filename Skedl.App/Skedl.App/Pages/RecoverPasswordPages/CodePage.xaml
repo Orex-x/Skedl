@@ -5,25 +5,26 @@
              xmlns:viewmodel="clr-namespace:Skedl.App.ViewModels.RecoverPasswordViewModels"
              x:DataType="viewmodel:CodeViewModel"
              Title="CodePage">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition/>
-            <RowDefinition Height="60"/>
-        </Grid.RowDefinitions>
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
 
-        <Label 
+            <Label 
             FontSize="24"
             Text="Подтвердите что аккаунт ваш" 
             VerticalOptions="Center"
             Margin="0,10,0,0" 
             HorizontalOptions="Center"/>
 
-        <Label 
+            <Label 
             Grid.Row="1"
             FontSize="14"
             Text="Мы отправили письмо с кодом на почту" 
@@ -31,7 +32,7 @@
             Margin="0,10,0,0" 
             HorizontalOptions="Center"/>
 
-        <Label 
+            <Label 
             Grid.Row="2"
             FontSize="14"
             Text="{Binding Model.EmailOrLogin}" 
@@ -39,7 +40,7 @@
             Margin="0,10,0,0" 
             HorizontalOptions="Center"/>
 
-        <Entry
+            <Entry
             Grid.Row="3"
             WidthRequest="200"
             Text="{Binding Code}"
@@ -47,7 +48,7 @@
             Keyboard="Numeric"
             Placeholder="12345"/>
 
-        <Label 
+            <Label 
             Grid.Row="4"
             FontSize="14"
             Text="{Binding ErrorMessage}" 
@@ -56,10 +57,11 @@
             Margin="0,10,0,0" 
             HorizontalOptions="Center"/>
 
-        <Button 
+            <Button 
             Margin="20,0,20,20"
             Text="Далее"
             Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CodeViewModel}}, Path=NextCommand}"
             Grid.Row="6"/>
-    </Grid>
+        </Grid>
+    </ScrollView>
 </ContentPage>
