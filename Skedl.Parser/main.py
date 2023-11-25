@@ -5,7 +5,7 @@ from services.rabbitmq_service import *
 from models.fastapi_body.link_model import *
 import os
 from dotenv import load_dotenv
-from fastapi import APIRouter, FastAPI
+from fastapi import FastAPI
 
 load_dotenv()
 

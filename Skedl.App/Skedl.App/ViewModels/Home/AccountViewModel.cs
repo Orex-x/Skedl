@@ -60,10 +60,9 @@ namespace Skedl.App.ViewModels.Home
                     VisibleAccount = true;
                     VisibleAuth = false;
 
-                    if (User.Avatar != null)
+                    if (User.AvatarName != null)
                     {
-                        string imageUrl = "https://lavar.com.ua/image/cache/catalog/vafelni-kartynku/vk-1172-750x750-product_thumb.jpg";
-                        AvatarSource = ImageSource.FromUri(new Uri(imageUrl));
+                        AvatarSource = ImageSource.FromUri(new Uri(User.AvatarName));
                     }
                 }
             });

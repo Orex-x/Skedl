@@ -13,8 +13,4 @@
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.0-preview3" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Files\Images\" />
-    </ItemGroup>
-
 </Project>

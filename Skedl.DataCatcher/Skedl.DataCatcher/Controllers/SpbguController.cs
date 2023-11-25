@@ -15,7 +15,7 @@ namespace Skedl.DataCatcher.Controllers
             ISpbguScheduleDelete spbguScheduleDelete,
             ISpbguScheduleCatch spbguScheduleCatch)
         {
-            spbguGroupCatch = spbguGroupCatch;
+            _spbguGroupCatch = spbguGroupCatch;
             _spbguScheduleDelete = spbguScheduleDelete;
             _spbguScheduleCatch = spbguScheduleCatch;
         }
@@ -53,6 +53,34 @@ namespace Skedl.DataCatcher.Controllers
             try
             {
                 await _spbguScheduleCatch.CatchScheduleAsyncByGroup(countWeek, groupName);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            return false;
+        }
+
+        public async Task<bool> DeleteLastWeek()
+        {
+            try
+            {
+                await _spbguScheduleDelete.DeleteLastWeek();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            return false;
+        }
+
+        public async Task<bool> DeleteWeek(int days)
+        {
+            try
+            {
+                await _spbguScheduleDelete.DeleteWeek(days);
                 return true;
             }
             catch (Exception ex)

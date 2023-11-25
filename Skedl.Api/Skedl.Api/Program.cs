@@ -6,9 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using Skedl.Api.Services.Databases;
 using Skedl.Api.Services.UserService;
 
-// хз допустим изменения 
 IConfiguration configuration = new ConfigurationBuilder()
-    .AddJsonFile("appsettings.Home.json", optional: true, reloadOnChange: true)
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
     .Build();
 
 var connectionStringsSpbgu = configuration["ConnectionStrings:Spbgu"]!;

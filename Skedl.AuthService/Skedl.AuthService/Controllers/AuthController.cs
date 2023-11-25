@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -12,7 +7,10 @@ using Skedl.AuthService.Services;
 using Skedl.AuthService.Services.CodeGeneration;
 using Skedl.AuthService.Services.FileService;
 using Skedl.AuthService.Services.MailService;
-using static System.Net.Mime.MediaTypeNames;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Skedl.AuthService.Controllers;
 
@@ -81,7 +79,7 @@ public class AuthController : Controller
 
         var code = _codeGenerator.Generation(5);
 
-        await _mailService.SendMessage(currentUser.Email, "Подтверждения пароля", $"Ваш код подтверждения {code}");
+        await _mailService.SendMessage(currentUser.Email, "Восстановление пароля", $"Ваш код подтверждения {code}");
 
         await _context.UserCodes.AddAsync(new UserCode()
         {
@@ -165,8 +163,7 @@ public class AuthController : Controller
 
             if (ok)
             {
-                user.AvatarName = filePath;
-                user.Avatar = model.Avatar;
+                user.AvatarName = $"https://skedl.ru/multimedia/photos/{uniqueFileName}";
             }
         }
 
@@ -194,12 +191,6 @@ public class AuthController : Controller
 
         _context.Users.Update(user);
         await _context.SaveChangesAsync();
-
-        if (user.AvatarName != null)
-        {
-            user.Avatar = _fileService.ConvertToByteArray(user.AvatarName);
-        }
-      
 
         return Ok(new Dictionary<string, object>()
         {

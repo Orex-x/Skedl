@@ -3,5 +3,6 @@
     public interface ISpbguScheduleDelete
     {
         Task DeleteLastWeek();
+        Task DeleteWeek(int days);
     }
 }

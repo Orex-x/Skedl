@@ -27,11 +27,6 @@ public class HomeController : Controller
 
         if (user == null) return BadRequest();
 
-        if (user.AvatarName != null)
-        {
-            user.Avatar = _fileService.ConvertToByteArray(user.AvatarName);
-        }
-
         return Ok(user);
     }
 

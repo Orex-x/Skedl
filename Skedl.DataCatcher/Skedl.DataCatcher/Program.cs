@@ -14,7 +14,7 @@ using Skedl.DataCatcher.Services.Spbgu;
 using System.Text;
 
 IConfiguration configuration = new ConfigurationBuilder()
-    .AddJsonFile("appsettings.Home.json", optional: true, reloadOnChange: true)
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
     .Build();
 
 var httpServiceBaseUrl = configuration["HttpService:BaseUrl"]!;
