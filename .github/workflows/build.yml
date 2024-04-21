@@ -10,11 +10,11 @@ jobs:
   build:
     runs-on: self-hosted
   steps:
-  - name: Checkout repository
-    uses: actions/checkout@v3
-  - name: Build and run Docker containers
-    run: |
-      cd Skedl.CICD
-      docker-compose build
-      docker-compose up -d
-      docker-compose ps
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Build and run Docker containers
+      run: |
+        cd Skedl.CICD
+        docker-compose build
+        docker-compose up -d
+        docker-compose ps
