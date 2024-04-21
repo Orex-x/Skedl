@@ -1,0 +1,82 @@
+version: "3.3"
+services:
+
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: uHsyxptZNq
+      POSTGRES_USER: postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - mainnet
+
+  pgadmin:
+    image: dpage/pgadmin4:6.15
+    environment:
+      PGADMIN_DEFAULT_EMAIL: orexkashtan@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: uHsyxptZNq
+      PGADMIN_LISTEN_PORT: 80
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - mainnet
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=skedladmin
+      - RABBITMQ_DEFAULT_PASS=Z0UwS4WROf
+      - RABBITMQ_MANAGEMENT_PATH_PREFIX=/manage/rabbitmq
+    networks:
+      - mainnet
+
+  nginx:
+    build: ./nginx
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - mainnet
+  
+  parser:
+    build: ./SkedlParser
+    restart: always
+    networks:
+      - mainnet
+    ports:
+      - 8080:80
+
+  datacatcher:
+    build: ./SkedlDataCatcher
+    restart: always
+    networks:
+      - mainnet
+
+  auth:
+    build: ./SkedlAuth
+    restart: always
+    networks:
+      - mainnet
+    volumes:
+      - ./data/auth/photos:/App/Files/Images
+
+  api:
+    build: ./SkedlApi
+    restart: always
+    networks:
+      - mainnet
+
+networks:
+  mainnet:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
