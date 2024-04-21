@@ -1,4 +1,4 @@
-name: CI/CD
+name: StartDockerCompose
 
 on:
   push:
@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: self-hosted
+    needs: [build_skedl_api]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
