@@ -1,5 +1,4 @@
-name: StartDockerCompose
-
+name: Build
 
 on:
   push:
@@ -8,6 +7,16 @@ on:
       - main
 
 jobs:
+  build_skedl_api:
+      runs-on: self-hosted
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
+        - name: Build project
+          run: |
+            cd Skedl.Api
+            dotnet restore
+            dotnet publish -c Release -o ./publish
   build:
     runs-on: self-hosted
     needs: [build_skedl_api]
