@@ -39,7 +39,7 @@ jobs:
             dotnet publish -c Release -o ./publish
   build:
     runs-on: self-hosted
-    needs: [build_skedl_api]
+    needs: [build_skedl_api, build_skedl_data_catcher, build_skedl_auth]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
