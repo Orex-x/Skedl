@@ -46,7 +46,7 @@ services:
       - mainnet
   
   parser:
-    build: ./SkedlParser
+    build: ../Skedl.Parser
     restart: always
     networks:
       - mainnet
@@ -54,13 +54,13 @@ services:
       - 8080:80
 
   datacatcher:
-    build: ./SkedlDataCatcher
+    build: ../Skedl.DataCatcher
     restart: always
     networks:
       - mainnet
 
   auth:
-    build: ./SkedlAuth
+    build: ../Skedl.AuthService
     restart: always
     networks:
       - mainnet
