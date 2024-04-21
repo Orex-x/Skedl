@@ -53,11 +53,11 @@ services:
     ports:
       - 8080:80
 
-  datacatcher:
-    build: ../Skedl.DataCatcher
-    restart: always
-    networks:
-      - mainnet
+  # datacatcher:
+  #   build: ../Skedl.DataCatcher
+  #   restart: always
+  #   networks:
+  #     - mainnet
 
   auth:
     build: ../Skedl.AuthService
