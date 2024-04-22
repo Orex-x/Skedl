@@ -39,22 +39,22 @@ jobs:
             dotnet restore
             dotnet build -o ./publish
 
-  build:
-    runs-on: self-hosted
-    needs: [build_skedl_api, build_skedl_data_catcher, build_skedl_auth]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+  # build:
+  #   runs-on: self-hosted
+  #   needs: [build_skedl_api, build_skedl_data_catcher, build_skedl_auth]
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
 
-      - name: Docker login
-        run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  #     - name: Docker login
+  #       run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  #       env:
+  #         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  #         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and run Docker containers
-        run: |
-          cd Skedl.CICD
-          docker-compose build
-          docker-compose up -d
-          docker-compose ps
+  #     - name: Build and run Docker containers
+  #       run: |
+  #         cd Skedl.CICD
+  #         docker-compose build
+  #         docker-compose up -d
+  #         docker-compose ps
