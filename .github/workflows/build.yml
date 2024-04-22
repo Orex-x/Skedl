@@ -15,8 +15,7 @@ jobs:
         - name: Build project
           run: |
             cd Skedl.Api
-            dotnet restore
-            dotnet publish -c Release
+            dotnet build
 
   build_skedl_auth:
       runs-on: self-hosted
