@@ -10,8 +10,6 @@ jobs:
   build_skedl_api:
       runs-on: self-hosted
       steps:
-        - name: Checkout repository
-          uses: actions/checkout@v3
         - name: Build project
           run: |
             cd Skedl.Api
@@ -20,8 +18,6 @@ jobs:
   build_skedl_auth:
       runs-on: self-hosted
       steps:
-        - name: Checkout repository
-          uses: actions/checkout@v3
         - name: Build project
           run: |
             cd Skedl.AuthService
@@ -30,8 +26,6 @@ jobs:
   build_skedl_data_catcher:
       runs-on: self-hosted
       steps:
-        - name: Checkout repository
-          uses: actions/checkout@v3
         - name: Build project
           run: |
             cd Skedl.DataCatcher
