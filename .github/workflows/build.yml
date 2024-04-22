@@ -15,7 +15,7 @@ jobs:
         - name: Build project
           run: |
             cd Skedl.Api
-            dotnet build -o ./publish
+            dotnet build -o ./publishs
 
   build_skedl_auth:
       runs-on: self-hosted
@@ -25,7 +25,6 @@ jobs:
         - name: Build project
           run: |
             cd Skedl.AuthService
-            dotnet restore
             dotnet build -o ./publish
 
   build_skedl_data_catcher:
@@ -36,7 +35,6 @@ jobs:
         - name: Build project
           run: |
             cd Skedl.DataCatcher
-            dotnet restore
             dotnet build -o ./publish
 
   # build:
