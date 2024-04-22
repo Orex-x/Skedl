@@ -68,7 +68,7 @@ services:
       - ./data/auth/photos:/App/Files/Images
 
   api:
-    build: ../../Skedl.Api
+    build: ../Skedl.Api
     restart: always
     networks:
       - mainnet
